@@ -1,0 +1,12 @@
+# Server ID, needs to be unique, also the name for cross server chat bracket: [default] <user> message
+# string
+serverID: default
+
+# Which channel in discord does this server represent
+# string
+primary channel: general
+
+# Add channels to listen to here seperated by a space, must add op channel to use /s op chat
+# strings
+channels: general
+

@@ -1,0 +1,19 @@
+# Enter your discord bot token here
+# string
+token:
+
+# If this is the main server, which will run the discord bot, enter true
+# boolean (true/false)
+master: true
+
+# Discord server to use
+# number
+serverID:
+
+# Admin Rank ID, look at log for id number
+# number
+adminID:
+
+# Staff Channel name, for OP chat
+# string
+staffChannel:
