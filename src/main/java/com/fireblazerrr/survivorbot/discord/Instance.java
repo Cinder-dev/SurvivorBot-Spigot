@@ -12,16 +12,19 @@ import java.util.logging.Level;
 
 public class Instance {
 
+    private SurvivorBot plugin;
+
     public volatile IDiscordClient client;
 
     private final AtomicBoolean reconnect = new AtomicBoolean(true);
 
-    public Instance() {
-        if (SurvivorBot.configManager.discordConfig.getString("token") != null) {
+    public Instance(SurvivorBot plugin) {
+        this.plugin = plugin;
+        if (this.plugin.config.getString("plugin.discord.token") != null) {
             login();
 
-            client.getDispatcher().registerListener(new ReadyListener());
-            client.getDispatcher().registerListener(new MessageListener());
+            client.getDispatcher().registerListener(new ReadyListener(this.plugin));
+            client.getDispatcher().registerListener(new MessageListener(this.plugin));
         } else {
             Bukkit.getLogger().log(Level.WARNING, "Token is required for bot use");
         }
@@ -29,7 +32,7 @@ public class Instance {
 
     private void login() {
         try {
-            client = new ClientBuilder().withToken(SurvivorBot.configManager.discordConfig.getString("token")).login();
+            client = new ClientBuilder().withToken(plugin.config.getString("plugin.discord.token")).login();
         } catch (DiscordException e) {
             e.printStackTrace();
         }

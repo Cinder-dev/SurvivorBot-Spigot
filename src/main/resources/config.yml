@@ -1,0 +1,59 @@
+########################################################################################################################
+#``````````````````````````````````````````````````````````````````````````````````````````````````````````````````````#
+#||||| Survivor Bot Configuration |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||#
+#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
+########################################################################################################################
+plugin:
+  # ///// General Configuration /////
+  general:
+    # Debug Mode
+    debug: true
+    # Database
+    mysql:
+      host: "localhost"
+      port: "3306"
+      database: "SurvivorBot"
+      user: "minecraft"
+      password: "1234"
+    # Redis
+    redis:
+      host: "localhost"
+      port: "6379"
+      user: "minecraft"
+      password: "1234"
+  # ///// Discord Configuration /////
+  discord:
+    # Discord Bot Token
+    token: "123456789"
+    # Master Server, Runs the bot
+    master: true
+    # Discord Server ID
+    serverID: "12345"
+    # Discord Staff Rank ID
+    staffRankID: "12345"
+    # Discord Staff Channel ID
+    staffChannelID: "12345"
+  # ///// Chat Configuration /////
+  chat:
+    # ///// Settings /////
+    settings:
+      # Default Channel
+      default: "default"
+      # Staff Channel
+      staff: "staff"
+      # Local Mutable, is it possible to mute the local channel?
+      localMutable: false
+    # ///// Channels /////
+    channels:
+      # Example Default Channel
+      default:
+        prefix: ""
+        commandID: "d"
+      # Example Staff Channel
+      staff:
+        prefix: "[STAFF]"
+        commandID: "s"
+        permission: "survivorbot.channels.staff"
+        opOnly: true
+  # ///// Player Configurations, Not For editing /////
+  players: {}

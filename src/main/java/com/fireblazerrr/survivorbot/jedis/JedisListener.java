@@ -12,6 +12,12 @@ import sx.blah.discord.util.RateLimitException;
 
 public class JedisListener extends JedisPubSub {
 
+    private SurvivorBot plugin;
+
+    public JedisListener(SurvivorBot plugin) {
+        this.plugin = plugin;
+    }
+
     @Override
     public void onMessage(String channel, String message) {
         Message received = new Message(message);
@@ -19,7 +25,7 @@ public class JedisListener extends JedisPubSub {
         // Broadcast messages received from discord
         if (received.source.equals("discord")) {
             // If it is from the servers channel
-            if (received.channel.equals(SurvivorBot.configManager.pluginConfig.getString("primary channel"))) {
+            if (received.channel.equals(plugin.config.getString("plugin.chat.settings.default"))) {
                 // If the message contains a command
                 if (received.user.equals("`command")) {
                     Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), received.message);
@@ -28,7 +34,7 @@ public class JedisListener extends JedisPubSub {
                 }
             }
             // If the message is from the staff channel
-            else if (received.channel.equals(SurvivorBot.configManager.discordConfig.getString("staffChannel"))) {
+            else if (received.channel.equals(plugin.config.getString("plugin.chat.settings.staff"))) {
                 // Not a command
                 if (!received.user.equals("`command")) {
                     broadcastToUsers(ChatColor.RED + "[DISCORD:" + received.channel + "] " + ChatColor.WHITE + "<" + received.user + "> " + received.message, true);
@@ -43,9 +49,9 @@ public class JedisListener extends JedisPubSub {
             }
         }
         // Broadcast message from other servers
-        else if (!received.source.equals(SurvivorBot.configManager.pluginConfig.getString("serverID"))) {
+        else if (!received.source.equals(plugin.config.getString("plugin.discord.serverID"))) {
             // If message is from staff
-            if (received.channel.equals(SurvivorBot.configManager.discordConfig.getString("staffChannel"))) {
+            if (received.channel.equals(plugin.config.getString("plugin.chat.settings.staff"))) {
                 // Not a command
                 if (!received.user.equals("`command")) {
                     broadcastToUsers(ChatColor.DARK_GREEN + "[" + received.channel + "] " + ChatColor.WHITE + "<" + received.user + "> " + received.message, true);
@@ -58,8 +64,8 @@ public class JedisListener extends JedisPubSub {
         }
 
         // Send messages from all servers to their discord channel
-        if (SurvivorBot.configManager.discordConfig.getBoolean("master") && !received.source.equals("discord")) {
-            SurvivorBot.instance.client.getChannels().stream().filter(ch -> ch.getName().equals(received.channel)).forEach(ch -> {
+        if (plugin.config.getBoolean("master") && !received.source.equals("discord")) {
+            plugin.instance.client.getChannels().stream().filter(ch -> ch.getName().equals(received.channel)).forEach(ch -> {
                 try {
                     ch.sendMessage("<" + received.user + "> " + received.message, false);
                 } catch (MissingPermissionsException | RateLimitException | DiscordException e) {

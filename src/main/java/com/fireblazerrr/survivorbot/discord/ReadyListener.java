@@ -1,9 +1,17 @@
 package com.fireblazerrr.survivorbot.discord;
 
+import com.fireblazerrr.survivorbot.SurvivorBot;
 import sx.blah.discord.api.events.IListener;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 
 public class ReadyListener implements IListener<ReadyEvent> {
+
+    private SurvivorBot plugin;
+
+    public ReadyListener(SurvivorBot plugin) {
+        this.plugin = plugin;
+    }
+
     @Override
     public void handle(ReadyEvent event) {
         System.out.println("*** Discord discord armed ***");

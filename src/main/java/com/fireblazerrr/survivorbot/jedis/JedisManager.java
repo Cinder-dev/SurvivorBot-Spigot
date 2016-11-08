@@ -6,17 +6,23 @@ import redis.clients.jedis.JedisPoolConfig;
 
 public class JedisManager implements Runnable {
 
+    private SurvivorBot plugin;
+
+    public JedisManager(SurvivorBot plugin) {
+        this.plugin = plugin;
+    }
+
     JedisPool pool;
 
     @Override
     public void run() {
         // Get channels to be listened to from the config
-        String channels = SurvivorBot.configManager.pluginConfig.getString("channels");
+        String channels = plugin.config.getString("plugin.chat.channels");
 
         pool = new JedisPool(new JedisPoolConfig(), "localhost");
 
         // start listening
-        pool.getResource().subscribe(new JedisListener(), channels.split(" "));
+        pool.getResource().subscribe(new JedisListener(plugin), channels.split(" "));
 
     }
 

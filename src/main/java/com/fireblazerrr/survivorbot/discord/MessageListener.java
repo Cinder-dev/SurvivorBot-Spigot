@@ -11,11 +11,17 @@ import sx.blah.discord.util.RateLimitException;
 
 public class MessageListener implements IListener<MessageReceivedEvent> {
 
+    private SurvivorBot plugin;
+
+    public MessageListener(SurvivorBot plugin) {
+        this.plugin = plugin;
+    }
+
     @Override
     public void handle(MessageReceivedEvent event) {
         // If the message contains a command
         if (event.getMessage().toString().startsWith("/")) {
-            if (event.getMessage().getAuthor().getRolesForGuild(SurvivorBot.instance.client.getGuildByID(SurvivorBot.configManager.discordConfig.getString("serverID"))).contains(SurvivorBot.instance.client.getRoleByID(SurvivorBot.configManager.discordConfig.getString("adminID")))) {
+            if (event.getMessage().getAuthor().getRolesForGuild(plugin.instance.client.getGuildByID(plugin.config.getString("plugin.discord.serverID"))).contains(plugin.instance.client.getRoleByID(plugin.config.getString("plugin.discord.staffID")))) {
                 JedisListener.publish(
                         event.getMessage().getChannel().getName(),
                         new Message(
