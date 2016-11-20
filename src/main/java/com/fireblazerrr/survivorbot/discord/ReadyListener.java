@@ -6,10 +6,8 @@ import sx.blah.discord.handle.impl.events.ReadyEvent;
 
 public class ReadyListener implements IListener<ReadyEvent> {
 
-    private SurvivorBot plugin;
-
     public ReadyListener(SurvivorBot plugin) {
-        this.plugin = plugin;
+        SurvivorBot plugin1 = plugin;
     }
 
     @Override

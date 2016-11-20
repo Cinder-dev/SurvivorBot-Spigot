@@ -7,10 +7,16 @@ main: com.fireblazerrr.survivorbot.SurvivorBot
 
 commands:
   ch:
-    description: Manipulate channels
-    usage: /channels <args...>
-    aliases: channels
-
+    aliases: ['survivorbot', 'leave', 'join', 'ignore', 'msg', 'tell', 'pm', 'w', 'r', 'afk']
+    description: Root Survivorbot command
+    usage: /<command>
+  me:
+    description: Sends emote messages
+    usage: /<command> <message>
 permissions:
-  
-
+    survivorbot.force.join.all:
+        default: false
+    survivorbot.force.leave.all:
+        default: false
+    survivorbot.autojoin.all:
+        default: false

@@ -2,27 +2,43 @@ package com.fireblazerrr.survivorbot.jedis;
 
 import com.fireblazerrr.survivorbot.SurvivorBot;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 public class JedisManager implements Runnable {
 
-    private SurvivorBot plugin;
+    private JedisPool pool;
 
     public JedisManager(SurvivorBot plugin) {
-        this.plugin = plugin;
+        SurvivorBot plugin1 = plugin;
     }
-
-    JedisPool pool;
 
     @Override
     public void run() {
-        // Get channels to be listened to from the config
-        String channels = plugin.config.getString("plugin.chat.channels");
 
-        pool = new JedisPool(new JedisPoolConfig(), "localhost");
+//        Log.info("REDIS: " + plugin.config.getString("plugin.general.redis.host"));
+//        Log.info("REDIS: " + plugin.config.getInt("plugin.general.redis.port"));
+//        Log.info("REDIS: " + plugin.config.getString("plugin.general.redis.password"));
+//        Log.info("REDIS: " + plugin.config.getString("plugin.general.redis.channel"));
+//
+//        if (plugin.config.getString("plugin.general.redis.password").equals("") || plugin.config.getString("plugin.general.redis.password") == null) {
+//            pool = new JedisPool(
+//                    new JedisPoolConfig(),
+//                    plugin.config.getString("plugin.general.redis.host"),
+//                    plugin.config.getInt("plugin.general.redis.port"),
+//                    Protocol.DEFAULT_TIMEOUT
+//            );
+//        } else {
+//            pool = new JedisPool(
+//                    new JedisPoolConfig(),
+//                    plugin.config.getString("plugin.general.redis.host"),
+//                    plugin.config.getInt("plugin.general.redis.port"),
+//                    Protocol.DEFAULT_TIMEOUT,
+//                    plugin.config.getString("plugin.general.redis.password")
+//            );
+//        }
+//
+//        // start listening
+//        pool.getResource().subscribe(new JedisListener(plugin), plugin.config.getString("plugin.general.redis.channel"));
 
-        // start listening
-        pool.getResource().subscribe(new JedisListener(plugin), channels.split(" "));
 
     }
 
