@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class ReplyCommand extends BasicCommand {
     public ReplyCommand() {
         super("Reply");
-        this.setDescription(this.getMessage("command_remove"));
+        this.setDescription(this.getMessage("command_reply"));
         this.setUsage("/r " + ChatColor.DARK_GRAY + "[message]");
         this.setArgumentRange(0, 2147483647);
         this.setIdentifiers("reply", "r", "ch reply", "survivorbot reply");

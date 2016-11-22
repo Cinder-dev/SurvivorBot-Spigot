@@ -40,17 +40,16 @@ public class SurvivorBot extends JavaPlugin {
     private static final MessageHandler messageHandler = new MessageHandler();
     private static final ConfigManager configManager = new ConfigManager();
     private static final MessageNotFoundException except = new MessageNotFoundException();
+    private static final JedisManager jedisManager = new JedisManager();
+    private static Instance instance = new Instance();
+
     private static SurvivorBot plugin;
     private static ResourceBundle messages;
     private static boolean chatLogEnabled;
     private static boolean logToBukkit;
 
-    private JedisManager jedisManager;
     private Thread jedisManagerThread;
     private static final boolean DEBUG = true;
-
-
-    public Instance instance;
 
     public SurvivorBot() {
     }
@@ -62,15 +61,17 @@ public class SurvivorBot extends JavaPlugin {
     public void onDisable() {
         if (channelManager.getStorage() != null) {
             channelManager.getStorage().update();
+            channelManager.clear();
         }
         if (chatterManager.getStorage() != null) {
             chatterManager.getStorage().update();
+            chatterManager.clear();
         }
 
 //        jedisManager.destroy();
-//        if (true)
-//            instance.terminate();
-//
+        if (instance.isMaster())
+            instance.terminate();
+
 //        jedisManagerThread.stop();
 
         info("Version " + this.getDescription().getVersion() + " is disabled.");
@@ -79,7 +80,6 @@ public class SurvivorBot extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         this.setupStorage();
-        //this.setupChatService();
         channelManager.loadChannels();
         configManager.load(new File(this.getDataFolder(), "config.yml"));
 
@@ -92,13 +92,12 @@ public class SurvivorBot extends JavaPlugin {
         this.registerEvents();
         info("Version " + this.getDescription().getVersion() + " is enabled.");
 
-//        // Create Discord Bot Instance
-//        if (true) {
-//            instance = new Instance(plugin);
-//        }
-//
-//        // Create Jedis Event Listener
-//        jedisManager = new JedisManager(plugin);
+        // Create Discord Bot Instance
+        if (instance.isMaster()) {
+            instance.setupInstance();
+        }
+
+        // Create Jedis Event Listener
 //        jedisManagerThread = new Thread(jedisManager);
 //        jedisManagerThread.start();
 
@@ -166,16 +165,6 @@ public class SurvivorBot extends JavaPlugin {
         }
     }
 
-//    private Boolean setupChatService(){
-//        RegisteredServiceProvider svc = this.getServer().getServicesManager().getRegistration(Chat.class);
-//        if(svc != null) {
-//            chatService = (Chat)svc.getProvider();
-//            return Boolean.valueOf(true);
-//        } else {
-//            return Boolean.valueOf(false);
-//        }
-//    }
-
     public static ConfigManager getConfigManager() {
         return configManager;
     }
@@ -228,6 +217,14 @@ public class SurvivorBot extends JavaPlugin {
 
     public static ChatterManager getChatterManager() {
         return chatterManager;
+    }
+
+    public static JedisManager getJedisManager() {
+        return jedisManager;
+    }
+
+    public static Instance getInstance() {
+        return instance;
     }
 
     public static void debug(String command, String results) {

@@ -1,5 +1,6 @@
 package com.fireblazerrr.survivorbot.channel;
 
+import com.fireblazerrr.survivorbot.SurvivorBot;
 import com.fireblazerrr.survivorbot.chatter.Chatter.Permission;
 import com.fireblazerrr.survivorbot.utils.message.MessageFormatSupplier;
 import org.bukkit.Bukkit;
@@ -27,7 +28,7 @@ public class ChannelManager implements MessageFormatSupplier {
 
     public void addChannel(Channel channel) {
         this.channels.put(channel.getName().toLowerCase(), channel);
-        this.channels.put(channel.getNick(), channel);
+        this.channels.put(channel.getNick().toLowerCase(), channel);
         if (!channel.isTransient()) {
             Permission[] pm = Permission.values();
 

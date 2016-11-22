@@ -4,9 +4,13 @@ import com.fireblazerrr.survivorbot.SurvivorBot;
 import com.fireblazerrr.survivorbot.spigot.command.BasicCommand;
 import com.fireblazerrr.survivorbot.spigot.command.Command;
 import com.fireblazerrr.survivorbot.spigot.command.CommandHandler;
-import com.fireblazerrr.survivorbot.utils.message.Messaging;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,33 +46,82 @@ public class HelpCommand extends BasicCommand {
             }
         }
 
-        int var13 = commands.size() / 8;
+        int maxPages = commands.size() / 8;
         if (commands.size() % 8 != 0) {
-            ++var13;
+            ++maxPages;
         }
 
-        if (var13 == 0) {
-            var13 = 1;
+        if (maxPages == 0) {
+            maxPages = 1;
         }
 
-        if (page >= var13 || page < 0) {
+        if (page >= maxPages || page < 0) {
             page = 0;
         }
 
-        sender.sendMessage(
-                ChatColor.RED + "-----[ " + ChatColor.WHITE + "SurvivorBot Help <" + (page + 1) + "/" + var13 + ">" + ChatColor.RED + " ]-----");
-        int var14 = page * 8;
-        int end = var14 + 8;
+        TextComponent master = new TextComponent("\n\n");
+        TextComponent prev;
+        TextComponent next;
+        TextComponent title;
+
+        if (page == 0) {
+            prev = new TextComponent("             [");
+            next = new TextComponent("] [NEXT PAGE] ");
+            next.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch help " + (page + 2)));
+            next.setHoverEvent(
+                    new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to Change Page").create()));
+        } else if (page + 1 == maxPages) {
+            prev = new TextComponent(" [PREV PAGE] [");
+            prev.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch help " + page));
+            prev.setHoverEvent(
+                    new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to Change Page").create()));
+            next = new TextComponent("]             ");
+        } else {
+            prev = new TextComponent(" [PREV PAGE] [");
+            prev.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch help " + page));
+            prev.setHoverEvent(
+                    new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to Change Page").create()));
+            next = new TextComponent("] [NEXT PAGE] ");
+            next.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch help " + (page + 2)));
+            next.setHoverEvent(
+                    new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to Change Page").create()));
+        }
+        prev.setColor(net.md_5.bungee.api.ChatColor.RED);
+        next.setColor(net.md_5.bungee.api.ChatColor.RED);
+
+        title = new TextComponent(" SurvivorBot Help <" + (page + 1) + "/" + maxPages + "> ");
+        title.setColor(net.md_5.bungee.api.ChatColor.WHITE);
+
+        master.addExtra(prev);
+        master.addExtra(title);
+        master.addExtra(next);
+
+        ((Player) sender).spigot().sendMessage(master);
+
+        int commandOffset = page * 8;
+        int end = commandOffset + 8;
         if (end > commands.size()) {
             end = commands.size();
         }
 
-        for (int c = var14; c < end; ++c) {
+        for (int c = commandOffset; c < end; ++c) {
             Command cmd = (Command) commands.get(c);
-            sender.sendMessage("  " + ChatColor.GREEN + "" + cmd.getUsage());
-        }
 
-        Messaging.send(sender, this.getMessage("help_moreInfo"), this.getMessage("help_infoCommand"));
+            TextComponent cmdComponent = new TextComponent("  " + cmd.getUsage());
+
+            ComponentBuilder helpComponent = new ComponentBuilder(
+                    ChatColor.RED + "Name: " + ChatColor.YELLOW + cmd.getName() + "\n");
+            helpComponent.append(ChatColor.RED + "Description: " + ChatColor.YELLOW + cmd.getDescription() + "\n");
+            helpComponent.append(ChatColor.RED + "Usage: " + ChatColor.YELLOW + cmd.getUsage() + "\n");
+            helpComponent.append(ChatColor.DARK_GRAY + "Click to copy to chat bar.");
+
+            cmdComponent.setColor(net.md_5.bungee.api.ChatColor.GREEN);
+            cmdComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, helpComponent.create()));
+            cmdComponent.setClickEvent(
+                    new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, ChatColor.stripColor(cmd.getUsage())));
+
+            ((Player) sender).spigot().sendMessage(cmdComponent);
+        }
         return true;
     }
 }

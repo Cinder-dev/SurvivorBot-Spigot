@@ -20,9 +20,9 @@ public class CommandHandler {
         Arrays.stream(command.getIdentifiers()).forEach(s -> identifiers.put(s.toLowerCase(), command));
     }
 
-    public boolean dispatch(CommandSender sender, String lable, String[] args) {
+    public boolean dispatch(CommandSender sender, String label, String[] args) {
         for (int argsIncluded = args.length; argsIncluded >= 0; --argsIncluded) {
-            StringBuilder identifier = new StringBuilder(lable);
+            StringBuilder identifier = new StringBuilder(label);
 
             for (int cmd = 0; cmd < argsIncluded; ++cmd) {
                 identifier.append(" ").append(args[cmd]);

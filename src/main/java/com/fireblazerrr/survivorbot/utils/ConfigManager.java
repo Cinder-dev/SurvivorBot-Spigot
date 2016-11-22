@@ -34,7 +34,8 @@ public class ConfigManager {
 
         config.setDefaults(this.getDefaults());
         config.options().header(
-                "Color Codes (Used with §<value>) | Formatting Codes (Used with §<value>)           \n" +
+                "============================================================================\n" +
+                        "Color Codes (Used with §<value>) | Formatting Codes (Used with §<value>)    \n" +
                         "0 : Black                         | k : Obfuscated 'Magic'                  \n" +
                         "1 : Dark Blue                     | l : Bold                                \n" +
                         "2 : Dark Green                    | m : Strikethrough                       \n" +
@@ -50,7 +51,8 @@ public class ConfigManager {
                         "c : Red                           |                                         \n" +
                         "d : Light Purple                  |                                         \n" +
                         "e : Yellow                        |                                         \n" +
-                        "f : White                         |                                         ");
+                        "f : White                         |                                         \n" +
+                        "============================================================================");
         ChannelManager channelManager = SurvivorBot.getChannelManager();
         if (config.getBoolean("moderator-permissions.can-kick")) {
             channelManager.addModPermission(Chatter.Permission.KICK);
@@ -145,6 +147,15 @@ public class ConfigManager {
         SurvivorBot.setLogToBukkitEnabled(config.getBoolean("log-to-bukkit", false));
         SurvivorBot.getMessageHandler().setTwitterStyleMsgs(config.getBoolean("twitter-style-private-messages", true));
 
+        SurvivorBot.getInstance().setMaster(config.getBoolean("discord.master"));
+        SurvivorBot.getInstance().setToken(config.getString("discord.bot-token"));
+        SurvivorBot.getInstance().setAdminRankID(config.getString("discord.admin-rank-id"));
+        SurvivorBot.getInstance().setServerID(config.getString("discord.server-id"));
+
+        SurvivorBot.getJedisManager().setHostname(config.getString("redis.hostname"));
+        SurvivorBot.getJedisManager().setPort(config.getInt("redis.port"));
+        SurvivorBot.getJedisManager().setPassword(config.getString("redis.password"));
+
         try {
             config.options().copyDefaults(true);
             config.save(file);
@@ -195,6 +206,13 @@ public class ConfigManager {
         config.set("log-chat", Boolean.TRUE);
         config.set("log-to-bukkit", Boolean.FALSE);
         config.set("twitter-style-private-messages", Boolean.TRUE);
+        config.set("discord.master", Boolean.TRUE);
+        config.set("discord.bot-token", "");
+        config.set("discord.admin-rank-id", "");
+        config.set("discord.server-id", "");
+        config.set("redis.hostname", "");
+        config.set("redis.port", 6379);
+        config.set("redis.password", "");
         return config;
     }
 }

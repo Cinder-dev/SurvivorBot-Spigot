@@ -64,6 +64,7 @@ public class YMLChannelStorage implements ChannelStorage {
         String nick = config.getString("nick", name);
         String format = config.getString("format", "{default}");
         String password = config.getString("password", "");
+        String discordChannelLinkID = config.getString("discordChannelLinkID", "");
         ChatColor color = Messaging.parseColor(config.getString("color", "WHITE"));
         if (color == null) {
             SurvivorBot.warning("The color \'" + config.getString("color") + "\' is not valid.");
@@ -92,6 +93,7 @@ public class YMLChannelStorage implements ChannelStorage {
         StandardChannel channel = new StandardChannel(this, name, nick, SurvivorBot.getChannelManager());
         channel.setFormat(format);
         channel.setPassword(password);
+        channel.setDiscordChannelLinkID(discordChannelLinkID);
         channel.setColor(color);
         channel.setDistance(distance);
         channel.setShortcutAllowed(shortcut);
@@ -146,6 +148,7 @@ public class YMLChannelStorage implements ChannelStorage {
             config.set("nick", channel.getNick());
             config.set("format", channel.getFormat());
             config.set("password", channel.getPassword());
+            config.set("discordChannelLinkID", channel.getDiscordChannelLinkID());
             config.set("color", channel.getColor().name());
             config.set("distance", channel.getDistance());
             config.set("shortcut", channel.isShortcutAllowed());

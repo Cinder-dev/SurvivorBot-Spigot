@@ -45,6 +45,8 @@ public interface Channel {
 
     String getPassword();
 
+    String getDiscordChannelLinkID();
+
     Set<String> getWorlds();
 
     boolean hasWorld(String world);
@@ -106,6 +108,8 @@ public interface Channel {
     void setNick(String nick);
 
     void setPassword(String password);
+
+    void setDiscordChannelLinkID(String discordChannelLinkID);
 
     void setShortcutAllowed(boolean bool);
 

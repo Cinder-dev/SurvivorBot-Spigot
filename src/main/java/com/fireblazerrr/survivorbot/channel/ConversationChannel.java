@@ -6,6 +6,10 @@ import com.fireblazerrr.survivorbot.spigot.events.custom.ChannelChatEvent;
 import com.fireblazerrr.survivorbot.spigot.events.custom.ChatCompleteEvent;
 import com.fireblazerrr.survivorbot.utils.message.MessageFormatSupplier;
 import com.fireblazerrr.survivorbot.utils.message.MessageNotFoundException;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -126,10 +130,17 @@ public class ConversationChannel extends StandardChannel {
 
         this.getMembers()
                 .stream()
-                .filter(chatter -> !(chatter.isIgnoring(senderName)) && !(chatter.canIgnore(SurvivorBot.getChatterManager().getChatter(senderName)) != Chatter.Result.NO_PERMISSION))
+                .filter(chatter -> !(chatter.isIgnoring(senderName)) && chatter.canIgnore(SurvivorBot.getChatterManager().getChatter(senderName)) == Chatter.Result.NO_PERMISSION)
                 .forEach(chatter -> {
                     String afkMsg = this.applyFormat(format, player, chatter.getPlayer());
-                    chatter.getPlayer().sendMessage(afkMsg.replace("{msg}", event.getMessage()));
+                    TextComponent msg = new TextComponent(afkMsg);
+                    if (senderName != chatter.getName()) {
+                        msg.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "@" + senderName));
+                        ComponentBuilder hover = new ComponentBuilder("Click to focus Direct Message");
+                        msg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover.create()));
+                    }
+                    msg.setText(msg.getText().replace("{msg}", event.getMessage()));
+                    chatter.getPlayer().spigot().sendMessage(msg);
                     if (!sender.equals(chatter) && chatter.isAFK()) {
                         afkMsg = chatter.getAFKMessage();
 

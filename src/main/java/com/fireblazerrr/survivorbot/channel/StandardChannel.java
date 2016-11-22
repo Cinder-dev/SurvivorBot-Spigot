@@ -6,10 +6,16 @@ import com.fireblazerrr.survivorbot.spigot.events.custom.ChannelChatEvent;
 import com.fireblazerrr.survivorbot.spigot.events.custom.ChatCompleteEvent;
 import com.fireblazerrr.survivorbot.utils.message.MessageFormatSupplier;
 import com.fireblazerrr.survivorbot.utils.message.MessageNotFoundException;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import sx.blah.discord.util.DiscordException;
+import sx.blah.discord.util.MissingPermissionsException;
+import sx.blah.discord.util.RateLimitException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +29,7 @@ public class StandardChannel implements Channel {
     private String nick;
     private String format;
     private String password;
+    private String discordChannelLinkID;
     private ChatColor color;
     private int distance;
     private boolean shortcutAllowed;
@@ -47,6 +54,7 @@ public class StandardChannel implements Channel {
         this.verbose = true;
         this.format = "{default}";
         this.password = "";
+        this.discordChannelLinkID = "";
         this.formatSupplier = formatSupplier;
         this.muted = false;
     }
@@ -259,6 +267,10 @@ public class StandardChannel implements Channel {
         return this.password;
     }
 
+    public String getDiscordChannelLinkID() {
+        return this.discordChannelLinkID;
+    }
+
     public ChannelStorage getStorage() {
         return this.storage;
     }
@@ -359,9 +371,24 @@ public class StandardChannel implements Channel {
         this.trimRecipients(recipients, sender);
         String msg = String.format(format, player.getDisplayName(), event.getMessage());
 
-        recipients.forEach(player1 -> player1.sendMessage(msg));
+        // Send to players in channel
+
+        TextComponent chatMessage = new TextComponent(msg);
+        chatMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.getName()));
+
+        recipients.forEach(player1 -> player1.spigot().sendMessage(chatMessage));
 
         Bukkit.getPluginManager().callEvent(new ChatCompleteEvent(sender, this, msg));
+
+        // Send to discord
+        if (!discordChannelLinkID.equals("")) {
+            try {
+                SurvivorBot.getInstance().getClient().getChannelByID(discordChannelLinkID)
+                        .sendMessage("<" + player.getName() + "> " + event.getMessage());
+            } catch (MissingPermissionsException | RateLimitException | DiscordException e) {
+                e.printStackTrace();
+            }
+        }
         SurvivorBot.logChat(msg);
     }
 
@@ -481,6 +508,10 @@ public class StandardChannel implements Channel {
         }
 
         this.storage.flagUpdate(this);
+    }
+
+    public void setDiscordChannelLinkID(String discordChannelLinkID) {
+        this.discordChannelLinkID = discordChannelLinkID;
     }
 
     public void setShortcutAllowed(boolean shortcutAllowed) {
