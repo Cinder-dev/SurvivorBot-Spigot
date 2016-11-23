@@ -74,9 +74,9 @@ public class YMLChannelStorage implements ChannelStorage {
         int distance = config.getInt("distance", 0);
         boolean shortcut;
         if (config.contains("shortcutAllowed")) {
-            shortcut = config.getBoolean("shortcutAllowed", false);
+            shortcut = config.getBoolean("shortcutAllowed", true);
         } else {
-            shortcut = config.getBoolean("shortcut", false);
+            shortcut = config.getBoolean("shortcut", true);
         }
 
         boolean verbose = config.getBoolean("verbose", true);

@@ -35,7 +35,7 @@ public class ConfigManager {
         config.setDefaults(this.getDefaults());
         config.options().header(
                 "============================================================================\n" +
-                        "Color Codes (Used with §<value>) | Formatting Codes (Used with §<value>)    \n" +
+                        "Color Codes (Used with &<value>)  | Formatting Codes (Used with §&<value>)  \n" +
                         "0 : Black                         | k : Obfuscated 'Magic'                  \n" +
                         "1 : Dark Blue                     | l : Bold                                \n" +
                         "2 : Dark Green                    | m : Strikethrough                       \n" +

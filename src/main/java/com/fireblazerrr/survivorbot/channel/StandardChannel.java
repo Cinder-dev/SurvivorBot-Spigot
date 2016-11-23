@@ -7,7 +7,6 @@ import com.fireblazerrr.survivorbot.spigot.events.custom.ChatCompleteEvent;
 import com.fireblazerrr.survivorbot.utils.message.MessageFormatSupplier;
 import com.fireblazerrr.survivorbot.utils.message.MessageNotFoundException;
 import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -89,7 +88,7 @@ public class StandardChannel implements Channel {
     }
 
     public void announce(String message) {
-        String colorized = message.replaceAll("(?i)&([a-fklmno0-9])", "§$1");
+        String colorized = ChatColor.translateAlternateColorCodes('&', message);
         message = this.applyFormat(this.formatSupplier.getAnnounceFormat(), "").replace("%2$s", colorized);
 
         String finalMessage = message;
@@ -113,7 +112,7 @@ public class StandardChannel implements Channel {
                 format.replace("{sender}", matcher.group(1) + matcher.group(2) + "%1$s" + matcher.group(3)) :
                 format.replace("{sender}", "%1$s");
 
-        format = format.replaceAll("(?i)&([a-fklmnor0-9])", "§$1");
+        format = ChatColor.translateAlternateColorCodes('&', format);
         return format;
     }
 
@@ -168,7 +167,7 @@ public class StandardChannel implements Channel {
         }
         */
 
-        format = format.replaceAll("(?i)&([a-fklmno0-9])", "§$1");
+        format = ChatColor.translateAlternateColorCodes('&', format);
         return format;
     }
 
@@ -368,15 +367,18 @@ public class StandardChannel implements Channel {
         String format = this.applyFormat(event.getFormat(), event.getBukkitFormat(), player);
         Chatter sender = SurvivorBot.getChatterManager().getChatter(player);
         Set<Player> recipients = Bukkit.getOnlinePlayers().stream().collect(Collectors.toSet());
+
         this.trimRecipients(recipients, sender);
-        String msg = String.format(format, player.getDisplayName(), event.getMessage());
+
+        SurvivorBot.debug("processChat >>> format: ", format);
+        String msg = String.format(format, player.getName(), event.getMessage());
+
+        TextComponent root = new TextComponent(msg);
+        root.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.getName()));
 
         // Send to players in channel
 
-        TextComponent chatMessage = new TextComponent(msg);
-        chatMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.getName()));
-
-        recipients.forEach(player1 -> player1.spigot().sendMessage(chatMessage));
+        recipients.forEach(player1 -> player1.spigot().sendMessage(root));
 
         Bukkit.getPluginManager().callEvent(new ChatCompleteEvent(sender, this, msg));
 
