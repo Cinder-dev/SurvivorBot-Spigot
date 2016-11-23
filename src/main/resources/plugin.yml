@@ -1,50 +1,22 @@
 name: SurvivorBot
 version: 0.1
 description: Multi server chat system with discord integration, requires a Redis server with default configuration to function
-authors: [Fireblazerrr]
+author: Fireblazerrr
 
 main: com.fireblazerrr.survivorbot.SurvivorBot
 
 commands:
-  channels:
-    description: View channels being listened to on this server.
-    usage: /channels | Does not accept arguments.
-    permission: survivorbot.channels
-    permission-message: Why do you need to see this?
-  online:
-    description: View a list of all users in discord.
-    usage: /online | Does not accept arguments.
-    permission: survivorbot.online
-    permission-message: Why do you need to see this?
-  ranks:
-    description: View a list of ranks on the discord server.
-    usage: /ranks | Does not accept arguments.
-    permission: survivorbot.ranks
-    permission-message: Why do you need to see this?
-  s:
-    description: Send a staff message.
-    usage: /s <message>
-    permission: survivorbot.staff
-    permission-message: You are not staff.
-
+  ch:
+    aliases: ['survivorbot', 'leave', 'join', 'ignore', 'msg', 'tell', 'pm', 'w', 'r', 'afk']
+    description: Root Survivorbot command
+    usage: /<command>
+  me:
+    description: Sends emote messages
+    usage: /<command> <message>
 permissions:
-  survivorbot.*:
-    description: Give access to all SurvivorBot Commands
-    children:
-      survivorbot.channels: true
-      survivorbot.online: true
-      survivorbot.ranks: true
-      survivorbot.staff: true
-  survivorbot.channels:
-    description: Allows you to see which channels are being listened to on this server
-    default: op
-  survivorbot.online:
-    description: Allows you to see users in Discord
-    default: op
-  survivorbot.ranks:
-    description: Allows you to see the ranks from Discord
-    default: op
-  survivorbot.staff:
-    description: Allows you to use the /s command
-    default: op
-
+    survivorbot.force.join.all:
+        default: false
+    survivorbot.force.leave.all:
+        default: false
+    survivorbot.autojoin.all:
+        default: false
