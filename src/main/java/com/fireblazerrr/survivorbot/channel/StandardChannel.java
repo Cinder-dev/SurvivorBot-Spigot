@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Team;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
@@ -157,9 +158,11 @@ public class StandardChannel implements Channel {
             }
         } else {
         */
-        format = format.replace("{prefix}", "")
-                .replace("{suffix}", "")
-                .replace("{group}", "")
+
+        Chatter chatter = SurvivorBot.getChatterManager().getChatter(sender);
+        format = format.replace("{prefix}", chatter.getTeam() == null ? "" : chatter.getTeam().getPrefix())
+                .replace("{suffix}", chatter.getTeam() == null ? "" : chatter.getTeam().getSuffix())
+                .replace("{group}", chatter.getTeam() == null ? "" : chatter.getTeam().getName())
                 .replace("{groupprefix}", "")
                 .replace("{groupsuffix}", "");
 

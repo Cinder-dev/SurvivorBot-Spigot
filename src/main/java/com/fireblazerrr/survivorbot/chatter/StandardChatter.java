@@ -4,8 +4,10 @@ import com.fireblazerrr.survivorbot.SurvivorBot;
 import com.fireblazerrr.survivorbot.channel.Channel;
 import com.fireblazerrr.survivorbot.utils.message.MessageNotFoundException;
 import com.fireblazerrr.survivorbot.utils.message.Messaging;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Team;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,10 +24,18 @@ public class StandardChatter implements Chatter {
     private String afkMessage = "";
     private boolean muted = false;
     private boolean afk = false;
+    private Team team;
 
     StandardChatter(ChatterStorage storage, Player player) {
         this.storage = storage;
         this.player = player;
+        // Get player team
+        String teamName = Bukkit.getScoreboardManager().getMainScoreboard().getTeams().stream().filter(
+                team -> team.getEntries().contains(player.getName()
+        )).map(Team::getName).findFirst().orElse("");
+        if (teamName.length() >= 1) {
+            team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(teamName);
+        }
     }
 
     public boolean addChannel(Channel channel, boolean announce, boolean flagUpdate) {
@@ -374,6 +384,16 @@ public class StandardChatter implements Chatter {
 
     public Result canIgnore(Chatter other) {
         return other.getPlayer().hasPermission("survivorbot.admin.unignore") ? Result.NO_PERMISSION : Result.ALLOWED;
+    }
+
+    public void setTeam(Team t)
+    {
+        team = t;
+    }
+
+    public Team getTeam()
+    {
+        return team;
     }
 
     public void disconnect() {

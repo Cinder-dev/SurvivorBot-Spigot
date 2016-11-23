@@ -20,6 +20,7 @@ public class ChannelManager implements MessageFormatSupplier {
     private String standardFormat = "{color}[{nick}{color}] &f{prefix}{sender}{suffix}{color}: {msg}";
     private String emoteFormat = "{color}[{nick}{color}] * {msg}";
     private String announceFormat = "{color}[{nick}{color}] {msg}";
+    private String discordFormat = "&9<Discord:{sender}&9>";
     private String conversationFormat = "&d{convoaddress} {convopartner}: {msg}";
     private boolean usingEmotes;
 
@@ -132,6 +133,11 @@ public class ChannelManager implements MessageFormatSupplier {
         return this.announceFormat;
     }
 
+    public String getDiscordFormat()
+    {
+        return this.discordFormat;
+    }
+
     public String getEmoteFormat() {
         return this.emoteFormat;
     }
@@ -203,6 +209,11 @@ public class ChannelManager implements MessageFormatSupplier {
 
     public void setAnnounceFormat(String announceFormat) {
         this.announceFormat = announceFormat;
+    }
+
+    public void setDiscordFormat(String discordFormat)
+    {
+        this.discordFormat = discordFormat;
     }
 
     public void setEmoteFormat(String emoteFormat) {

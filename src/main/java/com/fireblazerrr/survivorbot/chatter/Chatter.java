@@ -3,6 +3,7 @@ package com.fireblazerrr.survivorbot.chatter;
 import com.fireblazerrr.survivorbot.channel.Channel;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Team;
 
 import java.util.Set;
 
@@ -90,6 +91,9 @@ public interface Chatter {
 
     void disconnect();
 
+    void setTeam(Team t);
+
+    Team getTeam();
 
     enum Result {
         NO_PERMISSION,
