@@ -133,6 +133,7 @@ public class ConfigManager {
         SurvivorBot.getMessageHandler().setCensors(config.getStringList("censors"));
         channelManager.setStandardFormat(config.getString("format.default"));
         channelManager.setAnnounceFormat(config.getString("format.announce"));
+        channelManager.setDiscordFormat(config.getString("format.discord"));
         channelManager.setEmoteFormat(config.getString("format.emote"));
         channelManager.setConversationFormat(config.getString("format.private-message"));
         channelManager.setUsingEmotes(config.getBoolean("use-channel-emotes", true));
@@ -199,6 +200,7 @@ public class ConfigManager {
         config.set("censors", new ArrayList());
         config.set("format.default", SurvivorBot.getChannelManager().getStandardFormat());
         config.set("format.announce", SurvivorBot.getChannelManager().getAnnounceFormat());
+        config.set("format.discord", SurvivorBot.getChannelManager().getDiscordFormat());
         config.set("format.emote", SurvivorBot.getChannelManager().getEmoteFormat());
         config.set("format.private-message", SurvivorBot.getChannelManager().getConversationFormat());
         config.set("use-channel-emotes", Boolean.TRUE);
