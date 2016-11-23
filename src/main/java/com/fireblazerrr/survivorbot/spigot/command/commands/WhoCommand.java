@@ -5,13 +5,15 @@ import com.fireblazerrr.survivorbot.channel.Channel;
 import com.fireblazerrr.survivorbot.chatter.Chatter;
 import com.fireblazerrr.survivorbot.spigot.command.BasicCommand;
 import com.fireblazerrr.survivorbot.utils.message.Messaging;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class WhoCommand extends BasicCommand {
@@ -47,55 +49,73 @@ public class WhoCommand extends BasicCommand {
         } else {
 
             List<Chatter> mem = channel.getMembers().stream().collect(Collectors.toList());
+            TextComponent root = new TextComponent(ChatColor.RED + "          [ " + channel.getColor() + channel.getName() + ChatColor.RED + " ]          \n");
+            Map<String, TextComponent> components = new HashMap<>();
 
-            mem.stream().filter(chatter1 -> sender instanceof Player && !((Player) sender).canSee(chatter1.getPlayer())).forEachOrdered(chatter1 -> {
+            mem.stream().filter(chatter1 -> !chatter1.getPlayer().hasPermission("survivorbot.stealth")).forEach(chatter1 -> {
+                SurvivorBot.debug("chatter1", chatter1.getName());
+                components.put(chatter1.getName(), new TextComponent(chatter1.getName() + " "));
+                if (channel.isMuted(chatter1.getName()))
+                    components.get(chatter1.getName()).setColor(net.md_5.bungee.api.ChatColor.RED);
+                else if (channel.isModerator(chatter1.getName()))
+                    components.get(chatter1.getName()).setColor(net.md_5.bungee.api.ChatColor.GREEN);
+                else
+                    components.get(chatter1.getName()).setColor(net.md_5.bungee.api.ChatColor.WHITE);
 
+                components.get(chatter1.getName()).setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "@" + chatter1.getName()));
+                components.get(chatter1.getName()).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus player for private messaging.").create()));
             });
+            components.values().forEach(root::addExtra);
 
-            ArrayList<String> members = new ArrayList<>();
-            Iterator count = channel.getMembers().iterator();
+            if (sender instanceof Player) {
+                ((Player) sender).spigot().sendMessage(root);
+                return true;
+            } else {
+                ArrayList<String> members = new ArrayList<>();
+                Iterator count = channel.getMembers().iterator();
 
-            while (true) {
-                Chatter line;
-                do {
-                    if (!count.hasNext()) {
-                        members.sort(String::compareToIgnoreCase);
-                        sender.sendMessage(ChatColor.RED + "------------[ " + channel.getColor() + channel
-                                .getName() + ChatColor.RED + " ]------------");
-                        int memberCount = members.size();
-                        StringBuilder stringBuilder = new StringBuilder();
+                while (true) {
+                    Chatter line;
+                    do {
+                        if (!count.hasNext()) {
+                            members.sort(String::compareToIgnoreCase);
+                            sender.sendMessage(ChatColor.RED + "------------[ " + channel.getColor() + channel
+                                    .getName() + ChatColor.RED + " ]------------");
+                            int memberCount = members.size();
+                            StringBuilder stringBuilder = new StringBuilder();
 
-                        for (int i = 0; i < memberCount; ++i) {
-                            String name = members.get(i);
-                            if (channel.isMuted(name)) {
-                                name = ChatColor.RED + name + ChatColor.WHITE;
-                            } else if (channel.isModerator(name)) {
-                                name = ChatColor.GREEN + name + ChatColor.WHITE;
-                            }
+                            for (int i = 0; i < memberCount; ++i) {
+                                String name = members.get(i);
+                                if (channel.isMuted(name)) {
+                                    name = ChatColor.RED + name + ChatColor.WHITE;
+                                } else if (channel.isModerator(name)) {
+                                    name = ChatColor.GREEN + name + ChatColor.WHITE;
+                                }
 
-                            if (i + 1 < memberCount) {
-                                name = name + ", ";
-                            }
+                                if (i + 1 < memberCount) {
+                                    name = name + ", ";
+                                }
 
-                            if (stringBuilder.length() + name.length() > 64) {
-                                sender.sendMessage(stringBuilder.toString().trim());
-                                stringBuilder = new StringBuilder();
-                                --i;
-                            } else {
-                                stringBuilder.append(name);
-                                if (i + 1 == memberCount) {
+                                if (stringBuilder.length() + name.length() > 64) {
                                     sender.sendMessage(stringBuilder.toString().trim());
+                                    stringBuilder = new StringBuilder();
+                                    --i;
+                                } else {
+                                    stringBuilder.append(name);
+                                    if (i + 1 == memberCount) {
+                                        sender.sendMessage(stringBuilder.toString().trim());
+                                    }
                                 }
                             }
+
+                            return true;
                         }
 
-                        return true;
-                    }
+                        line = (Chatter) count.next();
+                    } while (sender instanceof Player && !((Player) sender).canSee(line.getPlayer()));
 
-                    line = (Chatter) count.next();
-                } while (sender instanceof Player && !((Player) sender).canSee(line.getPlayer()));
-
-                members.add(line.getPlayer().getName());
+                    members.add(line.getPlayer().getName());
+                }
             }
         }
     }
