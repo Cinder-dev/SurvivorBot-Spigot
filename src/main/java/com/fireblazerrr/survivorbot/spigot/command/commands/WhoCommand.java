@@ -11,6 +11,8 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class WhoCommand extends BasicCommand {
     public WhoCommand() {
@@ -25,26 +27,31 @@ public class WhoCommand extends BasicCommand {
 
     public boolean execute(CommandSender sender, String identifier, String[] args) {
         Chatter chatter = null;
-        if (sender instanceof Player) {
-            Player names = (Player) sender;
-            chatter = SurvivorBot.getChatterManager().getChatter(names);
-        }
-
         Channel channel;
+
+        if (sender instanceof Player)
+            chatter = SurvivorBot.getChatterManager().getChatter((Player) sender);
+
         if (args.length == 0) {
-            if (chatter != null) {
+            if (chatter != null)
                 channel = chatter.getActiveChannel();
-            } else {
+            else
                 channel = SurvivorBot.getChannelManager().getDefaultChannel();
-            }
-        } else {
+        } else
             channel = SurvivorBot.getChannelManager().getChannel(args[0]);
-        }
+
 
         if (channel == null) {
             Messaging.send(sender, this.getMessage("who_noChannel"));
             return true;
         } else {
+
+            List<Chatter> mem = channel.getMembers().stream().collect(Collectors.toList());
+
+            mem.stream().filter(chatter1 -> sender instanceof Player && !((Player) sender).canSee(chatter1.getPlayer())).forEachOrdered(chatter1 -> {
+
+            });
+
             ArrayList<String> members = new ArrayList<>();
             Iterator count = channel.getMembers().iterator();
 

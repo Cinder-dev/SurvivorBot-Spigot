@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class StandardChatter implements Chatter {
@@ -397,7 +398,12 @@ public class StandardChatter implements Chatter {
     }
 
     public void disconnect() {
-        this.channels.forEach(channel -> channel.removeMember(this, false, false));
+        Iterator<Channel> removal = this.channels.iterator();
+        while (removal.hasNext()){
+            Channel ch = removal.next();
+            removal.remove();
+            ch.removeMember(this, false, false);
+        }
     }
 }
 

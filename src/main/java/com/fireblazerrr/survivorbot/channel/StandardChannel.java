@@ -374,7 +374,8 @@ public class StandardChannel implements Channel {
         this.trimRecipients(recipients, sender);
 
         SurvivorBot.debug("processChat >>> format: ", format);
-        String msg = String.format(format, player.getName(), event.getMessage());
+        String playerColor = Bukkit.getScoreboardManager().getMainScoreboard().getTeams().stream().filter(team -> team.getEntries().contains(player.getName())).map(Team::getPrefix).findFirst().orElse("");
+        String msg = String.format(format, playerColor + player.getName(), event.getMessage());
 
         TextComponent root = new TextComponent(msg);
         root.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.getName()));
