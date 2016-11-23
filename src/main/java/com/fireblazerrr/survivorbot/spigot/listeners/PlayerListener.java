@@ -22,8 +22,7 @@ public class PlayerListener implements Listener {
         final Player player = event.getPlayer();
         final String msg = event.getMessage();
         final String format = event.getFormat();
-        Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin,
-                () -> SurvivorBot.getMessageHandler().handle(player, msg, format));
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, () -> SurvivorBot.getMessageHandler().handle(player, msg, format));
         event.setCancelled(true);
     }
 

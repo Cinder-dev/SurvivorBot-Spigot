@@ -9,6 +9,7 @@ import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ChannelManager implements MessageFormatSupplier {
     private Map<String, Channel> channels = new HashMap<>();
@@ -16,10 +17,10 @@ public class ChannelManager implements MessageFormatSupplier {
     private Map<Permission, org.bukkit.permissions.Permission> wildcardPermissions = new EnumMap<>(Permission.class);
     private Set<Permission> modPermissions = EnumSet.noneOf(Permission.class);
     private ChannelStorage storage;
-    private String standardFormat = "{color}[{nick}{color}] " + ChatColor.WHITE + "{prefix}{sender}{suffix}{color}: {msg}";
+    private String standardFormat = "{color}[{nick}{color}] &f{prefix}{sender}{suffix}{color}: {msg}";
     private String emoteFormat = "{color}[{nick}{color}] * {msg}";
     private String announceFormat = "{color}[{nick}{color}] {msg}";
-    private String conversationFormat = ChatColor.LIGHT_PURPLE + "{convoaddress} {convopartner}: {msg}";
+    private String conversationFormat = "&d{convoaddress} {convopartner}: {msg}";
     private boolean usingEmotes;
 
     public ChannelManager() {
@@ -103,6 +104,7 @@ public class ChannelManager implements MessageFormatSupplier {
     }
 
     public List<Channel> getChannels() {
+        SurvivorBot.debug("Channel Identifiers", this.channels.keySet().stream().map(String::toString).collect(Collectors.toList()).toString());
         ArrayList<Channel> list = new ArrayList<>();
 
         this.channels.values().stream().filter(channel -> !list.contains(channel)).forEach(list::add);
