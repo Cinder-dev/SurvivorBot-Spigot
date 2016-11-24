@@ -14,6 +14,7 @@ public class Instance {
     private String token = "";
     private String adminRankID = "";
     private String serverID = "";
+    private String inviteURL = "";
     private volatile IDiscordClient client;
 
     private static final ReadyListener readyListener = new ReadyListener();
@@ -90,5 +91,13 @@ public class Instance {
 
     public void setClient(IDiscordClient client) {
         this.client = client;
+    }
+
+    public String getInviteURL() {
+        return inviteURL;
+    }
+
+    public void setInviteURL(String inviteURL) {
+        this.inviteURL = inviteURL;
     }
 }

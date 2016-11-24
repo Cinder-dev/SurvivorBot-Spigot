@@ -50,15 +50,9 @@ public class PlayerListener implements Listener, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (sender instanceof Player) {
-            SurvivorBot.debug("onTabComplete() sender:", sender.getName());
-            SurvivorBot.debug("onTabComplete() command:", command.getName());
-            SurvivorBot.debug("onTabComplete() alias:", alias);
-            SurvivorBot.debug("onTabComplete() args:", Arrays.toString(args));
-
             ArrayList<String> results = new ArrayList<>();
 
             if (args.length == 1) {
-                //if (SurvivorBot.getChatterManager().getChatter((Player) sender).getChannels().contains())
                 channelIdentifiers.stream()
                         .filter(s -> s.startsWith(args[0]))
                         .filter(s -> SurvivorBot.getChatterManager().getChatter((Player) sender).getChannels().contains(SurvivorBot.getChannelManager().getChannel(s)))

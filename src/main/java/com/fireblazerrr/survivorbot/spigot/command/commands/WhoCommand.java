@@ -52,7 +52,7 @@ public class WhoCommand extends BasicCommand {
             TextComponent root = new TextComponent(ChatColor.RED + "          [ " + channel.getColor() + channel.getName() + ChatColor.RED + " ]          \n");
             Map<String, TextComponent> components = new HashMap<>();
 
-            mem.stream().filter(chatter1 -> !chatter1.getPlayer().hasPermission("survivorbot.stealth")).forEach(chatter1 -> {
+            mem.stream().filter(chatter1 -> !chatter1.getPlayer().hasPermission("survivorbot.admin.stealth")).forEach(chatter1 -> {
                 SurvivorBot.debug("chatter1", chatter1.getName());
                 components.put(chatter1.getName(), new TextComponent(chatter1.getName() + " "));
                 if (channel.isMuted(chatter1.getName()))

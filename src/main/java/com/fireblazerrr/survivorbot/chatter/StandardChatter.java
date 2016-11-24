@@ -31,9 +31,11 @@ public class StandardChatter implements Chatter {
         this.storage = storage;
         this.player = player;
         // Get player team
-        String teamName = Bukkit.getScoreboardManager().getMainScoreboard().getTeams().stream().filter(
-                team -> team.getEntries().contains(player.getName()
-        )).map(Team::getName).findFirst().orElse("");
+        String teamName = Bukkit.getScoreboardManager().getMainScoreboard().getTeams().stream()
+                .filter(team -> team.getEntries().contains(player.getName()))
+                .map(Team::getName)
+                .findFirst()
+                .orElse("");
         if (teamName.length() >= 1) {
             team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(teamName);
         }

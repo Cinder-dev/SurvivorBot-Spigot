@@ -35,7 +35,7 @@ public class ConfigManager {
         config.setDefaults(this.getDefaults());
         config.options().header(
                 "============================================================================\n" +
-                        "Color Codes (Used with &<value>)  | Formatting Codes (Used with §&<value>)  \n" +
+                        "Color Codes (Used with &<value>)  | Formatting Codes (Used with &<value>)  \n" +
                         "0 : Black                         | k : Obfuscated 'Magic'                  \n" +
                         "1 : Dark Blue                     | l : Bold                                \n" +
                         "2 : Dark Green                    | m : Strikethrough                       \n" +
@@ -152,6 +152,7 @@ public class ConfigManager {
         SurvivorBot.getInstance().setToken(config.getString("discord.bot-token"));
         SurvivorBot.getInstance().setAdminRankID(config.getString("discord.admin-rank-id"));
         SurvivorBot.getInstance().setServerID(config.getString("discord.server-id"));
+        SurvivorBot.getInstance().setInviteURL(config.getString("discord.inviteURL"));
 
         SurvivorBot.getJedisManager().setHostname(config.getString("redis.hostname"));
         SurvivorBot.getJedisManager().setPort(config.getInt("redis.port"));
@@ -212,6 +213,7 @@ public class ConfigManager {
         config.set("discord.bot-token", "");
         config.set("discord.admin-rank-id", "");
         config.set("discord.server-id", "");
+        config.set("discord.inviteURL", "");
         config.set("redis.hostname", "");
         config.set("redis.port", 6379);
         config.set("redis.password", "");

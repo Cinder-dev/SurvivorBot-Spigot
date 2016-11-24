@@ -17,6 +17,7 @@ import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
 
+import javax.xml.soap.Text;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -65,8 +66,7 @@ public class StandardChannel implements Channel {
         } else {
             if (announce && this.verbose) {
                 try {
-                    this.announce(
-                            SurvivorBot.getMessage("channel_join").replace("$1", chatter.getPlayer().getDisplayName()));
+                    this.announce(SurvivorBot.getMessage("channel_join").replace("$1", chatter.getPlayer().getDisplayName()));
                 } catch (MessageNotFoundException e) {
                     SurvivorBot.severe("Message.properties is missing: channel_join");
                 }
@@ -97,6 +97,7 @@ public class StandardChannel implements Channel {
 
         SurvivorBot.logChat(ChatColor.stripColor(message));
     }
+
 
     public void sendRawMessage(String message) {
         this.members.forEach(chatter -> chatter.getPlayer().sendMessage(message));
@@ -134,7 +135,6 @@ public class StandardChannel implements Channel {
         return format;
     }
 
-    @Override
     public boolean banMember(Chatter chatter, boolean bool, boolean flag) {
         return false;
     }
@@ -170,7 +170,7 @@ public class StandardChannel implements Channel {
         this.trimRecipients(recipients, sender);
 
         String finalMessage = message;
-        recipients.stream().forEach(player -> player.sendMessage(finalMessage));
+        recipients.forEach(player -> player.sendMessage(finalMessage));
 
         Bukkit.getPluginManager().callEvent(new ChatCompleteEvent(sender, this, message));
         SurvivorBot.logChat(message);
@@ -329,26 +329,26 @@ public class StandardChannel implements Channel {
         Player player = event.getSender().getPlayer();
         String format = this.applyFormat(event.getFormat(), event.getBukkitFormat(), player);
         Chatter sender = SurvivorBot.getChatterManager().getChatter(player);
+        TextComponent root = new TextComponent();
         Set<Player> recipients = Bukkit.getOnlinePlayers().stream().collect(Collectors.toSet());
 
         this.trimRecipients(recipients, sender);
 
         String msg = String.format(format, player.getName(), event.getMessage());
 
-        TextComponent root = new TextComponent(msg);
-        root.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.getName()));
+        TextComponent temp = new TextComponent(msg);
+        temp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.getName()));
 
         // Send to players in channel
 
-        recipients.forEach(player1 -> player1.spigot().sendMessage(root));
+        recipients.forEach(player1 -> player1.spigot().sendMessage(temp));
 
         Bukkit.getPluginManager().callEvent(new ChatCompleteEvent(sender, this, msg));
 
         // Send to discord
         if (!discordChannelLinkID.equals("")) {
             try {
-                SurvivorBot.getInstance().getClient().getChannelByID(discordChannelLinkID)
-                        .sendMessage("<" + player.getName() + "> " + event.getMessage());
+                SurvivorBot.getInstance().getClient().getChannelByID(discordChannelLinkID).sendMessage("<" + player.getName() + "> " + event.getMessage());
             } catch (MissingPermissionsException | RateLimitException | DiscordException e) {
                 e.printStackTrace();
             }
@@ -367,8 +367,7 @@ public class StandardChannel implements Channel {
 
             if (announce && this.verbose) {
                 try {
-                    this.announce(SurvivorBot.getMessage("channel_leave")
-                            .replace("$1", chatter.getPlayer().getDisplayName()));
+                    this.announce(SurvivorBot.getMessage("channel_leave").replace("$1", chatter.getPlayer().getDisplayName()));
                 } catch (MessageNotFoundException var5) {
                     SurvivorBot.severe("Messages.properties is missing: channel_leave");
                 }
@@ -500,7 +499,8 @@ public class StandardChannel implements Channel {
             Player senderPlayer = sender.getPlayer();
             int visibleRecipients = recipients.stream()
                     .filter(player -> player.hasPermission("survivorbot.admin.stealth") && !player.equals(senderPlayer))
-                    .collect(Collectors.toList()).size();
+                    .collect(Collectors.toList())
+                    .size();
 
             return visibleRecipients > 0;
         }
