@@ -25,6 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.FileHandler;
@@ -142,6 +143,7 @@ public class SurvivorBot extends JavaPlugin {
     private void registerEvents() {
         PluginManager pm = this.getServer().getPluginManager();
         PlayerListener pcl = new PlayerListener(this);
+        this.getCommand("ch").setTabCompleter(pcl);
         pm.registerEvents(pcl, this);
     }
 
@@ -227,9 +229,11 @@ public class SurvivorBot extends JavaPlugin {
         return instance;
     }
 
-    public static void debug(String command, String results) {
+    public static void debug(String identifier, String... args) {
         if (DEBUG) {
-            log.info("[SurvivorBot Debug] " + command + " | " + results);
+            final String[] results = {""};
+            Arrays.stream(args).forEach(s -> results[0] +=  s + " | ");
+            log.info("[SurvivorBot Debug] " + identifier + " | " + results[0]);
         }
     }
 

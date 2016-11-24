@@ -122,43 +122,6 @@ public class StandardChannel implements Channel {
                 .replace("{plainsender}", sender.getName())
                 .replace("{world}", sender.getWorld().getName());
 
-        // TODO FIGURE OUT HOW TO FIX VAULT CHAT
-        /*
-        Chat chat = SurvivorBot.getChatService();
-        if (chat != null) {
-            try {
-                String ignored = chat.getPlayerPrefix(sender);
-                if (ignored == null || ignored == "") {
-                    ignored = chat.getPlayerPrefix((String) null, sender.getName());
-                }
-
-                String suffix = chat.getPlayerSuffix(sender);
-                if (suffix == null || suffix == "") {
-                    suffix = chat.getPlayerSuffix((String)null, sender.getName());
-                }
-
-                String group = chat.getPrimaryGroup(sender);
-                String groupPrefix = group == null?"":chat.getGroupPrefix(sender.getWorld(), group);
-                if(group != null && (groupPrefix == null || groupPrefix == "")) {
-                    groupPrefix = chat.getGroupPrefix((String)null, group);
-                }
-
-                String groupSuffix = group == null?"":chat.getGroupSuffix(sender.getWorld(), group);
-                if(group != null && (groupSuffix == null || groupSuffix == "")) {
-                    groupSuffix = chat.getGroupSuffix((String)null, group);
-                }
-
-                format = format.replace("{prefix}", ignored == null?"":ignored.replace("%", "%%"));
-                format = format.replace("{suffix}", suffix == null?"":suffix.replace("%", "%%"));
-                format = format.replace("{group}", group == null?"":group.replace("%", "%%"));
-                format = format.replace("{groupprefix}", groupPrefix == null?"":groupPrefix.replace("%", "%%"));
-                format = format.replace("{groupsuffix}", groupSuffix == null?"":groupSuffix.replace("%", "%%"));
-            } catch (UnsupportedOperationException var10) {
-                ;
-            }
-        } else {
-        */
-
         Chatter chatter = SurvivorBot.getChatterManager().getChatter(sender);
         format = format.replace("{prefix}", chatter.getTeam() == null ? "" : chatter.getTeam().getPrefix())
                 .replace("{suffix}", chatter.getTeam() == null ? "" : chatter.getTeam().getSuffix())
@@ -166,9 +129,6 @@ public class StandardChannel implements Channel {
                 .replace("{groupprefix}", "")
                 .replace("{groupsuffix}", "");
 
-        /*
-        }
-        */
 
         format = ChatColor.translateAlternateColorCodes('&', format);
         return format;
@@ -373,9 +333,7 @@ public class StandardChannel implements Channel {
 
         this.trimRecipients(recipients, sender);
 
-        SurvivorBot.debug("processChat >>> format: ", format);
-        String playerColor = Bukkit.getScoreboardManager().getMainScoreboard().getTeams().stream().filter(team -> team.getEntries().contains(player.getName())).map(Team::getPrefix).findFirst().orElse("");
-        String msg = String.format(format, playerColor + player.getName(), event.getMessage());
+        String msg = String.format(format, player.getName(), event.getMessage());
 
         TextComponent root = new TextComponent(msg);
         root.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.getName()));

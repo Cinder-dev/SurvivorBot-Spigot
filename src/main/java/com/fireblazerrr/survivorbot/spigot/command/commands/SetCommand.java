@@ -18,7 +18,7 @@ public class SetCommand extends BasicCommand {
         this.setArgumentRange(3, 3);
         this.setIdentifiers("ch set", "survivorbot set");
         this.setNotes(
-                ChatColor.RED + "Settings:" + ChatColor.YELLOW + " nick, format, password, distance, color, shortcut, verbose, crossworld, chatcost");
+                ChatColor.RED + "Settings:" + ChatColor.YELLOW + " nick, format, password, distance, color, shortcut, verbose, crossworld");
         this.setNotes(ChatColor.RED + "Note:" + ChatColor.YELLOW + " setting the password to \'none\' clears it");
     }
 

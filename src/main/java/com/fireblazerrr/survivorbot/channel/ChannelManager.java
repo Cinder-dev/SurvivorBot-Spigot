@@ -28,6 +28,11 @@ public class ChannelManager implements MessageFormatSupplier {
         this.registerChannelPermissions();
     }
 
+    /**
+     * Add a channel to the {@link ChannelManager}
+     *
+     * @param channel Channel to add.
+     */
     public void addChannel(Channel channel) {
         this.channels.put(channel.getName().toLowerCase(), channel);
         this.channels.put(channel.getNick().toLowerCase(), channel);
@@ -80,14 +85,29 @@ public class ChannelManager implements MessageFormatSupplier {
         }
     }
 
+    /**
+     * Adds a {@link Permission} to the available moderator permissions.
+     *
+     * @param permission {@link Permission} to add.
+     */
     public void addModPermission(Permission permission) {
         this.modPermissions.add(permission);
     }
 
+    /**
+     * Checks if moderators have access to a {@link Permission}
+     *
+     * @param permission {@link Permission} to check for.
+     *
+     * @return true if {@link Permission} is set.
+     */
     public boolean checkModPermission(Permission permission) {
         return this.modPermissions.contains(permission);
     }
 
+    /**
+     * Resets the {@link ChannelManager} to default state.
+     */
     public void clear() {
         this.defaultChannel = null;
         this.channels.clear();
@@ -97,13 +117,26 @@ public class ChannelManager implements MessageFormatSupplier {
         this.standardFormat = "{color}[{nick}{color}] " + ChatColor.WHITE + "{prefix}{sender}{suffix}{color}: {msg}";
         this.announceFormat = "{color}[{nick}{color}] {msg}";
         this.emoteFormat = "{color}[{nick}{color}] * {msg}";
+        this.discordFormat = "&9<Discord:{sender}&9>";
         this.conversationFormat = ChatColor.LIGHT_PURPLE + "{convoaddress} {convopartner}: {msg}";
     }
 
+    /**
+     * Get a {@link Channel} from the {@link ChannelManager} using the name or nick of the channel.
+     *
+     * @param identifier String with the channel name or nick to return.
+     *
+     * @return {@link Channel} is returned if available.
+     */
     public Channel getChannel(String identifier) {
         return this.channels.get(identifier.toLowerCase());
     }
 
+    /**
+     * Get a {@link List} of {@link Channel}.
+     *
+     * @return a {@link List} of {@link Channel}.
+     */
     public List<Channel> getChannels() {
         SurvivorBot.debug("Channel Identifiers", this.channels.keySet().stream().map(String::toString).collect(Collectors.toList()).toString());
         ArrayList<Channel> list = new ArrayList<>();
@@ -133,8 +166,7 @@ public class ChannelManager implements MessageFormatSupplier {
         return this.announceFormat;
     }
 
-    public String getDiscordFormat()
-    {
+    public String getDiscordFormat() {
         return this.discordFormat;
     }
 
@@ -160,8 +192,7 @@ public class ChannelManager implements MessageFormatSupplier {
 
     public void registerChannelPermissions() {
         Arrays.stream(Permission.values()).forEach(permission -> {
-            org.bukkit.permissions.Permission perm = new org.bukkit.permissions.Permission(permission.formWildcard(),
-                    PermissionDefault.FALSE);
+            org.bukkit.permissions.Permission perm = new org.bukkit.permissions.Permission(permission.formWildcard(), PermissionDefault.FALSE);
             Bukkit.getServer().getPluginManager().addPermission(perm);
             this.wildcardPermissions.put(permission, perm);
         });
@@ -211,8 +242,7 @@ public class ChannelManager implements MessageFormatSupplier {
         this.announceFormat = announceFormat;
     }
 
-    public void setDiscordFormat(String discordFormat)
-    {
+    public void setDiscordFormat(String discordFormat) {
         this.discordFormat = discordFormat;
     }
 
