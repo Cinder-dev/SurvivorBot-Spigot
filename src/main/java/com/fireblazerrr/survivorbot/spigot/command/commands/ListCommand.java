@@ -108,7 +108,7 @@ public class ListCommand extends BasicCommand {
             Channel channel = (Channel) channels.get(c);
 
             TextComponent section = new TextComponent();
-            TextComponent channelView = new TextComponent("  [" + channel.getNick() + "] " + channel.getName());
+            TextComponent channelView = new TextComponent(" [" + channel.getNick() + "] " + channel.getName());
             channelView.setColor(channel.getColor().asBungee());
             if (chatter != null && chatter.canViewInfo(channel) == Chatter.Result.ALLOWED) {
                 ComponentBuilder channelViewHover = new ComponentBuilder("");
@@ -140,13 +140,13 @@ public class ListCommand extends BasicCommand {
                 joinPadding.append(" ");
             channelView.setText(channelView.getText() + joinPadding.toString());
 
-            TextComponent focus = new TextComponent("[FOCUS]");
+            TextComponent focus = new TextComponent("[@]");
             ComponentBuilder focusHover = new ComponentBuilder(ChatColor.RED + "Click to focus " + channel.getColor() + channel.getName());
             focus.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + channel.getName()));
             focus.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, focusHover.create()));
             focus.setColor(net.md_5.bungee.api.ChatColor.AQUA);
 
-            TextComponent join = new TextComponent(" [JOIN]");
+            TextComponent join = new TextComponent(" [+]");
             ComponentBuilder joinHover = new ComponentBuilder(ChatColor.RED + "Click to join " + channel.getColor() + channel.getName());
             if (channel.getPassword().equals("")) {
                 join.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch join " + channel.getName()));
@@ -157,13 +157,11 @@ public class ListCommand extends BasicCommand {
             join.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, joinHover.create()));
             join.setColor(net.md_5.bungee.api.ChatColor.DARK_GREEN);
 
-            TextComponent leave = new TextComponent(" [LEAVE]");
+            TextComponent leave = new TextComponent(" [-]");
             ComponentBuilder leaveHover = new ComponentBuilder(ChatColor.RED + "Click to leave " + channel.getColor() + channel.getName());
             leave.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch leave " + channel.getName()));
             leave.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, leaveHover.create()));
             leave.setColor(net.md_5.bungee.api.ChatColor.RED);
-
-            section.addExtra(channelView);
 
             section.addExtra(focus);
             if (chatter != null && !chatter.getChannels().contains(channel))
@@ -172,13 +170,15 @@ public class ListCommand extends BasicCommand {
                 section.addExtra(leave);
 
             if (chatter != null && chatter.canRemove(channel) == Chatter.Result.ALLOWED) {
-                TextComponent remove = new TextComponent(" [REMOVE]");
+                TextComponent remove = new TextComponent(" [X]");
                 ComponentBuilder removeHover = new ComponentBuilder(ChatColor.RED + "Click to copy remove cmd to chat box");
                 remove.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ch remove " + channel.getName()));
                 remove.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, removeHover.create()));
                 remove.setColor(net.md_5.bungee.api.ChatColor.DARK_GRAY);
                 section.addExtra(remove);
             }
+
+            section.addExtra(channelView);
 
             ((Player) sender).spigot().sendMessage(section);
         }
