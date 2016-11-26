@@ -3,6 +3,7 @@ package com.fireblazerrr.survivorbot.channel;
 import com.fireblazerrr.survivorbot.chatter.Chatter;
 import com.fireblazerrr.survivorbot.spigot.events.custom.ChannelChatEvent;
 import com.fireblazerrr.survivorbot.utils.message.MessageFormatSupplier;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -17,9 +18,9 @@ public interface Channel {
 
     void announce(String message);
 
-    String applyFormat(String format, String originalFormat);
+    TextComponent applyFormat(String format, String msg, Player player);
 
-    String applyFormat(String s1, String s2, Player player);
+    String applyFormat(String format, String originalFormat);
 
     boolean banMember(Chatter chatter, boolean bool, boolean flag);
 

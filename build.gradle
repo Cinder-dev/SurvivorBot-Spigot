@@ -39,6 +39,9 @@ repositories {
     maven {
         url "http://jcenter.bintray.com"
     }
+    maven {
+        url "https://hub.spigotmc.org"
+    }
     mavenLocal()
     mavenCentral()
 }

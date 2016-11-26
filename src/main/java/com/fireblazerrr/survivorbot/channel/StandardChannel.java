@@ -7,17 +7,17 @@ import com.fireblazerrr.survivorbot.spigot.events.custom.ChatCompleteEvent;
 import com.fireblazerrr.survivorbot.utils.message.MessageFormatSupplier;
 import com.fireblazerrr.survivorbot.utils.message.MessageNotFoundException;
 import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Team;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
 
-import javax.xml.soap.Text;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 public class StandardChannel implements Channel {
     private static final Pattern msgPattern = Pattern.compile("(.*)<(.*)%1\\$s(.*)> $2\\$s");
     private final String name;
+    private final MessageFormatSupplier formatSupplier;
     private String nick;
     private String format;
     private String password;
@@ -43,7 +44,6 @@ public class StandardChannel implements Channel {
     private Set<String> moderators = new HashSet<>();
     private Set<String> mutes = new HashSet<>();
     private ChannelStorage storage;
-    private final MessageFormatSupplier formatSupplier;
 
     public StandardChannel(ChannelStorage storage, String name, String nick, MessageFormatSupplier formatSupplier) {
         this.storage = storage;
@@ -103,6 +103,113 @@ public class StandardChannel implements Channel {
         this.members.forEach(chatter -> chatter.getPlayer().sendMessage(message));
     }
 
+    public TextComponent applyFormat(String format, String msg, Player player) {
+        Chatter chatter = SurvivorBot.getChatterManager().getChatter(player);
+        format = format.replace("{default}", this.formatSupplier.getStandardFormat());
+        TextComponent root = new TextComponent();
+
+        TextComponent tc = new TextComponent();
+        ClickEvent ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.getName());
+        HoverEvent he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
+        ChatColor currentColor = ChatColor.WHITE;
+        String analyzer = "";
+        boolean nextIsColorCode = false;
+        boolean inNode = false;
+        boolean prefix = false;
+        ChatColor playerColor = chatter.getTeam() == null ? ChatColor.WHITE : ChatColor.getByChar(ChatColor.getLastColors(chatter.getTeam().getPrefix()).charAt(1));
+
+        for (char c : format.toCharArray()) {
+            if (nextIsColorCode) {
+                currentColor = ChatColor.getByChar(c);
+                tc.setColor(ChatColor.getByChar(c).asBungee());
+                nextIsColorCode = false;
+            } else if (c == '{') {
+                inNode = true;
+            } else if (c == '}') {
+                boolean create = false;
+                tc = new TextComponent();
+                switch (analyzer) {
+                    case "name":
+                        tc.setText("" + this.name);
+                        ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.name);
+                        he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
+                        create = true;
+                        break;
+                    case "nick":
+                        tc.setText("" + this.nick);
+                        ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.name);
+                        he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
+                        create = true;
+                        break;
+                    case "color":
+                        currentColor = this.color;
+                        tc.setColor(this.color.asBungee());
+                        break;
+                    case "msg":
+                        tc.setText("" + msg);
+                        ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.name);
+                        he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
+                        create = true;
+                        break;
+                    case "sender":
+                        if (prefix)
+                            tc.setText("" + chatter.getTeam().getPrefix() + player.getName());
+                        else
+                            tc.setText("" + player.getName());
+                        ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "@" + player.getName());
+                        he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to msg " + playerColor + player.getName()).create());
+                        create = true;
+                        break;
+                    case "plainsender":
+                        tc.setText("" + player.getName());
+                        ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "@" + player.getName());
+                        he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to msg " + playerColor + player.getName()).create());
+                        create = true;
+                        break;
+                    case "world":
+                        tc.setText("" + player.getWorld().getName());
+                        ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.name);
+                        he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
+                        create = true;
+                        break;
+                    case "prefix":
+                        prefix = chatter.getTeam() != null;
+                        break;
+                    case "suffix":
+                        tc.setText("" + chatter.getTeam().getSuffix());
+                        ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.name);
+                        he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
+                        create = true;
+                        break;
+                    case "groupprefix":
+                        break;
+                    case "groupsuffix":
+                        break;
+                }
+                if (create) {
+                    tc.setColor(currentColor.asBungee());
+                    tc.setClickEvent(ce);
+                    tc.setHoverEvent(he);
+                    root.addExtra(tc);
+                }
+
+                analyzer = "";
+                inNode = false;
+            } else if (c == '&') {
+                nextIsColorCode = true;
+            } else if (inNode) {
+                analyzer += c;
+            } else {
+                tc = new TextComponent(String.valueOf(c));
+                tc.setColor(currentColor.asBungee());
+                tc.setClickEvent(ce);
+                tc.setHoverEvent(he);
+                root.addExtra(tc);
+            }
+        }
+        return root;
+    }
+
     public String applyFormat(String format, String originalFormat) {
         format = format.replace("{default}", this.formatSupplier.getStandardFormat())
                 .replace("{name}", this.name)
@@ -113,23 +220,6 @@ public class StandardChannel implements Channel {
         format = (matcher.matches() && matcher.groupCount() == 3) ?
                 format.replace("{sender}", matcher.group(1) + matcher.group(2) + "%1$s" + matcher.group(3)) :
                 format.replace("{sender}", "%1$s");
-
-        format = ChatColor.translateAlternateColorCodes('&', format);
-        return format;
-    }
-
-    public String applyFormat(String format, String originalFormat, Player sender) {
-        format = this.applyFormat(format, originalFormat)
-                .replace("{plainsender}", sender.getName())
-                .replace("{world}", sender.getWorld().getName());
-
-        Chatter chatter = SurvivorBot.getChatterManager().getChatter(sender);
-        format = format.replace("{prefix}", chatter.getTeam() == null ? "" : chatter.getTeam().getPrefix())
-                .replace("{suffix}", chatter.getTeam() == null ? "" : chatter.getTeam().getSuffix())
-                .replace("{group}", chatter.getTeam() == null ? "" : chatter.getTeam().getName())
-                .replace("{groupprefix}", "")
-                .replace("{groupsuffix}", "");
-
 
         format = ChatColor.translateAlternateColorCodes('&', format);
         return format;
@@ -193,16 +283,36 @@ public class StandardChannel implements Channel {
         return new HashSet(this.bans);
     }
 
+    public void setBans(Set<String> bans) {
+        this.bans = bans;
+        this.storage.flagUpdate(this);
+    }
+
     public ChatColor getColor() {
         return this.color;
+    }
+
+    public void setColor(ChatColor color) {
+        this.color = color;
+        this.storage.flagUpdate(this);
     }
 
     public int getDistance() {
         return this.distance;
     }
 
+    public void setDistance(int distance) {
+        this.distance = distance < 0 ? 0 : distance;
+        this.storage.flagUpdate(this);
+    }
+
     public String getFormat() {
         return this.format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+        this.storage.flagUpdate(this);
     }
 
     public Set<Chatter> getMembers() {
@@ -213,8 +323,18 @@ public class StandardChannel implements Channel {
         return new HashSet(this.moderators);
     }
 
+    public void setModerators(Set<String> moderators) {
+        this.moderators = moderators;
+        this.storage.flagUpdate(this);
+    }
+
     public Set<String> getMutes() {
         return new HashSet(this.mutes);
+    }
+
+    public void setMutes(Set<String> mutes) {
+        this.mutes = mutes;
+        this.storage.flagUpdate(this);
     }
 
     public String getName() {
@@ -225,12 +345,31 @@ public class StandardChannel implements Channel {
         return this.nick;
     }
 
+    public void setNick(String nick) {
+        this.nick = nick;
+        this.storage.flagUpdate(this);
+    }
+
     public String getPassword() {
         return this.password;
     }
 
+    public void setPassword(String password) {
+        if (password == null) {
+            this.password = "";
+        } else {
+            this.password = password;
+        }
+
+        this.storage.flagUpdate(this);
+    }
+
     public String getDiscordChannelLinkID() {
         return this.discordChannelLinkID;
+    }
+
+    public void setDiscordChannelLinkID(String discordChannelLinkID) {
+        this.discordChannelLinkID = discordChannelLinkID;
     }
 
     public ChannelStorage getStorage() {
@@ -239,6 +378,11 @@ public class StandardChannel implements Channel {
 
     public Set<String> getWorlds() {
         return new HashSet(this.worlds);
+    }
+
+    public void setWorlds(Set<String> worlds) {
+        this.worlds = worlds;
+        this.storage.flagUpdate(this);
     }
 
     public int hashCode() {
@@ -265,6 +409,11 @@ public class StandardChannel implements Channel {
         return this.crossWorld;
     }
 
+    public void setCrossWorld(boolean crossWorld) {
+        this.crossWorld = crossWorld;
+        this.storage.flagUpdate(this);
+    }
+
     public boolean isHidden() {
         return false;
     }
@@ -289,12 +438,22 @@ public class StandardChannel implements Channel {
         return this.shortcutAllowed;
     }
 
+    public void setShortcutAllowed(boolean shortcutAllowed) {
+        this.shortcutAllowed = shortcutAllowed;
+        this.storage.flagUpdate(this);
+    }
+
     public boolean isTransient() {
         return false;
     }
 
     public boolean isVerbose() {
         return this.verbose;
+    }
+
+    public void setVerbose(boolean verbose) {
+        this.verbose = verbose;
+        this.storage.flagUpdate(this);
     }
 
     public boolean kickMember(Chatter chatter, boolean bool, boolean flag) {
@@ -327,21 +486,17 @@ public class StandardChannel implements Channel {
 
     public void processChat(ChannelChatEvent event) {
         Player player = event.getSender().getPlayer();
-        String format = this.applyFormat(event.getFormat(), event.getBukkitFormat(), player);
+        TextComponent root = this.applyFormat(event.getFormat(), event.getMessage(), player);
         Chatter sender = SurvivorBot.getChatterManager().getChatter(player);
-        TextComponent root = new TextComponent();
         Set<Player> recipients = Bukkit.getOnlinePlayers().stream().collect(Collectors.toSet());
 
         this.trimRecipients(recipients, sender);
 
-        String msg = String.format(format, player.getName(), event.getMessage());
-
-        TextComponent temp = new TextComponent(msg);
-        temp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.getName()));
+        String msg = root.toPlainText();
 
         // Send to players in channel
 
-        recipients.forEach(player1 -> player1.spigot().sendMessage(temp));
+        recipients.forEach(player1 -> player1.spigot().sendMessage(root));
 
         Bukkit.getPluginManager().callEvent(new ChatCompleteEvent(sender, this, msg));
 
@@ -395,31 +550,6 @@ public class StandardChannel implements Channel {
         this.storage.flagUpdate(this);
     }
 
-    public void setBans(Set<String> bans) {
-        this.bans = bans;
-        this.storage.flagUpdate(this);
-    }
-
-    public void setColor(ChatColor color) {
-        this.color = color;
-        this.storage.flagUpdate(this);
-    }
-
-    public void setCrossWorld(boolean crossWorld) {
-        this.crossWorld = crossWorld;
-        this.storage.flagUpdate(this);
-    }
-
-    public void setDistance(int distance) {
-        this.distance = distance < 0 ? 0 : distance;
-        this.storage.flagUpdate(this);
-    }
-
-    public void setFormat(String format) {
-        this.format = format;
-        this.storage.flagUpdate(this);
-    }
-
     public void setModerator(String name, boolean moderator) {
         if (moderator) {
             this.moderators.add(name.toLowerCase());
@@ -430,17 +560,12 @@ public class StandardChannel implements Channel {
         this.storage.flagUpdate(this);
     }
 
-    public void setModerators(Set<String> moderators) {
-        this.moderators = moderators;
-        this.storage.flagUpdate(this);
+    public boolean isMuted() {
+        return this.muted;
     }
 
     public void setMuted(boolean value) {
         this.muted = value;
-    }
-
-    public boolean isMuted() {
-        return this.muted;
     }
 
     public void setMuted(String name, boolean muted) {
@@ -450,45 +575,6 @@ public class StandardChannel implements Channel {
             this.mutes.remove(name.toLowerCase());
         }
 
-        this.storage.flagUpdate(this);
-    }
-
-    public void setMutes(Set<String> mutes) {
-        this.mutes = mutes;
-        this.storage.flagUpdate(this);
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
-        this.storage.flagUpdate(this);
-    }
-
-    public void setPassword(String password) {
-        if (password == null) {
-            this.password = "";
-        } else {
-            this.password = password;
-        }
-
-        this.storage.flagUpdate(this);
-    }
-
-    public void setDiscordChannelLinkID(String discordChannelLinkID) {
-        this.discordChannelLinkID = discordChannelLinkID;
-    }
-
-    public void setShortcutAllowed(boolean shortcutAllowed) {
-        this.shortcutAllowed = shortcutAllowed;
-        this.storage.flagUpdate(this);
-    }
-
-    public void setVerbose(boolean verbose) {
-        this.verbose = verbose;
-        this.storage.flagUpdate(this);
-    }
-
-    public void setWorlds(Set<String> worlds) {
-        this.worlds = worlds;
         this.storage.flagUpdate(this);
     }
 

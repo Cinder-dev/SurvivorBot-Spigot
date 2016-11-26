@@ -31,7 +31,7 @@ public class MessageListener implements IListener<MessageReceivedEvent> {
                             .map(Player::spigot)
                             .forEach(spigot -> {
                                 String colorized = ChatColor.translateAlternateColorCodes('&', format(channel, sender, message));
-                                TextComponent root = new TextComponent(colorized);
+                                TextComponent root = new TextComponent(TextComponent.fromLegacyText(colorized));
                                 root.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, SurvivorBot.getInstance().getInviteURL()));
                                 root.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.BOLD + "" + ChatColor.AQUA + sender + ChatColor.RESET + "\n" + (event.getMessage().getAuthor().getStatus().getStatusMessage() == null ? "" : "Playing: " + event.getMessage().getAuthor().getStatus().getStatusMessage())).create()));
                                 spigot.sendMessage(root);
