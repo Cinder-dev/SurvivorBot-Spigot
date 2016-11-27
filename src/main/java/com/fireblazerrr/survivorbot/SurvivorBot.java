@@ -42,17 +42,103 @@ public class SurvivorBot extends JavaPlugin {
     private static final ConfigManager configManager = new ConfigManager();
     private static final MessageNotFoundException except = new MessageNotFoundException();
     private static final JedisManager jedisManager = new JedisManager();
+    private static final boolean DEBUG = true;
     private static Instance instance = new Instance();
-
     private static SurvivorBot plugin;
     private static ResourceBundle messages;
     private static boolean chatLogEnabled;
     private static boolean logToBukkit;
-
     private Thread jedisManagerThread;
-    private static final boolean DEBUG = true;
 
     public SurvivorBot() {
+    }
+
+    public static ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    public static String getMessage(String key) throws MessageNotFoundException {
+        String msg = messages.getString(key);
+        if (msg == null) {
+            throw except;
+        } else {
+            return msg;
+        }
+    }
+
+    public static SurvivorBot getPlugin() {
+        return plugin;
+    }
+
+    public static void logChat(String message) {
+        if (chatLogEnabled) {
+            chatLog.info(ChatColor.stripColor(message));
+        }
+    }
+
+    public static void setChatLogEnabled(boolean chatLogEnabled) {
+        SurvivorBot.chatLogEnabled = chatLogEnabled;
+    }
+
+    public static void setLogToBukkitEnabled(boolean enabled) {
+        logToBukkit = enabled;
+    }
+
+    public static void setLocale(Locale locale) throws ClassNotFoundException {
+        messages = ResourceBundle.getBundle("messages", locale);
+        if (messages == null) {
+            throw new ClassNotFoundException("messages");
+        }
+    }
+
+    public static ChannelManager getChannelManager() {
+        return channelManager;
+    }
+
+    public static MessageHandler getMessageHandler() {
+        return messageHandler;
+    }
+
+    public static CommandHandler getCommandHandler() {
+        return commandHandler;
+    }
+
+    public static ChatterManager getChatterManager() {
+        return chatterManager;
+    }
+
+    public static JedisManager getJedisManager() {
+        return jedisManager;
+    }
+
+    public static Instance getInstance() {
+        return instance;
+    }
+
+    public static void debug(String identifier, String... args) {
+        if (DEBUG) {
+            final String[] results = {""};
+            Arrays.stream(args).forEach(s -> results[0] +=  s + " | ");
+            log.info("[SurvivorBot Debug] " + identifier + " | " + results[0]);
+        }
+    }
+
+    public static void info(String message) {
+        log.info("[SurvivorBot] " + message);
+    }
+
+    public static void severe(String message) {
+        log.severe("[SurvivorBot] " + message);
+    }
+
+    public static void warning(String message) {
+        log.warning("[SurvivorBot] " + message);
+    }
+
+    public static boolean hasChannelPermission(Player player, Channel channel, Chatter.Permission permission) {
+        String formedPermission = permission.form(channel).toLowerCase();
+        return player.isPermissionSet(formedPermission) ? player.hasPermission(formedPermission) :
+                player.hasPermission(permission.formAll());
     }
 
     public boolean onCommand(CommandSender sender, Command command, String lable, String[] args) {
@@ -165,93 +251,5 @@ public class SurvivorBot extends JavaPlugin {
                 ex.printStackTrace();
             }
         }
-    }
-
-    public static ConfigManager getConfigManager() {
-        return configManager;
-    }
-
-    public static String getMessage(String key) throws MessageNotFoundException {
-        String msg = messages.getString(key);
-        if (msg == null) {
-            throw except;
-        } else {
-            return msg;
-        }
-    }
-
-    public static SurvivorBot getPlugin() {
-        return plugin;
-    }
-
-    public static void logChat(String message) {
-        if (chatLogEnabled) {
-            chatLog.info(ChatColor.stripColor(message));
-        }
-    }
-
-    public static void setChatLogEnabled(boolean chatLogEnabled) {
-        SurvivorBot.chatLogEnabled = chatLogEnabled;
-    }
-
-    public static void setLogToBukkitEnabled(boolean enabled) {
-        logToBukkit = enabled;
-    }
-
-    public static void setLocale(Locale locale) throws ClassNotFoundException {
-        messages = ResourceBundle.getBundle("messages", locale);
-        if (messages == null) {
-            throw new ClassNotFoundException("messages");
-        }
-    }
-
-    public static ChannelManager getChannelManager() {
-        return channelManager;
-    }
-
-    public static MessageHandler getMessageHandler() {
-        return messageHandler;
-    }
-
-    public static CommandHandler getCommandHandler() {
-        return commandHandler;
-    }
-
-    public static ChatterManager getChatterManager() {
-        return chatterManager;
-    }
-
-    public static JedisManager getJedisManager() {
-        return jedisManager;
-    }
-
-    public static Instance getInstance() {
-        return instance;
-    }
-
-    public static void debug(String identifier, String... args) {
-        if (DEBUG) {
-            final String[] results = {""};
-            Arrays.stream(args).forEach(s -> results[0] +=  s + " | ");
-            log.info("[SurvivorBot Debug] " + identifier + " | " + results[0]);
-        }
-    }
-
-    public static void info(String message) {
-        log.info("[SurvivorBot] " + message);
-    }
-
-    public static void severe(String message) {
-        log.severe("[SurvivorBot] " + message);
-    }
-
-    public static void warning(String message) {
-        log.warning("[SurvivorBot] " + message);
-    }
-
-    public static boolean hasChannelPermission(Player player, Channel channel, Chatter.Permission permission) {
-        String formedPermission = permission.form(channel).toLowerCase();
-        return player.isPermissionSet(formedPermission) ? player.hasPermission(formedPermission) :
-                player.hasPermission(permission.formAll());
     }
 }

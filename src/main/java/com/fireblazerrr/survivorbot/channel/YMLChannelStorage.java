@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class YMLChannelStorage implements ChannelStorage {
+    private final File channelFolder;
     private Map<Channel, FileConfiguration> configs = new HashMap<>();
     private Set<Channel> updates = new HashSet<>();
-    private final File channelFolder;
 
     public YMLChannelStorage(File channelFolder) {
         this.channelFolder = channelFolder;

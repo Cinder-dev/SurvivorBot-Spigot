@@ -10,17 +10,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Instance {
 
+    private static final ReadyListener readyListener = new ReadyListener();
+    private static final MessageListener messageListener = new MessageListener();
+    private final AtomicBoolean reconnect = new AtomicBoolean(true);
     private boolean master = true;
     private String token = "";
     private String adminRankID = "";
     private String serverID = "";
     private String inviteURL = "";
     private volatile IDiscordClient client;
-
-    private static final ReadyListener readyListener = new ReadyListener();
-    private static final MessageListener messageListener = new MessageListener();
-
-    private final AtomicBoolean reconnect = new AtomicBoolean(true);
 
     public Instance() {
     }

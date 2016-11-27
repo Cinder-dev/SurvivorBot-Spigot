@@ -15,8 +15,8 @@ import java.util.*;
 
 public class YMLChatterStorage implements ChatterStorage {
 
-    private Set<Chatter> updates = new HashSet<>();
     private final File chatterFolder;
+    private Set<Chatter> updates = new HashSet<>();
 
     public YMLChatterStorage(File chatterFolder) {
         this.chatterFolder = chatterFolder;

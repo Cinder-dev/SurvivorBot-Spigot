@@ -28,27 +28,47 @@ public interface Channel {
 
     Set<String> getBans();
 
+    void setBans(Set<String> bans);
+
     ChatColor getColor();
+
+    void setColor(ChatColor color);
 
     int getDistance();
 
+    void setDistance(int distance);
+
     String getFormat();
+
+    void setFormat(String format);
 
     Set<Chatter> getMembers();
 
     Set<String> getModerators();
 
+    void setModerators(Set<String> chatters);
+
     Set<String> getMutes();
+
+    void setMutes(Set<String> chatters);
 
     String getName();
 
     String getNick();
 
+    void setNick(String nick);
+
     String getPassword();
+
+    void setPassword(String password);
 
     String getDiscordChannelLinkID();
 
+    void setDiscordChannelLinkID(String discordChannelLinkID);
+
     Set<String> getWorlds();
+
+    void setWorlds(Set<String> worlds);
 
     boolean hasWorld(String world);
 
@@ -57,6 +77,8 @@ public interface Channel {
     boolean isBanned(String s);
 
     boolean isCrossWorld();
+
+    void setCrossWorld(boolean bool);
 
     boolean isHidden();
 
@@ -70,9 +92,13 @@ public interface Channel {
 
     boolean isShortcutAllowed();
 
+    void setShortcutAllowed(boolean bool);
+
     boolean isTransient();
 
     boolean isVerbose();
+
+    void setVerbose(boolean bool);
 
     boolean kickMember(Chatter chatter, boolean bool);
 
@@ -88,39 +114,13 @@ public interface Channel {
 
     void setBanned(String chatter, boolean bool);
 
-    void setBans(Set<String> bans);
-
-    void setColor(ChatColor color);
-
-    void setCrossWorld(boolean bool);
-
-    void setDistance(int distance);
-
-    void setFormat(String format);
-
     void setModerator(String chatter, boolean bool);
-
-    void setModerators(Set<String> chatters);
 
     void setMuted(String chatter, boolean bool);
 
-    void setMutes(Set<String> chatters);
-
-    void setNick(String nick);
-
-    void setPassword(String password);
-
-    void setDiscordChannelLinkID(String discordChannelLinkID);
-
-    void setShortcutAllowed(boolean bool);
-
-    void setVerbose(boolean bool);
-
-    void setWorlds(Set<String> worlds);
+    boolean isMuted();
 
     void setMuted(boolean bool);
-
-    boolean isMuted();
 
     void sendRawMessage(String message);
 

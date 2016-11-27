@@ -60,6 +60,10 @@ public class ChatterManager {
         return this.storage;
     }
 
+    public void setStorage(ChatterStorage storage) {
+        this.storage = storage;
+    }
+
     public void removeChatter(Chatter chatter) {
         this.storage.removeChatter(chatter);
         chatter.disconnect();
@@ -69,10 +73,6 @@ public class ChatterManager {
 
     public void removeChatter(Player player) {
         this.removeChatter(this.getChatter(player));
-    }
-
-    public void setStorage(ChatterStorage storage) {
-        this.storage = storage;
     }
 
     public void reset() {

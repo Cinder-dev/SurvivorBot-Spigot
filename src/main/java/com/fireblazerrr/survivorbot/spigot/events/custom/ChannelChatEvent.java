@@ -54,6 +54,11 @@ public class ChannelChatEvent extends Event {
         return this.channel;
     }
 
+    public void setChannel(Channel channel) {
+        if (channel != null)
+            this.channel = channel;
+    }
+
     public HandlerList getHandlers() {
         return handlers;
     }
@@ -62,16 +67,11 @@ public class ChannelChatEvent extends Event {
         return result;
     }
 
-    public void setChannel(Channel channel) {
-        if (channel != null)
-            this.channel = channel;
+    public void setResult(Chatter.Result result) {
+        this.result = result;
     }
 
     public Chatter getSender() {
         return sender;
-    }
-
-    public void setResult(Chatter.Result result) {
-        this.result = result;
     }
 }

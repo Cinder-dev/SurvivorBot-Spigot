@@ -17,6 +17,10 @@ public class ChatCompleteEvent extends Event {
         this.msg = msg;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     public Chatter getSender() {
         return this.sender;
     }
@@ -30,10 +34,6 @@ public class ChatCompleteEvent extends Event {
     }
 
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 

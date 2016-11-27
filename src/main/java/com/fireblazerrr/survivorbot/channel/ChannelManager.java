@@ -146,40 +146,76 @@ public class ChannelManager implements MessageFormatSupplier {
         return list;
     }
 
-    public String getConversationFormat() {
-        return this.conversationFormat;
-    }
-
     public Channel getDefaultChannel() {
         return this.defaultChannel;
+    }
+
+    public void setDefaultChannel(Channel channel) {
+        this.defaultChannel = channel;
     }
 
     public Set<Permission> getModPermissions() {
         return this.modPermissions;
     }
 
+    public void setModPermissions(Set<Permission> modPermissions) {
+        this.modPermissions = modPermissions;
+    }
+
     public String getStandardFormat() {
         return this.standardFormat;
+    }
+
+    public String getConversationFormat() {
+        return this.conversationFormat;
     }
 
     public String getAnnounceFormat() {
         return this.announceFormat;
     }
 
+    public String getEmoteFormat() {
+        return this.emoteFormat;
+    }
+
+    public void setEmoteFormat(String emoteFormat) {
+        this.emoteFormat = emoteFormat;
+    }
+
+    public void setAnnounceFormat(String announceFormat) {
+        this.announceFormat = announceFormat;
+    }
+
+    public void setConversationFormat(String conversationFormat) {
+        this.conversationFormat = conversationFormat;
+    }
+
+    public void setStandardFormat(String standardFormat) {
+        this.standardFormat = standardFormat;
+    }
+
     public String getDiscordFormat() {
         return this.discordFormat;
     }
 
-    public String getEmoteFormat() {
-        return this.emoteFormat;
+    public void setDiscordFormat(String discordFormat) {
+        this.discordFormat = discordFormat;
     }
 
     public ChannelStorage getStorage() {
         return this.storage;
     }
 
+    public void setStorage(ChannelStorage storage) {
+        this.storage = storage;
+    }
+
     public boolean isUsingEmotes() {
         return this.usingEmotes;
+    }
+
+    public void setUsingEmotes(boolean usingEmotes) {
+        this.usingEmotes = usingEmotes;
     }
 
     public boolean hasChannel(String identifier) {
@@ -220,41 +256,5 @@ public class ChannelManager implements MessageFormatSupplier {
 
             this.storage.removeChannel(channel);
         }
-    }
-
-    public void setConversationFormat(String conversationFormat) {
-        this.conversationFormat = conversationFormat;
-    }
-
-    public void setDefaultChannel(Channel channel) {
-        this.defaultChannel = channel;
-    }
-
-    public void setModPermissions(Set<Permission> modPermissions) {
-        this.modPermissions = modPermissions;
-    }
-
-    public void setStandardFormat(String standardFormat) {
-        this.standardFormat = standardFormat;
-    }
-
-    public void setAnnounceFormat(String announceFormat) {
-        this.announceFormat = announceFormat;
-    }
-
-    public void setDiscordFormat(String discordFormat) {
-        this.discordFormat = discordFormat;
-    }
-
-    public void setEmoteFormat(String emoteFormat) {
-        this.emoteFormat = emoteFormat;
-    }
-
-    public void setStorage(ChannelStorage storage) {
-        this.storage = storage;
-    }
-
-    public void setUsingEmotes(boolean usingEmotes) {
-        this.usingEmotes = usingEmotes;
     }
 }

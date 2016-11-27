@@ -99,28 +99,28 @@ public abstract class BasicCommand implements Command {
         return true;
     }
 
-    public void setArgumentRange(int min, int max) {
-        this.minArguments = min;
-        this.maxArguments = max;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setIdentifiers(String... identifiers) {
-        this.identifiers = identifiers;
-    }
-
-    public void setNotes(String... notes) {
-        this.notes = notes;
+    public void setUsage(String usage) {
+        this.usage = usage;
     }
 
     public void setPermission(String permission) {
         this.permission = permission;
     }
 
-    public void setUsage(String usage) {
-        this.usage = usage;
+    public void setNotes(String... notes) {
+        this.notes = notes;
+    }
+
+    public void setIdentifiers(String... identifiers) {
+        this.identifiers = identifiers;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setArgumentRange(int min, int max) {
+        this.minArguments = min;
+        this.maxArguments = max;
     }
 }

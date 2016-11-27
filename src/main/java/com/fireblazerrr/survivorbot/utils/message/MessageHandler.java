@@ -22,6 +22,14 @@ public class MessageHandler {
     public MessageHandler() {
     }
 
+    public static ChannelChatEvent throwChannelEvent(Chatter sender, Channel channel, Chatter.Result result, String msg,
+                                                     String format, String format1) {
+
+        ChannelChatEvent event = new ChannelChatEvent(sender, channel, result, msg, format, format1);
+        Bukkit.getPluginManager().callEvent(event);
+        return event;
+    }
+
     public void setTwitterStyleMsgs(boolean twitterStyleMsgs) {
         this.twitterStyleMsgs = twitterStyleMsgs;
     }
@@ -148,14 +156,6 @@ public class MessageHandler {
                 }
             }
         }
-    }
-
-    public static ChannelChatEvent throwChannelEvent(Chatter sender, Channel channel, Chatter.Result result, String msg,
-                                                     String format, String format1) {
-
-        ChannelChatEvent event = new ChannelChatEvent(sender, channel, result, msg, format, format1);
-        Bukkit.getPluginManager().callEvent(event);
-        return event;
     }
 
     public void setCensors(List<String> censors) {

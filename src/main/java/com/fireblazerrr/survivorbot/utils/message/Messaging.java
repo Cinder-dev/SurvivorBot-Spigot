@@ -11,33 +11,6 @@ import java.util.Map;
 public class Messaging {
     private static final Map<String, ChatColor> colors;
 
-    private Messaging() {
-
-    }
-
-    private static void broadcast(String msg, Object... params) {
-        Bukkit.getServer().broadcastMessage(parameterizeMessage(msg, params));
-    }
-
-    private static String parameterizeMessage(String msg, Object... params) {
-        msg = ChatColor.YELLOW + msg;
-        if (params != null) {
-            for (int i = 0; i < params.length; ++i) {
-                msg = msg.replace("$" + (i + 1), ChatColor.WHITE + params[i].toString() + ChatColor.YELLOW);
-            }
-        }
-
-        return msg;
-    }
-
-    public static ChatColor parseColor(String input) {
-        return colors.get(input.toLowerCase().replace("&", ""));
-    }
-
-    public static void send(CommandSender sender, String msg, Object... params) {
-        sender.sendMessage(parameterizeMessage(msg, params));
-    }
-
     static {
         HashMap<String, ChatColor> tmpMap = new HashMap<>();
         tmpMap.put("black", ChatColor.BLACK);
@@ -103,5 +76,32 @@ public class Messaging {
         tmpMap.put("reset", ChatColor.RESET);
         tmpMap.put("r", ChatColor.RESET);
         colors = Collections.unmodifiableMap(tmpMap);
+    }
+
+    private Messaging() {
+
+    }
+
+    private static void broadcast(String msg, Object... params) {
+        Bukkit.getServer().broadcastMessage(parameterizeMessage(msg, params));
+    }
+
+    private static String parameterizeMessage(String msg, Object... params) {
+        msg = ChatColor.YELLOW + msg;
+        if (params != null) {
+            for (int i = 0; i < params.length; ++i) {
+                msg = msg.replace("$" + (i + 1), ChatColor.WHITE + params[i].toString() + ChatColor.YELLOW);
+            }
+        }
+
+        return msg;
+    }
+
+    public static ChatColor parseColor(String input) {
+        return colors.get(input.toLowerCase().replace("&", ""));
+    }
+
+    public static void send(CommandSender sender, String msg, Object... params) {
+        sender.sendMessage(parameterizeMessage(msg, params));
     }
 }

@@ -58,10 +58,6 @@ public class StandardChatter implements Chatter {
         }
     }
 
-    public void attachStorage(ChatterStorage storage) {
-        this.storage = storage;
-    }
-
     public Result canBan(Channel channel) {
         return SurvivorBot.hasChannelPermission(this.player, channel, Permission.BAN) ?
                 Result.ALLOWED :
@@ -74,12 +70,6 @@ public class StandardChatter implements Chatter {
     @Override
     public Result canColorMessage(Channel channel, ChatColor color) {
         return null;
-    }
-
-    public Result canColorMessages(Channel channel, ChatColor color) {
-        return SurvivorBot.hasChannelPermission(this.player, channel, Permission.COLOR) ? Result.ALLOWED :
-                (!SurvivorBot.hasChannelPermission(this.player, channel, Permission.valueOf(color.name())) ?
-                        Result.NO_PERMISSION : Result.ALLOWED);
     }
 
     public Result canEmote(Channel channel) {
@@ -188,9 +178,8 @@ public class StandardChatter implements Chatter {
                 Result.ALLOWED;
     }
 
-    public boolean equals(Object other) {
-        return other == this || (other != null && (other instanceof Chatter && this.player
-                .equals(((Chatter) other).getPlayer())));
+    public Result canIgnore(Chatter other) {
+        return other.getPlayer().hasPermission("survivorbot.admin.unignore") ? Result.NO_PERMISSION : Result.ALLOWED;
     }
 
     public Channel getActiveChannel() {
@@ -199,6 +188,11 @@ public class StandardChatter implements Chatter {
 
     public String getAFKMessage() {
         return this.afkMessage;
+    }
+
+    @Override
+    public void setAFKMessage(String message) {
+
     }
 
     public Set<Channel> getChannels() {
@@ -221,6 +215,10 @@ public class StandardChatter implements Chatter {
         return this.lastPMSource;
     }
 
+    public void setLastPrivateMessageSource(Chatter chatter) {
+        this.lastPMSource = chatter;
+    }
+
     public String getName() {
         return this.player.getName();
     }
@@ -229,20 +227,16 @@ public class StandardChatter implements Chatter {
         return this.player;
     }
 
-    public ChatterStorage getStorage() {
-        return this.storage;
-    }
-
     public boolean hasChannel(Channel channel) {
         return this.channels.contains(channel);
     }
 
-    public int hashCode() {
-        return this.player.hashCode();
-    }
-
     public boolean isAFK() {
         return this.afk;
+    }
+
+    public void setAFK(boolean afk) {
+        this.afk = afk;
     }
 
     public boolean isIgnoring(Chatter other) {
@@ -312,19 +306,6 @@ public class StandardChatter implements Chatter {
         }
     }
 
-    public void setAFK(boolean afk) {
-        this.afk = afk;
-    }
-
-    @Override
-    public void setAFKMessage(String message) {
-
-    }
-
-    public void setAfkMessage(String message) {
-        this.afkMessage = afkMessage;
-    }
-
     public void setIgnore(String name, boolean ignore, boolean flagUpdate) {
         if (ignore) {
             this.ignores.add(name.toLowerCase());
@@ -335,10 +316,6 @@ public class StandardChatter implements Chatter {
         if (flagUpdate) {
             this.storage.flagUpdate(this);
         }
-    }
-
-    public void setLastPrivateMessageSource(Chatter chatter) {
-        this.lastPMSource = chatter;
     }
 
     public void setMuted(boolean muted, boolean flagUpdate) {
@@ -385,20 +362,6 @@ public class StandardChatter implements Chatter {
 
     }
 
-    public Result canIgnore(Chatter other) {
-        return other.getPlayer().hasPermission("survivorbot.admin.unignore") ? Result.NO_PERMISSION : Result.ALLOWED;
-    }
-
-    public void setTeam(Team t)
-    {
-        team = t;
-    }
-
-    public Team getTeam()
-    {
-        return team;
-    }
-
     public void disconnect() {
         Iterator<Channel> removal = this.channels.iterator();
         while (removal.hasNext()){
@@ -406,6 +369,43 @@ public class StandardChatter implements Chatter {
             removal.remove();
             ch.removeMember(this, false, false);
         }
+    }
+
+    public Team getTeam()
+    {
+        return team;
+    }
+
+    public void setTeam(Team t)
+    {
+        team = t;
+    }
+
+    public void attachStorage(ChatterStorage storage) {
+        this.storage = storage;
+    }
+
+    public Result canColorMessages(Channel channel, ChatColor color) {
+        return SurvivorBot.hasChannelPermission(this.player, channel, Permission.COLOR) ? Result.ALLOWED :
+                (!SurvivorBot.hasChannelPermission(this.player, channel, Permission.valueOf(color.name())) ?
+                        Result.NO_PERMISSION : Result.ALLOWED);
+    }
+
+    public ChatterStorage getStorage() {
+        return this.storage;
+    }
+
+    public int hashCode() {
+        return this.player.hashCode();
+    }
+
+    public boolean equals(Object other) {
+        return other == this || (other != null && (other instanceof Chatter && this.player
+                .equals(((Chatter) other).getPlayer())));
+    }
+
+    public void setAfkMessage(String message) {
+        this.afkMessage = afkMessage;
     }
 }
 

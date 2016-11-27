@@ -14,6 +14,17 @@ public class CommandHandler {
     public CommandHandler() {
     }
 
+    public static boolean hasPermission(CommandSender sender, String permission) {
+        if (sender.isOp()) {
+            return true;
+        } else if (sender instanceof Player && permission != null && !permission.isEmpty()) {
+            Player player = (Player) sender;
+            return player.hasPermission(permission);
+        } else {
+            return true;
+        }
+    }
+
     public void addCommand(Command command) {
         this.commands.put(command.getName().toLowerCase(), command);
 
@@ -95,16 +106,5 @@ public class CommandHandler {
     public void removeCommand(Command command) {
         this.commands.remove(command.getName().toLowerCase());
         Arrays.stream(command.getIdentifiers()).forEach(s -> this.identifiers.remove(s.toLowerCase()));
-    }
-
-    public static boolean hasPermission(CommandSender sender, String permission) {
-        if (sender.isOp()) {
-            return true;
-        } else if (sender instanceof Player && permission != null && !permission.isEmpty()) {
-            Player player = (Player) sender;
-            return player.hasPermission(permission);
-        } else {
-            return true;
-        }
     }
 }

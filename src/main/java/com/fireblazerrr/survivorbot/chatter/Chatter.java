@@ -41,6 +41,8 @@ public interface Chatter {
 
     String getAFKMessage();
 
+    void setAFKMessage(String message);
+
     Set<Channel> getChannels();
 
     Set<String> getIgnores();
@@ -51,6 +53,8 @@ public interface Chatter {
 
     Chatter getLastPrivateMessageSource();
 
+    void setLastPrivateMessageSource(Chatter chatter);
+
     String getName();
 
     Player getPlayer();
@@ -58,6 +62,8 @@ public interface Chatter {
     boolean hasChannel(Channel channel);
 
     boolean isAFK();
+
+    void setAFK(boolean afk);
 
     boolean isIgnoring(Chatter chatter);
 
@@ -71,13 +77,7 @@ public interface Chatter {
 
     void setActiveChannel(Channel channel, boolean announce, boolean flag);
 
-    void setAFK(boolean afk);
-
-    void setAFKMessage(String message);
-
     void setIgnore(String name, boolean ignore, boolean flag);
-
-    void setLastPrivateMessageSource(Chatter chatter);
 
     void setMuted(boolean muted, boolean flag);
 
@@ -91,9 +91,9 @@ public interface Chatter {
 
     void disconnect();
 
-    void setTeam(Team t);
-
     Team getTeam();
+
+    void setTeam(Team t);
 
     enum Result {
         NO_PERMISSION,

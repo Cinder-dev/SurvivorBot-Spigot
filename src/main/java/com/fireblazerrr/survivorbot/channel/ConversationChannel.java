@@ -32,28 +32,15 @@ public class ConversationChannel extends StandardChannel {
     public void addWorld(String world) {
     }
 
-    public String applyFormat(String format, Player sender, Player recipient) {
-        Player target = null;
-        if (sender.equals(recipient)) {
-            target = this.getMembers().stream().filter(chatter -> !chatter.getPlayer().equals(sender)).map(Chatter::getPlayer).findFirst().get();
-
-            if (target != null) {
-                format = format.replace("{convoaddress}", "To").replace("{convopartner}", target.getDisplayName());
-            }
-        } else {
-            format = format.replace("{convoaddress}", "From").replace("{convopartner}", sender.getDisplayName());
-        }
-
-        format = format.replaceAll("(?i)&([0-9a-fk-or])", "§$1");
-        return format;
-    }
-
     public boolean banMember(Chatter chatter, boolean announce) {
         return false;
     }
 
     public Set<String> getBans() {
         return new HashSet();
+    }
+
+    public void setBans(Set<String> bans) {
     }
 
     public int getDistance() {
@@ -64,16 +51,31 @@ public class ConversationChannel extends StandardChannel {
         return new HashSet();
     }
 
+    public void setModerators(Set<String> moderators) {
+    }
+
     public Set<String> getMutes() {
         return new HashSet();
+    }
+
+    public void setMutes(Set<String> mutes) {
+    }
+
+    public void setNick(String nick) {
     }
 
     public String getPassword() {
         return "";
     }
 
+    public void setPassword(String password) {
+    }
+
     public Set<String> getWorlds() {
         return new HashSet();
+    }
+
+    public void setWorlds(Set<String> worlds) {
     }
 
     public boolean hasWorld(World world) {
@@ -102,6 +104,9 @@ public class ConversationChannel extends StandardChannel {
 
     public boolean isShortcutAllowed() {
         return false;
+    }
+
+    public void setShortcutAllowed(boolean shortcutAllowed) {
     }
 
     public boolean isTransient() {
@@ -187,31 +192,26 @@ public class ConversationChannel extends StandardChannel {
     public void setBanned(String name, boolean banned) {
     }
 
-    public void setBans(Set<String> bans) {
-    }
-
     public void setModerator(String name, boolean moderator) {
-    }
-
-    public void setModerators(Set<String> moderators) {
     }
 
     public void setMuted(String name, boolean muted) {
     }
 
-    public void setMutes(Set<String> mutes) {
-    }
+    public String applyFormat(String format, Player sender, Player recipient) {
+        Player target = null;
+        if (sender.equals(recipient)) {
+            target = this.getMembers().stream().filter(chatter -> !chatter.getPlayer().equals(sender)).map(Chatter::getPlayer).findFirst().get();
 
-    public void setNick(String nick) {
-    }
+            if (target != null) {
+                format = format.replace("{convoaddress}", "To").replace("{convopartner}", target.getDisplayName());
+            }
+        } else {
+            format = format.replace("{convoaddress}", "From").replace("{convopartner}", sender.getDisplayName());
+        }
 
-    public void setPassword(String password) {
-    }
-
-    public void setShortcutAllowed(boolean shortcutAllowed) {
-    }
-
-    public void setWorlds(Set<String> worlds) {
+        format = format.replaceAll("(?i)&([0-9a-fk-or])", "§$1");
+        return format;
     }
 }
 

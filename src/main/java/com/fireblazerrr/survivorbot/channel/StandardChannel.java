@@ -98,11 +98,6 @@ public class StandardChannel implements Channel {
         SurvivorBot.logChat(ChatColor.stripColor(message));
     }
 
-
-    public void sendRawMessage(String message) {
-        this.members.forEach(chatter -> chatter.getPlayer().sendMessage(message));
-    }
-
     public TextComponent applyFormat(String format, String msg, Player player) {
         Chatter chatter = SurvivorBot.getChatterManager().getChatter(player);
         format = format.replace("{default}", this.formatSupplier.getStandardFormat());
@@ -229,29 +224,6 @@ public class StandardChannel implements Channel {
         return false;
     }
 
-    public void attachStorage(ChannelStorage storage) {
-        this.storage = storage;
-    }
-
-    public boolean banMember(Chatter chatter, boolean announce) {
-        if (!this.members.contains(chatter)) {
-            return false;
-        } else {
-            this.removeMember(chatter, false, true);
-            this.setBanned(chatter.getPlayer().getName(), true);
-            if (announce) {
-                try {
-                    this.announce(
-                            SurvivorBot.getMessage("channel_ban").replace("$1", chatter.getPlayer().getDisplayName()));
-                } catch (MessageNotFoundException e) {
-                    SurvivorBot.severe("Messages.properties is missing: channel_ban");
-                }
-            }
-
-            return true;
-        }
-    }
-
     public void emote(Chatter sender, String message) {
         message = this.applyFormat(this.formatSupplier.getEmoteFormat(), "").replace("%2$s", message);
 
@@ -264,19 +236,6 @@ public class StandardChannel implements Channel {
 
         Bukkit.getPluginManager().callEvent(new ChatCompleteEvent(sender, this, message));
         SurvivorBot.logChat(message);
-    }
-
-    public boolean equals(Object other) {
-        if (other == this)
-            return true;
-        else if (other == null)
-            return false;
-        else if (!(other instanceof Channel))
-            return false;
-        else {
-            Channel channel = (Channel) other;
-            return this.name.equalsIgnoreCase(channel.getName()) || this.name.equalsIgnoreCase(channel.getNick());
-        }
     }
 
     public Set<String> getBans() {
@@ -372,10 +331,6 @@ public class StandardChannel implements Channel {
         this.discordChannelLinkID = discordChannelLinkID;
     }
 
-    public ChannelStorage getStorage() {
-        return this.storage;
-    }
-
     public Set<String> getWorlds() {
         return new HashSet(this.worlds);
     }
@@ -383,14 +338,6 @@ public class StandardChannel implements Channel {
     public void setWorlds(Set<String> worlds) {
         this.worlds = worlds;
         this.storage.flagUpdate(this);
-    }
-
-    public int hashCode() {
-        boolean prime = true;
-        byte result = 1;
-        int result1 = 31 * result + (this.name == null ? 0 : this.name.toLowerCase().hashCode());
-        result1 = 31 * result1 + (this.nick == null ? 0 : this.nick.toLowerCase().hashCode());
-        return result1;
     }
 
     public boolean hasWorld(String world) {
@@ -454,10 +401,6 @@ public class StandardChannel implements Channel {
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
         this.storage.flagUpdate(this);
-    }
-
-    public boolean kickMember(Chatter chatter, boolean bool, boolean flag) {
-        return false;
     }
 
     public boolean kickMember(Chatter chatter, boolean announce) {
@@ -560,14 +503,6 @@ public class StandardChannel implements Channel {
         this.storage.flagUpdate(this);
     }
 
-    public boolean isMuted() {
-        return this.muted;
-    }
-
-    public void setMuted(boolean value) {
-        this.muted = value;
-    }
-
     public void setMuted(String name, boolean muted) {
         if (muted) {
             this.mutes.add(name.toLowerCase());
@@ -576,6 +511,74 @@ public class StandardChannel implements Channel {
         }
 
         this.storage.flagUpdate(this);
+    }
+
+    public boolean isMuted() {
+        return this.muted;
+    }
+
+    public void setMuted(boolean value) {
+        this.muted = value;
+    }
+
+    public void sendRawMessage(String message) {
+        this.members.forEach(chatter -> chatter.getPlayer().sendMessage(message));
+    }
+
+    public MessageFormatSupplier getFormatSupplier() {
+        return this.formatSupplier;
+    }
+
+    public void attachStorage(ChannelStorage storage) {
+        this.storage = storage;
+    }
+
+    public boolean banMember(Chatter chatter, boolean announce) {
+        if (!this.members.contains(chatter)) {
+            return false;
+        } else {
+            this.removeMember(chatter, false, true);
+            this.setBanned(chatter.getPlayer().getName(), true);
+            if (announce) {
+                try {
+                    this.announce(
+                            SurvivorBot.getMessage("channel_ban").replace("$1", chatter.getPlayer().getDisplayName()));
+                } catch (MessageNotFoundException e) {
+                    SurvivorBot.severe("Messages.properties is missing: channel_ban");
+                }
+            }
+
+            return true;
+        }
+    }
+
+    public ChannelStorage getStorage() {
+        return this.storage;
+    }
+
+    public int hashCode() {
+        boolean prime = true;
+        byte result = 1;
+        int result1 = 31 * result + (this.name == null ? 0 : this.name.toLowerCase().hashCode());
+        result1 = 31 * result1 + (this.nick == null ? 0 : this.nick.toLowerCase().hashCode());
+        return result1;
+    }
+
+    public boolean equals(Object other) {
+        if (other == this)
+            return true;
+        else if (other == null)
+            return false;
+        else if (!(other instanceof Channel))
+            return false;
+        else {
+            Channel channel = (Channel) other;
+            return this.name.equalsIgnoreCase(channel.getName()) || this.name.equalsIgnoreCase(channel.getNick());
+        }
+    }
+
+    public boolean kickMember(Chatter chatter, boolean bool, boolean flag) {
+        return false;
     }
 
     private boolean isMessageHeard(Set<Player> recipients, Chatter sender) {
@@ -606,10 +609,6 @@ public class StandardChannel implements Channel {
                 .collect(Collectors.toSet());
         recipients.removeAll(toRemove);
 
-    }
-
-    public MessageFormatSupplier getFormatSupplier() {
-        return this.formatSupplier;
     }
 }
 
