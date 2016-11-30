@@ -14,9 +14,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import sx.blah.discord.util.DiscordException;
-import sx.blah.discord.util.MissingPermissionsException;
-import sx.blah.discord.util.RateLimitException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -445,11 +442,6 @@ public class StandardChannel implements Channel {
 
         // Send to discord
         if (!discordChannelLinkID.equals("")) {
-            try {
-                SurvivorBot.getInstance().getClient().getChannelByID(discordChannelLinkID).sendMessage("<" + player.getName() + "> " + event.getMessage());
-            } catch (MissingPermissionsException | RateLimitException | DiscordException e) {
-                e.printStackTrace();
-            }
         }
         SurvivorBot.logChat(msg);
     }

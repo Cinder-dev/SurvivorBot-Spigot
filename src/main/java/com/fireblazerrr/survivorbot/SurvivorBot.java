@@ -118,7 +118,7 @@ public class SurvivorBot extends JavaPlugin {
     public static void debug(String identifier, String... args) {
         if (DEBUG) {
             final String[] results = {""};
-            Arrays.stream(args).forEach(s -> results[0] +=  s + " | ");
+            Arrays.stream(args).forEach(s -> results[0] += s + " | ");
             log.info("[SurvivorBot Debug] " + identifier + " | " + results[0]);
         }
     }
@@ -156,8 +156,8 @@ public class SurvivorBot extends JavaPlugin {
         }
 
 //        jedisManager.destroy();
-        if (instance.isMaster())
-            instance.terminate();
+//        if (instance.isMaster())
+//            instance.terminate();
 
 //        jedisManagerThread.stop();
 

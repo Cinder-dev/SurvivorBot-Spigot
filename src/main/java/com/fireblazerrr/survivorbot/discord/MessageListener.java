@@ -3,25 +3,25 @@ package com.fireblazerrr.survivorbot.discord;
 import com.fireblazerrr.survivorbot.SurvivorBot;
 import com.fireblazerrr.survivorbot.channel.Channel;
 import com.fireblazerrr.survivorbot.chatter.Chatter;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import sx.blah.discord.api.events.IListener;
-import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 
-public class MessageListener implements IListener<MessageReceivedEvent> {
+public class MessageListener extends ListenerAdapter {
 
     public MessageListener() {
     }
 
     @Override
-    public void handle(MessageReceivedEvent event) {
-        String channelID = event.getMessage().getChannel().getID();
+    public void onMessageReceived(MessageReceivedEvent event) {
+        String channelID = event.getMessage().getTextChannel().getId();
         String sender = event.getMessage().getAuthor().getName();
-        String message = event.getMessage().toString();
+        String message = event.getMessage().getRawContent();
 
         SurvivorBot.getChannelManager().getChannels().stream()
                 .filter(channel -> channel.getDiscordChannelLinkID().equals(channelID))
@@ -33,7 +33,7 @@ public class MessageListener implements IListener<MessageReceivedEvent> {
                                 String colorized = ChatColor.translateAlternateColorCodes('&', format(channel, sender, message));
                                 TextComponent root = new TextComponent(TextComponent.fromLegacyText(colorized));
                                 root.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, SurvivorBot.getInstance().getInviteURL()));
-                                root.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.BOLD + "" + ChatColor.AQUA + sender + ChatColor.RESET + "\n" + (event.getMessage().getAuthor().getStatus().getStatusMessage() == null ? "" : "Playing: " + event.getMessage().getAuthor().getStatus().getStatusMessage())).create()));
+                                root.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.BOLD + "" + ChatColor.AQUA + sender + ChatColor.RESET + "\n" + (SurvivorBot.getInstance().getDJA().getGuildById(event.getGuild().getId()).getMember(event.getMessage().getAuthor()).getGame().getName() == null ? "" : "Playing: " + SurvivorBot.getInstance().getDJA().getGuildById(event.getGuild().getId()).getMember(event.getMessage().getAuthor()).getGame().getName())).create()));
                                 spigot.sendMessage(root);
                             });
                 });

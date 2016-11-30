@@ -1,55 +1,52 @@
 package com.fireblazerrr.survivorbot.discord;
 
 import com.fireblazerrr.survivorbot.SurvivorBot;
-import sx.blah.discord.api.ClientBuilder;
-import sx.blah.discord.api.IDiscordClient;
-import sx.blah.discord.util.DiscordException;
-import sx.blah.discord.util.RateLimitException;
+import net.dv8tion.jda.core.AccountType;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
+import javax.security.auth.login.LoginException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Instance {
 
-    private static final ReadyListener readyListener = new ReadyListener();
-    private static final MessageListener messageListener = new MessageListener();
     private final AtomicBoolean reconnect = new AtomicBoolean(true);
     private boolean master = true;
     private String token = "";
     private String adminRankID = "";
     private String serverID = "";
     private String inviteURL = "";
-    private volatile IDiscordClient client;
+    private JDA jda;
 
     public Instance() {
     }
 
     public void setupInstance() {
         if (!token.equals("")) {
-            login();
-
-            client.getDispatcher().registerListener(readyListener);
-            client.getDispatcher().registerListener(messageListener);
+            try {
+                SurvivorBot.info(token);
+                jda = new JDABuilder(AccountType.BOT)
+                        .setToken(token)
+                        .addListener(new ReadyListener())
+                        .addListener(new MessageListener())
+                        .buildBlocking();
+            } catch (LoginException | InterruptedException | RateLimitedException e) {
+                e.printStackTrace();
+            }
         } else {
             SurvivorBot.severe("Token is required for bot use");
         }
     }
 
-    private void login() {
-        try {
-            client = new ClientBuilder().withToken(token).login();
-        } catch (DiscordException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void terminate() {
-        reconnect.set(false);
-        try {
-            client.logout();
-        } catch (DiscordException | RateLimitException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void terminate() {
+//        reconnect.set(false);
+//        try {
+//            jda.logout();
+//        } catch (DiscordException | RateLimitException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public boolean isMaster() {
         return master;
@@ -83,12 +80,12 @@ public class Instance {
         this.serverID = serverID;
     }
 
-    public IDiscordClient getClient() {
-        return client;
+    public JDA getDJA() {
+        return jda;
     }
 
-    public void setClient(IDiscordClient client) {
-        this.client = client;
+    public void setJDA(JDA jda) {
+        this.jda = jda;
     }
 
     public String getInviteURL() {
