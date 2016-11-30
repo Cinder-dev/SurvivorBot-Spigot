@@ -442,6 +442,7 @@ public class StandardChannel implements Channel {
 
         // Send to discord
         if (!discordChannelLinkID.equals("")) {
+            SurvivorBot.getInstance().getDJA().getTextChannelById(discordChannelLinkID).sendMessage("<" + player.getName() + "> " + event.getMessage()).queue();
         }
         SurvivorBot.logChat(msg);
     }
