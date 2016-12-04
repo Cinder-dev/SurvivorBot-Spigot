@@ -17,6 +17,10 @@ public class Instance {
     private String adminRankID = "";
     private String serverID = "";
     private String inviteURL = "";
+    private boolean useAnnouncement = true;
+    private String announcementHeader = "&9===== &bRecent Announcement &9=====&f";
+    private String announcementFooter = "&9=============================&f";
+    private String announcementChannelID = "";
     private JDA jda;
 
     public Instance() {
@@ -94,5 +98,37 @@ public class Instance {
 
     public void setInviteURL(String inviteURL) {
         this.inviteURL = inviteURL;
+    }
+
+    public String getAnnouncementChannelID() {
+        return announcementChannelID;
+    }
+
+    public void setAnnouncementChannelID(String announcementChannelID) {
+        this.announcementChannelID = announcementChannelID;
+    }
+
+    public String getAnnouncementHeader() {
+        return announcementHeader;
+    }
+
+    public void setAnnouncementHeader(String announcementHeader) {
+        this.announcementHeader = announcementHeader;
+    }
+
+    public String getAnnouncementFooter() {
+        return announcementFooter;
+    }
+
+    public void setAnnouncementFooter(String announcementFooter) {
+        this.announcementFooter = announcementFooter;
+    }
+
+    public boolean isUseAnnouncement() {
+        return useAnnouncement;
+    }
+
+    public void setUseAnnouncement(boolean useAnnouncement) {
+        this.useAnnouncement = useAnnouncement;
     }
 }

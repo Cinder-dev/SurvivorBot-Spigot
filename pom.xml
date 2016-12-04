@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.fireblazerrr.survivorbot</groupId>
     <artifactId>SurvivorBot</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <url>http://www.tba.com</url>
     <build>
         <finalName>${project.artifactId}-Build-${project.version}-SNAPSHOT</finalName>
@@ -73,6 +73,14 @@
                 <configuration>
                     <!--  utterly useless artifact from shade 2.x  -->
                     <createDependencyReducedPom>false</createDependencyReducedPom>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                    <outputDirectory>S:/Dev/Java/SurvivorBot-Spigot/testserver/plugins</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>

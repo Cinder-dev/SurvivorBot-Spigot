@@ -15,6 +15,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -139,13 +141,25 @@ public class StandardChannel implements Channel {
                         break;
                     case "msg":
                         tc.setText("" + msg);
-                        ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.name);
-                        he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
+                        String[] words = msg.split("\\s+");
+                        boolean test = true;
+                        for (String word : words) {
+                            try {
+                                URL url = new URL(word);
+                                ce = new ClickEvent(ClickEvent.Action.OPEN_URL, url.toString());
+                                he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to follow link").create());
+                                test = false;
+                            } catch (MalformedURLException ignored) {}
+                        }
+                        if (test) {
+                            ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.name);
+                            he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
+                        }
                         create = true;
                         break;
                     case "sender":
                         if (prefix)
-                            tc.setText("" + chatter.getTeam().getPrefix() + player.getName());
+                            tc.setText("" + (chatter.getTeam() == null ? "" : chatter.getTeam().getPrefix()) + player.getName());
                         else
                             tc.setText("" + player.getName());
                         ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "@" + player.getName());
@@ -168,10 +182,12 @@ public class StandardChannel implements Channel {
                         prefix = chatter.getTeam() != null;
                         break;
                     case "suffix":
-                        tc.setText("" + chatter.getTeam().getSuffix());
-                        ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.name);
-                        he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
-                        create = true;
+                        if (chatter.getTeam() != null) {
+                            tc.setText("" + chatter.getTeam().getSuffix());
+                            ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.name);
+                            he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
+                            create = true;
+                        }
                         break;
                     case "groupprefix":
                         break;

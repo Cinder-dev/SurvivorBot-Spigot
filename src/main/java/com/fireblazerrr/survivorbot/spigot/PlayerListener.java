@@ -1,8 +1,11 @@
-package com.fireblazerrr.survivorbot.spigot.listeners;
+package com.fireblazerrr.survivorbot.spigot;
 
 import com.fireblazerrr.survivorbot.SurvivorBot;
 import com.fireblazerrr.survivorbot.channel.Channel;
+import com.fireblazerrr.survivorbot.chatter.Chatter;
+import com.fireblazerrr.survivorbot.utils.Announcement;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -22,6 +25,9 @@ public class PlayerListener implements Listener, TabCompleter {
 
     private ArrayList<String> channelIdentifiers = new ArrayList<>();
     private ArrayList<String> commandIdentifiers = new ArrayList<>();
+
+    private String joinFormat = SurvivorBot.getJoinFormat();
+    private String quitFormat = SurvivorBot.getQuitFormat();
 
     public PlayerListener(SurvivorBot plugin) {
         this.plugin = plugin;
@@ -227,11 +233,29 @@ public class PlayerListener implements Listener, TabCompleter {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        SurvivorBot.getChatterManager().addChatter(event.getPlayer());
+        Chatter joined = SurvivorBot.getChatterManager().addChatter(event.getPlayer());
+
+        new Announcement(event.getPlayer());
+
+        joinFormat = joinFormat.replace("{prefix}", joined.getTeam() == null ? "" : joined.getTeam().getPrefix())
+                .replace("{player}", joined.getName())
+                .replace("{suffix}", joined.getTeam() == null ? "" : joined.getTeam().getSuffix());
+        event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', joinFormat));
+        SurvivorBot.getInstance().getDJA().getTextChannelById(
+                SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
+                .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', joinFormat))).queue();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(PlayerQuitEvent event) {
+        Chatter quitter = SurvivorBot.getChatterManager().getChatter(event.getPlayer());
+        quitFormat = quitFormat.replace("{prefix}", quitter.getTeam() == null ? "" : quitter.getTeam().getPrefix())
+                .replace("{player}", quitter.getName())
+                .replace("{suffix}", quitter.getTeam() == null ? "" : quitter.getTeam().getSuffix());
+        event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', quitFormat));
+        SurvivorBot.getInstance().getDJA().getTextChannelById(
+                SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
+                .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', quitFormat))).queue();
         SurvivorBot.getChatterManager().removeChatter(event.getPlayer());
     }
 
@@ -239,4 +263,5 @@ public class PlayerListener implements Listener, TabCompleter {
     public void onPlayerChangeWorld(PlayerChangedWorldEvent event) {
         SurvivorBot.getChatterManager().getChatter(event.getPlayer()).refocus();
     }
+
 }
