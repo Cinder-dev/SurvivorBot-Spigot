@@ -28,9 +28,7 @@ public abstract class BasicCommand implements Command {
     }
 
     @Override
-    public void cancelInteraction(CommandSender cs) {
-
-    }
+    public void cancelInteraction(CommandSender cs) {}
 
     @Override
     public String getDescription() {

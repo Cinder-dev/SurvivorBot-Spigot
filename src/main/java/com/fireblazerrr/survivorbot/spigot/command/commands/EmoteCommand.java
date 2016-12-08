@@ -4,7 +4,7 @@ import com.fireblazerrr.survivorbot.SurvivorBot;
 import com.fireblazerrr.survivorbot.channel.Channel;
 import com.fireblazerrr.survivorbot.chatter.Chatter;
 import com.fireblazerrr.survivorbot.spigot.command.BasicCommand;
-import com.fireblazerrr.survivorbot.spigot.events.custom.ChannelChatEvent;
+import com.fireblazerrr.survivorbot.spigot.events.ChannelChatEvent;
 import com.fireblazerrr.survivorbot.utils.message.MessageHandler;
 import com.fireblazerrr.survivorbot.utils.message.MessageNotFoundException;
 import com.fireblazerrr.survivorbot.utils.message.Messaging;

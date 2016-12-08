@@ -1,7 +1,7 @@
 package com.fireblazerrr.survivorbot.channel;
 
 import com.fireblazerrr.survivorbot.chatter.Chatter;
-import com.fireblazerrr.survivorbot.spigot.events.custom.ChannelChatEvent;
+import com.fireblazerrr.survivorbot.spigot.events.ChannelChatEvent;
 import com.fireblazerrr.survivorbot.utils.message.MessageFormatSupplier;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;

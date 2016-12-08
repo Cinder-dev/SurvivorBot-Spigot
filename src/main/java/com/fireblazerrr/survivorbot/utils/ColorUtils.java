@@ -1,6 +1,5 @@
 package com.fireblazerrr.survivorbot.utils;
 
-import com.fireblazerrr.survivorbot.SurvivorBot;
 import org.bukkit.ChatColor;
 
 import java.awt.*;

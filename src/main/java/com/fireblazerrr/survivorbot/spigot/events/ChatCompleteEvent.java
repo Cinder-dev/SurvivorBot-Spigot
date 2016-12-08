@@ -1,4 +1,4 @@
-package com.fireblazerrr.survivorbot.spigot.events.custom;
+package com.fireblazerrr.survivorbot.spigot.events;
 
 import com.fireblazerrr.survivorbot.channel.Channel;
 import com.fireblazerrr.survivorbot.chatter.Chatter;

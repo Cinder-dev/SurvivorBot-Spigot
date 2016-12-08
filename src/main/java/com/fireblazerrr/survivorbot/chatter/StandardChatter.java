@@ -166,11 +166,15 @@ public class StandardChatter implements Chatter {
     }
 
     public Result canSpeak(Channel channel) {
-        return !channel.isMember(this) ? Result.INVALID :
+        return !channel.isMember(this) ?
+                Result.INVALID :
                 (!channel.isTransient() && !SurvivorBot.hasChannelPermission(this.player, channel, Permission.SPEAK) ?
-                        Result.NO_PERMISSION : (!this.muted && !channel.isMuted(this.player.getName()) ?
-                        (!channel.hasWorld(this.player.getWorld()) ? Result.BAD_WORLD : Result.ALLOWED) :
-                        Result.MUTED));
+                        Result.NO_PERMISSION :
+                        (!this.muted && !channel.isMuted(this.player.getName()) ?
+                                (!channel.hasWorld(this.player.getWorld()) ?
+                                        Result.BAD_WORLD :
+                                        Result.ALLOWED) :
+                                Result.MUTED));
     }
 
     public Result canViewInfo(Channel channel) {
@@ -364,20 +368,18 @@ public class StandardChatter implements Chatter {
 
     public void disconnect() {
         Iterator<Channel> removal = this.channels.iterator();
-        while (removal.hasNext()){
+        while (removal.hasNext()) {
             Channel ch = removal.next();
             removal.remove();
             ch.removeMember(this, false, false);
         }
     }
 
-    public Team getTeam()
-    {
+    public Team getTeam() {
         return team;
     }
 
-    public void setTeam(Team t)
-    {
+    public void setTeam(Team t) {
         team = t;
     }
 

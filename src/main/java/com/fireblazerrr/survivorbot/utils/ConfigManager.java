@@ -177,9 +177,9 @@ public class ConfigManager {
         SurvivorBot.getInstance().setInviteURL(config.getString("discord.inviteURL"));
         SurvivorBot.getInstance().setAnnouncementChannelID(config.getString("discord.announcement-channel-id"));
 
-        SurvivorBot.getJedisManager().setHostname(config.getString("redis.hostname"));
-        SurvivorBot.getJedisManager().setPort(config.getInt("redis.port"));
-        SurvivorBot.getJedisManager().setPassword(config.getString("redis.password"));
+//        SurvivorBot.getJedisManager().setHostname(config.getString("redis.hostname"));
+//        SurvivorBot.getJedisManager().setPort(config.getInt("redis.port"));
+//        SurvivorBot.getJedisManager().setPassword(config.getString("redis.password"));
 
         try {
             config.options().copyDefaults(true);
