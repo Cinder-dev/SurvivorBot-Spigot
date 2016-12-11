@@ -1,28 +1,28 @@
 package com.fireblazerrr.survivorbot.discord;
 
 import com.fireblazerrr.survivorbot.SurvivorBot;
-import sx.blah.discord.api.events.IListener;
-import sx.blah.discord.handle.impl.events.ReadyEvent;
+import net.dv8tion.jda.core.events.ReadyEvent;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
-public class ReadyListener implements IListener<ReadyEvent> {
+public class ReadyListener extends ListenerAdapter {
 
     public ReadyListener() {
-
     }
 
     @Override
-    public void handle(ReadyEvent event) {
-        SurvivorBot.info("*** Discord discord armed ***");
-        event.getClient().getGuilds().forEach(iGuild -> {
-            SurvivorBot.info("===== " + iGuild.getName() + " \t\t[" + iGuild.getID() + "] =====");
-            SurvivorBot.info("///// Channels /////");
-            iGuild.getChannels().forEach(iChannel -> SurvivorBot.info("     " + iChannel.getName() + " \t\t[" + iChannel.getID() + "]"));
+    public void onReady(ReadyEvent event) {
+        SurvivorBot.info("*** Discord bot armed ***");
+        event.getJDA().getGuilds().forEach(guild -> {
+            SurvivorBot.info("===== " + guild.getName() + " [" + guild.getId() + "] =====");
+            SurvivorBot.info("///// Text Channels /////");
+            guild.getTextChannels().forEach(textChannel -> SurvivorBot.info("      " + textChannel.getName() + " [" + textChannel.getId() + "]"));
+            SurvivorBot.info("///// Voice Channels /////");
+            guild.getVoiceChannels().forEach(voiceChannel -> SurvivorBot.info("      " + voiceChannel.getName() + " [" + voiceChannel.getId() + "]"));
             SurvivorBot.info("///// Roles /////");
-            iGuild.getRoles().forEach(iRole -> SurvivorBot.info("     " + iRole.getName() + " \t\t[" + iRole.getID() + "]"));
-            SurvivorBot.info("///// Users - " + iGuild.getUsers().size() + " /////");
-            if (iGuild.getUsers().size() < 100)
-                iGuild.getUsers().forEach(iUser -> SurvivorBot.info("     " + iUser.getName() + " \t\t[" + iUser.getID() + "]"));
-            SurvivorBot.info("================================================================");
+            guild.getRoles().forEach(role -> SurvivorBot.info("      " + role.getName() + " [" + role.getId() + "]"));
+            SurvivorBot.info("///// Users /////");
+            guild.getMembers().forEach(member -> SurvivorBot.info("      " + member.getEffectiveName() + " [" + member.getUser().getId() + "]"));
+            SurvivorBot.info("==========================================================================================");
         });
     }
 }

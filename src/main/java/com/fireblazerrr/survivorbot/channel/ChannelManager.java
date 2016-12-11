@@ -1,21 +1,20 @@
 package com.fireblazerrr.survivorbot.channel;
 
-import com.fireblazerrr.survivorbot.SurvivorBot;
-import com.fireblazerrr.survivorbot.chatter.Chatter.Permission;
+import com.fireblazerrr.survivorbot.chatter.Chatter;
 import com.fireblazerrr.survivorbot.utils.message.MessageFormatSupplier;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ChannelManager implements MessageFormatSupplier {
     private Map<String, Channel> channels = new HashMap<>();
     private Channel defaultChannel;
-    private Map<Permission, org.bukkit.permissions.Permission> wildcardPermissions = new EnumMap<>(Permission.class);
-    private Set<Permission> modPermissions = EnumSet.noneOf(Permission.class);
+    private Map<Chatter.Permission, Permission> wildcardPermissions = new EnumMap<>(Chatter.Permission.class);
+    private Set<Chatter.Permission> modPermissions = EnumSet.noneOf(Chatter.Permission.class);
     private ChannelStorage storage;
     private String standardFormat = "{color}[{nick}{color}] &f{prefix}{sender}{suffix}{color}: {msg}";
     private String emoteFormat = "{color}[{nick}{color}] * {msg}";
@@ -37,9 +36,9 @@ public class ChannelManager implements MessageFormatSupplier {
         this.channels.put(channel.getName().toLowerCase(), channel);
         this.channels.put(channel.getNick().toLowerCase(), channel);
         if (!channel.isTransient()) {
-            Permission[] pm = Permission.values();
+            Chatter.Permission[] pm = Chatter.Permission.values();
 
-            for (Permission forceJoinPermission : pm) {
+            for (Chatter.Permission forceJoinPermission : pm) {
                 org.bukkit.permissions.Permission forceLeavePermission = this.wildcardPermissions
                         .get(forceJoinPermission);
                 forceLeavePermission.getChildren().put(forceJoinPermission.form(channel).toLowerCase(), Boolean.TRUE);
@@ -47,21 +46,21 @@ public class ChannelManager implements MessageFormatSupplier {
             }
 
             PluginManager pluginManager = Bukkit.getServer().getPluginManager();
-            String focus = Permission.FOCUS.form(channel).toLowerCase();
+            String focus = Chatter.Permission.FOCUS.form(channel).toLowerCase();
 
             try {
                 pluginManager.addPermission(new org.bukkit.permissions.Permission(focus, PermissionDefault.TRUE));
             } catch (IllegalArgumentException ignored) {
             }
 
-            String autoJoin = Permission.AUTOJOIN.form(channel).toLowerCase();
+            String autoJoin = Chatter.Permission.AUTOJOIN.form(channel).toLowerCase();
 
             try {
                 pluginManager.addPermission(new org.bukkit.permissions.Permission(autoJoin, PermissionDefault.FALSE));
             } catch (IllegalArgumentException ignored) {
             }
 
-            String forceJoin = Permission.FORCE_JOIN.form(channel).toLowerCase();
+            String forceJoin = Chatter.Permission.FORCE_JOIN.form(channel).toLowerCase();
 
             try {
                 pluginManager.addPermission(new org.bukkit.permissions.Permission(forceJoin, PermissionDefault.FALSE));
@@ -69,7 +68,7 @@ public class ChannelManager implements MessageFormatSupplier {
 
             }
 
-            String forceLeave = Permission.FORCE_LEAVE.form(channel).toLowerCase();
+            String forceLeave = Chatter.Permission.FORCE_LEAVE.form(channel).toLowerCase();
 
             try {
                 pluginManager.addPermission(new org.bukkit.permissions.Permission(forceLeave, PermissionDefault.FALSE));
@@ -86,22 +85,22 @@ public class ChannelManager implements MessageFormatSupplier {
     }
 
     /**
-     * Adds a {@link Permission} to the available moderator permissions.
+     * Adds a {@link Chatter.Permission} to the available moderator permissions.
      *
-     * @param permission {@link Permission} to add.
+     * @param permission {@link Chatter.Permission} to add.
      */
-    public void addModPermission(Permission permission) {
+    public void addModPermission(Chatter.Permission permission) {
         this.modPermissions.add(permission);
     }
 
     /**
-     * Checks if moderators have access to a {@link Permission}
+     * Checks if moderators have access to a {@link Chatter.Permission}
      *
-     * @param permission {@link Permission} to check for.
+     * @param permission {@link Chatter.Permission} to check for.
      *
-     * @return true if {@link Permission} is set.
+     * @return true if {@link Chatter.Permission} is set.
      */
-    public boolean checkModPermission(Permission permission) {
+    public boolean checkModPermission(Chatter.Permission permission) {
         return this.modPermissions.contains(permission);
     }
 
@@ -138,7 +137,6 @@ public class ChannelManager implements MessageFormatSupplier {
      * @return a {@link List} of {@link Channel}.
      */
     public List<Channel> getChannels() {
-        SurvivorBot.debug("Channel Identifiers", this.channels.keySet().stream().map(String::toString).collect(Collectors.toList()).toString());
         ArrayList<Channel> list = new ArrayList<>();
 
         this.channels.values().stream().filter(channel -> !list.contains(channel)).forEach(list::add);
@@ -154,11 +152,11 @@ public class ChannelManager implements MessageFormatSupplier {
         this.defaultChannel = channel;
     }
 
-    public Set<Permission> getModPermissions() {
+    public Set<Chatter.Permission> getModPermissions() {
         return this.modPermissions;
     }
 
-    public void setModPermissions(Set<Permission> modPermissions) {
+    public void setModPermissions(Set<Chatter.Permission> modPermissions) {
         this.modPermissions = modPermissions;
     }
 
@@ -227,8 +225,8 @@ public class ChannelManager implements MessageFormatSupplier {
     }
 
     public void registerChannelPermissions() {
-        Arrays.stream(Permission.values()).forEach(permission -> {
-            org.bukkit.permissions.Permission perm = new org.bukkit.permissions.Permission(permission.formWildcard(), PermissionDefault.FALSE);
+        Arrays.stream(Chatter.Permission.values()).forEach(permission -> {
+            Permission perm = new Permission(permission.formWildcard(), PermissionDefault.FALSE);
             Bukkit.getServer().getPluginManager().addPermission(perm);
             this.wildcardPermissions.put(permission, perm);
         });
@@ -238,20 +236,20 @@ public class ChannelManager implements MessageFormatSupplier {
         this.channels.remove(channel.getName().toLowerCase());
         this.channels.remove(channel.getNick().toLowerCase());
         if (!channel.isTransient()) {
-            Arrays.stream(Permission.values()).forEach(permission -> {
-                org.bukkit.permissions.Permission forceLeavePermission = this.wildcardPermissions.get(permission);
+            Arrays.stream(Chatter.Permission.values()).forEach(permission -> {
+                Permission forceLeavePermission = this.wildcardPermissions.get(permission);
                 forceLeavePermission.getChildren().remove(permission.form(channel).toLowerCase());
                 forceLeavePermission.recalculatePermissibles();
             });
 
             PluginManager pluginManager = Bukkit.getServer().getPluginManager();
-            String focus = Permission.FOCUS.form(channel).toLowerCase();
+            String focus = Chatter.Permission.FOCUS.form(channel).toLowerCase();
             pluginManager.removePermission(focus);
-            String autoJoin = Permission.AUTOJOIN.form(channel).toLowerCase();
+            String autoJoin = Chatter.Permission.AUTOJOIN.form(channel).toLowerCase();
             pluginManager.removePermission(autoJoin);
-            String forceJoin = Permission.FORCE_JOIN.form(channel).toLowerCase();
+            String forceJoin = Chatter.Permission.FORCE_JOIN.form(channel).toLowerCase();
             pluginManager.removePermission(forceJoin);
-            String forceLeave = Permission.FORCE_LEAVE.form(channel).toLowerCase();
+            String forceLeave = Chatter.Permission.FORCE_LEAVE.form(channel).toLowerCase();
             pluginManager.removePermission(forceLeave);
 
             this.storage.removeChannel(channel);

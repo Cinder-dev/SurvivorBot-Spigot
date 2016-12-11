@@ -4,7 +4,7 @@ import com.fireblazerrr.survivorbot.SurvivorBot;
 import com.fireblazerrr.survivorbot.channel.Channel;
 import com.fireblazerrr.survivorbot.chatter.Chatter;
 import com.fireblazerrr.survivorbot.spigot.command.BasicCommand;
-import com.fireblazerrr.survivorbot.spigot.events.custom.ChannelChatEvent;
+import com.fireblazerrr.survivorbot.spigot.events.ChannelChatEvent;
 import com.fireblazerrr.survivorbot.utils.message.MessageHandler;
 import com.fireblazerrr.survivorbot.utils.message.MessageNotFoundException;
 import com.fireblazerrr.survivorbot.utils.message.Messaging;
@@ -12,9 +12,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import sx.blah.discord.util.DiscordException;
-import sx.blah.discord.util.MissingPermissionsException;
-import sx.blah.discord.util.RateLimitException;
 
 import java.util.Arrays;
 
@@ -92,12 +89,7 @@ public class EmoteCommand extends BasicCommand {
             } else {
                 channel.emote(chatter, msg.toString());
                 if (!channel.getDiscordChannelLinkID().equals("")) {
-                    try {
-                        SurvivorBot.getInstance().getClient().getChannelByID(channel.getDiscordChannelLinkID())
-                                .sendMessage(msg.toString());
-                    } catch (MissingPermissionsException | RateLimitException | DiscordException e) {
-                        e.printStackTrace();
-                    }
+                    SurvivorBot.getInstance().getDJA().getTextChannelById(channel.getDiscordChannelLinkID()).sendMessage(msg.toString());
                 }
                 return true;
             }

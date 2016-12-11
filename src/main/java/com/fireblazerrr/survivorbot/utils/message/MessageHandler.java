@@ -4,7 +4,7 @@ import com.fireblazerrr.survivorbot.SurvivorBot;
 import com.fireblazerrr.survivorbot.channel.Channel;
 import com.fireblazerrr.survivorbot.chatter.Chatter;
 import com.fireblazerrr.survivorbot.chatter.ChatterManager;
-import com.fireblazerrr.survivorbot.spigot.events.custom.ChannelChatEvent;
+import com.fireblazerrr.survivorbot.spigot.events.ChannelChatEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

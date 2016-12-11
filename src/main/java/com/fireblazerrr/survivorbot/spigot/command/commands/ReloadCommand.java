@@ -1,7 +1,6 @@
 package com.fireblazerrr.survivorbot.spigot.command.commands;
 
 import com.fireblazerrr.survivorbot.SurvivorBot;
-import com.fireblazerrr.survivorbot.channel.Channel;
 import com.fireblazerrr.survivorbot.channel.ChannelManager;
 import com.fireblazerrr.survivorbot.chatter.ChatterManager;
 import com.fireblazerrr.survivorbot.spigot.command.BasicCommand;
@@ -10,7 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
 import java.io.File;
-import java.util.stream.Collectors;
 
 public class ReloadCommand extends BasicCommand {
     public ReloadCommand() {

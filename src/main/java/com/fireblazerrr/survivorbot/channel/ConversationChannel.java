@@ -2,8 +2,8 @@ package com.fireblazerrr.survivorbot.channel;
 
 import com.fireblazerrr.survivorbot.SurvivorBot;
 import com.fireblazerrr.survivorbot.chatter.Chatter;
-import com.fireblazerrr.survivorbot.spigot.events.custom.ChannelChatEvent;
-import com.fireblazerrr.survivorbot.spigot.events.custom.ChatCompleteEvent;
+import com.fireblazerrr.survivorbot.spigot.events.ChannelChatEvent;
+import com.fireblazerrr.survivorbot.spigot.events.ChatCompleteEvent;
 import com.fireblazerrr.survivorbot.utils.message.MessageFormatSupplier;
 import com.fireblazerrr.survivorbot.utils.message.MessageNotFoundException;
 import net.md_5.bungee.api.chat.ClickEvent;

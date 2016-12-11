@@ -39,7 +39,7 @@ public class CommandHandler {
                 identifier.append(" ").append(args[cmd]);
             }
 
-            Command command = this.getCmdFromIdent(identifier.toString(), sender);
+            Command command = this.getCmdFromIdentifier(identifier.toString(), sender);
             if (command != null) {
                 String[] realArgs = Arrays.copyOfRange(args, argsIncluded, args.length);
                 if (!command.isInProgress(sender)) {
@@ -77,10 +77,10 @@ public class CommandHandler {
         }
     }
 
-    public Command getCmdFromIdent(String ident, CommandSender executor) {
-        ident = ident.toLowerCase();
-        if (this.identifiers.containsKey(ident)) {
-            return this.identifiers.get(ident);
+    public Command getCmdFromIdentifier(String identifier, CommandSender executor) {
+        identifier = identifier.toLowerCase();
+        if (this.identifiers.containsKey(identifier)) {
+            return this.identifiers.get(identifier);
         } else {
             Iterator i = this.commands.values().iterator();
 
@@ -89,7 +89,7 @@ public class CommandHandler {
                 if (!i.hasNext())
                     return null;
                 cmd = (Command) i.next();
-            } while (!cmd.isIdentifier(executor, ident));
+            } while (!cmd.isIdentifier(executor, identifier));
 
             return cmd;
         }

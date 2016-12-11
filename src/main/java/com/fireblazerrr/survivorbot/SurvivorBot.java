@@ -7,10 +7,9 @@ import com.fireblazerrr.survivorbot.chatter.Chatter;
 import com.fireblazerrr.survivorbot.chatter.ChatterManager;
 import com.fireblazerrr.survivorbot.chatter.YMLChatterStorage;
 import com.fireblazerrr.survivorbot.discord.Instance;
-import com.fireblazerrr.survivorbot.jedis.JedisManager;
+import com.fireblazerrr.survivorbot.spigot.PlayerListener;
 import com.fireblazerrr.survivorbot.spigot.command.CommandHandler;
 import com.fireblazerrr.survivorbot.spigot.command.commands.*;
-import com.fireblazerrr.survivorbot.spigot.listeners.PlayerListener;
 import com.fireblazerrr.survivorbot.utils.ChatLogFormatter;
 import com.fireblazerrr.survivorbot.utils.ConfigManager;
 import com.fireblazerrr.survivorbot.utils.message.MessageHandler;
@@ -41,14 +40,16 @@ public class SurvivorBot extends JavaPlugin {
     private static final MessageHandler messageHandler = new MessageHandler();
     private static final ConfigManager configManager = new ConfigManager();
     private static final MessageNotFoundException except = new MessageNotFoundException();
-    private static final JedisManager jedisManager = new JedisManager();
     private static final boolean DEBUG = true;
     private static Instance instance = new Instance();
     private static SurvivorBot plugin;
     private static ResourceBundle messages;
     private static boolean chatLogEnabled;
     private static boolean logToBukkit;
-    private Thread jedisManagerThread;
+
+    private static boolean discordJoinLeave = true;
+    private static String joinFormat = "&f{prefix}{player}{suffix} &6joined the game";
+    private static String quitFormat = "&f{prefix}{player}{suffix} &6left the game";
 
     public SurvivorBot() {
     }
@@ -107,10 +108,6 @@ public class SurvivorBot extends JavaPlugin {
         return chatterManager;
     }
 
-    public static JedisManager getJedisManager() {
-        return jedisManager;
-    }
-
     public static Instance getInstance() {
         return instance;
     }
@@ -118,7 +115,7 @@ public class SurvivorBot extends JavaPlugin {
     public static void debug(String identifier, String... args) {
         if (DEBUG) {
             final String[] results = {""};
-            Arrays.stream(args).forEach(s -> results[0] +=  s + " | ");
+            Arrays.stream(args).forEach(s -> results[0] += s + " | ");
             log.info("[SurvivorBot Debug] " + identifier + " | " + results[0]);
         }
     }
@@ -155,12 +152,6 @@ public class SurvivorBot extends JavaPlugin {
             chatterManager.clear();
         }
 
-//        jedisManager.destroy();
-        if (instance.isMaster())
-            instance.terminate();
-
-//        jedisManagerThread.stop();
-
         info("Version " + this.getDescription().getVersion() + " is disabled.");
     }
 
@@ -183,11 +174,6 @@ public class SurvivorBot extends JavaPlugin {
         if (instance.isMaster()) {
             instance.setupInstance();
         }
-
-        // Create Jedis Event Listener
-//        jedisManagerThread = new Thread(jedisManager);
-//        jedisManagerThread.start();
-
     }
 
     public void setupStorage() {
@@ -251,5 +237,29 @@ public class SurvivorBot extends JavaPlugin {
                 ex.printStackTrace();
             }
         }
+    }
+
+    public static String getJoinFormat() {
+        return joinFormat;
+    }
+
+    public static void setJoinFormat(String joinFormat) {
+        joinFormat = joinFormat;
+    }
+
+    public static String getQuitFormat() {
+        return quitFormat;
+    }
+
+    public static void setQuitFormat(String quitFormat) {
+        quitFormat = quitFormat;
+    }
+
+    public static boolean isDiscordJoinLeave() {
+        return discordJoinLeave;
+    }
+
+    public static void setDiscordJoinLeave(boolean discordJoinLeave) {
+        SurvivorBot.discordJoinLeave = discordJoinLeave;
     }
 }

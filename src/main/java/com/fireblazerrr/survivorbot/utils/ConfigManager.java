@@ -152,7 +152,13 @@ public class ConfigManager {
         channelManager.setDiscordFormat(config.getString("format.discord"));
         channelManager.setEmoteFormat(config.getString("format.emote"));
         channelManager.setConversationFormat(config.getString("format.private-message"));
+        SurvivorBot.getInstance().setAnnouncementHeader(config.getString("format.announcement-header"));
+        SurvivorBot.getInstance().setAnnouncementFooter(config.getString("format.announcement-footer"));
+        SurvivorBot.setJoinFormat(config.getString("format.join"));
+        SurvivorBot.setQuitFormat(config.getString("format.quit"));
         channelManager.setUsingEmotes(config.getBoolean("use-channel-emotes", true));
+        SurvivorBot.getInstance().setUseAnnouncement(config.getBoolean("use-discord-announcement-channel"));
+        SurvivorBot.setDiscordJoinLeave(config.getBoolean("use-discord-join-leave"));
         try {
             SurvivorBot.setLocale(this.loadLocale(config.getString("locale")));
         } catch (ClassNotFoundException e) {
@@ -169,10 +175,11 @@ public class ConfigManager {
         SurvivorBot.getInstance().setAdminRankID(config.getString("discord.admin-rank-id"));
         SurvivorBot.getInstance().setServerID(config.getString("discord.server-id"));
         SurvivorBot.getInstance().setInviteURL(config.getString("discord.inviteURL"));
+        SurvivorBot.getInstance().setAnnouncementChannelID(config.getString("discord.announcement-channel-id"));
 
-        SurvivorBot.getJedisManager().setHostname(config.getString("redis.hostname"));
-        SurvivorBot.getJedisManager().setPort(config.getInt("redis.port"));
-        SurvivorBot.getJedisManager().setPassword(config.getString("redis.password"));
+//        SurvivorBot.getJedisManager().setHostname(config.getString("redis.hostname"));
+//        SurvivorBot.getJedisManager().setPort(config.getInt("redis.port"));
+//        SurvivorBot.getJedisManager().setPassword(config.getString("redis.password"));
 
         try {
             config.options().copyDefaults(true);
@@ -220,7 +227,13 @@ public class ConfigManager {
         config.set("format.discord", SurvivorBot.getChannelManager().getDiscordFormat());
         config.set("format.emote", SurvivorBot.getChannelManager().getEmoteFormat());
         config.set("format.private-message", SurvivorBot.getChannelManager().getConversationFormat());
+        config.set("format.announcement-header", SurvivorBot.getInstance().getAnnouncementHeader());
+        config.set("format.announcement-footer", SurvivorBot.getInstance().getAnnouncementFooter());
+        config.set("format.join", SurvivorBot.getJoinFormat());
+        config.set("format.quit", SurvivorBot.getQuitFormat());
         config.set("use-channel-emotes", Boolean.TRUE);
+        config.set("use-discord-announcement-channel", Boolean.TRUE);
+        config.set("use-discord-join-leave", Boolean.TRUE);
         config.set("locale", "en_US");
         config.set("log-chat", Boolean.TRUE);
         config.set("log-to-bukkit", Boolean.FALSE);
@@ -230,6 +243,7 @@ public class ConfigManager {
         config.set("discord.admin-rank-id", "");
         config.set("discord.server-id", "");
         config.set("discord.inviteURL", "");
+        config.set("discord.announcement-channel-id", "");
         config.set("redis.hostname", "");
         config.set("redis.port", 6379);
         config.set("redis.password", "");
