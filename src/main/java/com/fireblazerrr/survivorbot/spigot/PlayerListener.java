@@ -28,6 +28,7 @@ public class PlayerListener implements Listener, TabCompleter {
 
     private String joinFormat = SurvivorBot.getJoinFormat();
     private String quitFormat = SurvivorBot.getQuitFormat();
+    private String achievementFormat = "%s has just earned the achievement [%s]";
 
     public PlayerListener(SurvivorBot plugin) {
         this.plugin = plugin;
@@ -231,37 +232,154 @@ public class PlayerListener implements Listener, TabCompleter {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Chatter joined = SurvivorBot.getChatterManager().addChatter(event.getPlayer());
 
         new Announcement(event.getPlayer());
 
-        joinFormat = joinFormat.replace("{prefix}", joined.getTeam() == null ? "" : joined.getTeam().getPrefix())
+        String newMessage = joinFormat.replace("{prefix}", joined.getTeam() == null ? "" : joined.getTeam().getPrefix())
                 .replace("{player}", joined.getName())
                 .replace("{suffix}", joined.getTeam() == null ? "" : joined.getTeam().getSuffix());
-        event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', joinFormat));
+        event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
         SurvivorBot.getInstance().getDJA().getTextChannelById(
                 SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
-                .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', joinFormat))).queue();
+                .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', newMessage))).queue();
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerQuit(PlayerQuitEvent event) {
         Chatter quitter = SurvivorBot.getChatterManager().getChatter(event.getPlayer());
-        quitFormat = quitFormat.replace("{prefix}", quitter.getTeam() == null ? "" : quitter.getTeam().getPrefix())
+        String newMessage = quitFormat.replace("{prefix}", quitter.getTeam() == null ? "" : quitter.getTeam().getPrefix())
                 .replace("{player}", quitter.getName())
                 .replace("{suffix}", quitter.getTeam() == null ? "" : quitter.getTeam().getSuffix());
-        event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', quitFormat));
+        event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
         SurvivorBot.getInstance().getDJA().getTextChannelById(
                 SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
-                .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', quitFormat))).queue();
+                .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', newMessage))).queue();
         SurvivorBot.getChatterManager().removeChatter(event.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerChangeWorld(PlayerChangedWorldEvent event) {
         SurvivorBot.getChatterManager().getChatter(event.getPlayer()).refocus();
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerAchievement(PlayerAchievementAwardedEvent event) {
+
+        String achievementName = "";
+
+        switch (event.getAchievement()) {
+            case OPEN_INVENTORY:
+                achievementName = "Taking Inventory";
+                break;
+            case MINE_WOOD:
+                achievementName = "Getting Wood";
+                break;
+            case BUILD_WORKBENCH:
+                achievementName = "Benchmarking";
+                break;
+            case BUILD_PICKAXE:
+                achievementName = "Time to Mine!";
+                break;
+            case BUILD_FURNACE:
+                achievementName = "Hot Topic";
+                break;
+            case ACQUIRE_IRON:
+                achievementName = "Acquire hardware";
+                break;
+            case BUILD_HOE:
+                achievementName = "Time to Farm!";
+                break;
+            case MAKE_BREAD:
+                achievementName = "Bake Bread";
+                break;
+            case BAKE_CAKE:
+                achievementName = "The Lie";
+                break;
+            case BOOKCASE:
+                achievementName = "Librarian";
+                break;
+            case BREED_COW:
+                achievementName = "Repopulation";
+                break;
+            case BUILD_BETTER_PICKAXE:
+                achievementName = "Getting an Upgrade";
+                break;
+            case COOK_FISH:
+                achievementName = "Delicious Fish";
+                break;
+            case ON_A_RAIL:
+                achievementName = "On A Rail";
+                break;
+            case BUILD_SWORD:
+                achievementName = "Time to Strike!";
+                break;
+            case KILL_ENEMY:
+                achievementName = "Monster Hunter";
+                break;
+            case KILL_COW:
+                achievementName = "Cow Tipper";
+                break;
+            case FLY_PIG:
+                achievementName = "When Pigs Fly";
+                break;
+            case SNIPE_SKELETON:
+                achievementName = "Sniper Duel";
+                break;
+            case GET_DIAMONDS:
+                achievementName = "DIAMONDS!";
+                break;
+            case NETHER_PORTAL:
+                achievementName = "We Need to Go Deeper";
+                break;
+            case GHAST_RETURN:
+                achievementName = "Return to Sender";
+                break;
+            case GET_BLAZE_ROD:
+                achievementName = "Into Fire";
+                break;
+            case BREW_POTION:
+                achievementName = "Local Brewery";
+                break;
+            case END_PORTAL:
+                achievementName = "The End?";
+                break;
+            case THE_END:
+                achievementName = "The End.";
+                break;
+            case ENCHANTMENTS:
+                achievementName = "Enchanter";
+                break;
+            case OVERKILL:
+                achievementName = "Overkill";
+                break;
+            case EXPLORE_ALL_BIOMES:
+                achievementName = "Adventuring Time";
+                break;
+            case SPAWN_WITHER:
+                achievementName = "The Beginning?";
+                break;
+            case KILL_WITHER:
+                achievementName = "The Beginning.";
+                break;
+            case FULL_BEACON:
+                achievementName = "Beaconator";
+                break;
+            case DIAMONDS_TO_YOU:
+                achievementName = "Diamonds to you!";
+                break;
+            case OVERPOWERED:
+                achievementName = "Overpowered";
+                break;
+        }
+
+        SurvivorBot.getInstance().getDJA().getTextChannelById(
+                SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID()
+        ).sendMessage(
+                String.format(achievementFormat, event.getPlayer().getName(), achievementName)
+        ).queue();
     }
 
 }
