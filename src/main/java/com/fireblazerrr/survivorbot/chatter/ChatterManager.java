@@ -21,7 +21,7 @@ public class ChatterManager {
         if (chatter != null) {
             return chatter;
         } else {
-            Object chatter1 = this.storage.load(player.getName());
+            Object chatter1 = this.storage.load(player.getUniqueId());
             if (chatter1 == null) {
                 SurvivorBot.severe("Null chatter for: " + player.getName() + " was detected, wiping all player info and attempting to load bogus chatter.");
                 chatter1 = new StandardChatter(this.storage, player);

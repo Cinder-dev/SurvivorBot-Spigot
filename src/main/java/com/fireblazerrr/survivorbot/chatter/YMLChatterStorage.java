@@ -28,13 +28,13 @@ public class YMLChatterStorage implements ChatterStorage {
     }
 
     @Override
-    public Chatter load(String name) {
-        File folder = new File(this.chatterFolder, name.substring(0, 1).toLowerCase());
-        File file = new File(folder, name + ".yml");
+    public Chatter load(UUID userUID) {
+        //File folder = new File(this.chatterFolder, name.substring(0, 1).toLowerCase());
+        File file = new File(this.chatterFolder, userUID.toString() + ".yml");
         YamlConfiguration config = new YamlConfiguration();
 
         try {
-            folder.mkdirs();
+            //folder.mkdirs();
             if (file.exists()) {
                 config.load(file);
             }
@@ -42,7 +42,7 @@ public class YMLChatterStorage implements ChatterStorage {
             ex.printStackTrace();
         }
 
-        Player player = Bukkit.getServer().getPlayerExact(name);
+        Player player = Bukkit.getServer().getPlayer(userUID);
         if (player == null) {
             return null;
         } else {
@@ -76,6 +76,7 @@ public class YMLChatterStorage implements ChatterStorage {
     public void update(Chatter chatter) {
         YamlConfiguration config = new YamlConfiguration();
         String name = chatter.getName();
+        config.set("uuid", chatter.getPlayer().getUniqueId().toString());
         config.set("name", name);
         if (chatter.getActiveChannel() != null) {
             if (chatter.getActiveChannel().isTransient()) {
@@ -93,8 +94,8 @@ public class YMLChatterStorage implements ChatterStorage {
         config.set("ignores", new ArrayList<>(chatter.getIgnores()));
         config.set("muted", chatter.isMuted());
         config.set("autojoin", Boolean.FALSE);
-        File folder1 = new File(this.chatterFolder, name.substring(0, 1).toLowerCase());
-        File file1 = new File(folder1, name + ".yml");
+        //File folder1 = new File(this.chatterFolder, name.substring(0, 1).toLowerCase());
+        File file1 = new File(this.chatterFolder, chatter.getPlayer().getUniqueId().toString() + ".yml");
 
         try {
             config.save(file1);

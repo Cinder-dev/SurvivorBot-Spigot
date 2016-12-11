@@ -1,10 +1,12 @@
 package com.fireblazerrr.survivorbot.chatter;
 
+import java.util.UUID;
+
 public interface ChatterStorage {
 
     void flagUpdate(Chatter chatter);
 
-    Chatter load(String string);
+    Chatter load(UUID userUID);
 
     void removeChatter(Chatter chatter);
 
