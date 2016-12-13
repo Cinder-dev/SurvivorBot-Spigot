@@ -4,6 +4,7 @@ import com.fireblazerrr.survivorbot.SurvivorBot;
 import com.fireblazerrr.survivorbot.channel.Channel;
 import com.fireblazerrr.survivorbot.chatter.Chatter;
 import com.fireblazerrr.survivorbot.utils.Announcement;
+import com.google.gson.JsonObject;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -243,9 +244,17 @@ public class PlayerListener implements Listener, TabCompleter {
                     .replace("{player}", joined.getName())
                     .replace("{suffix}", joined.getTeam() == null ? "" : joined.getTeam().getSuffix());
             event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
-            SurvivorBot.getInstance().getDJA().getTextChannelById(
-                    SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
-                    .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', newMessage))).queue();
+            if (SurvivorBot.getInstance().isMaster()) {
+                SurvivorBot.getInstance().getDJA().getTextChannelById(
+                        SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
+                        .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', newMessage))).queue();
+            }
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("id", SurvivorBot.getChannelManager().getDefaultChannel().getName());
+            jsonObject.addProperty("channel", "join");
+            jsonObject.addProperty("user", event.getPlayer().getName());
+            jsonObject.addProperty("message", newMessage);
+            SurvivorBot.getJedisPool().getResource().publish("survivor", jsonObject.toString());
         }
     }
 
@@ -257,10 +266,20 @@ public class PlayerListener implements Listener, TabCompleter {
                     .replace("{player}", quitter.getName())
                     .replace("{suffix}", quitter.getTeam() == null ? "" : quitter.getTeam().getSuffix());
             event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
-            SurvivorBot.getInstance().getDJA().getTextChannelById(
-                    SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
-                    .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', newMessage))).queue();
+            if (SurvivorBot.getInstance().isMaster()) {
+                SurvivorBot.getInstance().getDJA().getTextChannelById(
+                        SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
+                        .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', newMessage))).queue();
+            }
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("id", SurvivorBot.getChannelManager().getDefaultChannel().getName());
+            jsonObject.addProperty("channel", "leave");
+            jsonObject.addProperty("user", event.getPlayer().getName());
+            jsonObject.addProperty("message", newMessage);
+            SurvivorBot.getJedisPool().getResource().publish("survivor", jsonObject.toString());
             SurvivorBot.getChatterManager().removeChatter(event.getPlayer());
+        } else {
+
         }
     }
 
@@ -379,11 +398,19 @@ public class PlayerListener implements Listener, TabCompleter {
                 break;
         }
 
-        SurvivorBot.getInstance().getDJA().getTextChannelById(
-                SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID()
-        ).sendMessage(
-                String.format(achievementFormat, event.getPlayer().getName(), achievementName)
-        ).queue();
+        if (SurvivorBot.getInstance().isMaster()) {
+            SurvivorBot.getInstance().getDJA().getTextChannelById(
+                    SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID()
+            ).sendMessage(
+                    String.format(achievementFormat, event.getPlayer().getName(), achievementName)
+            ).queue();
+        }
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", SurvivorBot.getChannelManager().getDefaultChannel().getName());
+        jsonObject.addProperty("channel", "achievement");
+        jsonObject.addProperty("user", event.getPlayer().getName());
+        jsonObject.addProperty("message", String.format(achievementFormat, event.getPlayer().getName(), achievementName));
+        SurvivorBot.getJedisPool().getResource().publish("survivor", jsonObject.toString());
     }
 
 }

@@ -52,12 +52,19 @@ public class JedisListener extends JedisPubSub {
                 break;
             default: // From Other Server
                 if (!id.equals(SurvivorBot.getChannelManager().getDefaultChannel().getName())) {
-                    user = jsonData.get("user").getAsString();
-                    message = jsonData.get("message").getAsString();
-                    if (SurvivorBot.getChannelManager().getChannel(channel) != null) {
-                        SurvivorBot.getChannelManager().getChannel(channel).announce(user + ": " + message);
+                    if (channel.equals("join") || channel.equals("leave") || channel.equals("achievement")) {
+                        message = jsonData.get("message").getAsString();
+                        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', message));
                         if (SurvivorBot.getInstance().isMaster())
-                            SurvivorBot.getInstance().getDJA().getTextChannelById(SurvivorBot.getChannelManager().getChannel(channel).getDiscordChannelLinkID()).sendMessage(user + ": " + message).queue();
+                            SurvivorBot.getInstance().getDJA().getTextChannelById(SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID()).sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', message)));
+                    } else {
+                        user = jsonData.get("user").getAsString();
+                        message = jsonData.get("message").getAsString();
+                        if (SurvivorBot.getChannelManager().getChannel(channel) != null) {
+                            SurvivorBot.getChannelManager().getChannel(channel).announce(user + ": " + message);
+                            if (SurvivorBot.getInstance().isMaster())
+                                SurvivorBot.getInstance().getDJA().getTextChannelById(SurvivorBot.getChannelManager().getChannel(channel).getDiscordChannelLinkID()).sendMessage(user + ": " + message).queue();
+                        }
                     }
                 }
                 break;

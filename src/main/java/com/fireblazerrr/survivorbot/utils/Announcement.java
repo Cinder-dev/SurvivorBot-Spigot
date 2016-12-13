@@ -49,14 +49,14 @@ public class Announcement {
                     players.stream().map(Player::spigot).forEach(spigot -> spigot.sendMessage(component));
                 });
 
-                SurvivorBot.getInstance().setAnnouncement(getLatestAnnouncement());
-
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("id", "announcement");
-                jsonObject.addProperty("channel", "announcement");
-                jsonObject.addProperty("user", "");
-                jsonObject.addProperty("message", SurvivorBot.getInstance().getAnnouncement());
-                SurvivorBot.getJedisPool().getResource().publish("survivor", jsonObject.toString());
+                getLatestAnnouncement(messages -> {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("id", "announcement");
+                    jsonObject.addProperty("channel", "announcement");
+                    jsonObject.addProperty("user", "");
+                    jsonObject.addProperty("message", messages.get(0).getContent());
+                    SurvivorBot.getJedisPool().getResource().publish("survivor", jsonObject.toString());
+                });
             } else {
                 String message = SurvivorBot.getInstance().getAnnouncement();
 
@@ -105,7 +105,24 @@ public class Announcement {
                     player.spigot().sendMessage(component);
                 });
             } else {
-                SurvivorBot.info("TODO: add slave player join motd");
+                    String message = SurvivorBot.getInstance().getAnnouncement();
+
+                    TextComponent component = new TextComponent();
+                    String[] words = message.split("\\s+");
+                    URL url = null;
+                    for (String word : words) {
+                        try {
+                            url = new URL(word);
+                            component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url.toString()));
+                            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to open " + ChatColor.DARK_BLUE + url.toString()).create()));
+                        } catch (MalformedURLException ignored) {
+                        }
+                    }
+                    announcement[0] = message.replace(url != null ? url.toString() : "", url != null ? "&9" + url.toString() : "");
+                    Arrays.stream(TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', SurvivorBot.getInstance().getAnnouncementHeader() + "\n" + announcement[0] + "\n" + SurvivorBot.getInstance().getAnnouncementFooter()))).forEach(component::addExtra);
+
+                    player.spigot().sendMessage(component);
+
             }
         }
     }
