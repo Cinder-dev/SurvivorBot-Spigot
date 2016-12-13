@@ -18,6 +18,7 @@ public class Instance {
     private String serverID = "";
     private String inviteURL = "";
     private boolean useAnnouncement = true;
+    private String announcement = "Needs Updating!";
     private String announcementHeader = "&9===== &bRecent Announcement &9=====&f";
     private String announcementFooter = "&9=============================&f";
     private String announcementChannelID = "";
@@ -106,6 +107,14 @@ public class Instance {
 
     public void setAnnouncementChannelID(String announcementChannelID) {
         this.announcementChannelID = announcementChannelID;
+    }
+
+    public String getAnnouncement() {
+        return announcement;
+    }
+
+    public void setAnnouncement(String announcement) {
+        this.announcement = announcement;
     }
 
     public String getAnnouncementHeader() {

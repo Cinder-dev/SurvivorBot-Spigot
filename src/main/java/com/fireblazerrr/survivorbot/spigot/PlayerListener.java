@@ -234,30 +234,34 @@ public class PlayerListener implements Listener, TabCompleter {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Chatter joined = SurvivorBot.getChatterManager().addChatter(event.getPlayer());
+        if (SurvivorBot.isDiscordJoinLeave()) {
+            Chatter joined = SurvivorBot.getChatterManager().addChatter(event.getPlayer());
 
-        new Announcement(event.getPlayer());
+            new Announcement(event.getPlayer());
 
-        String newMessage = joinFormat.replace("{prefix}", joined.getTeam() == null ? "" : joined.getTeam().getPrefix())
-                .replace("{player}", joined.getName())
-                .replace("{suffix}", joined.getTeam() == null ? "" : joined.getTeam().getSuffix());
-        event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
-        SurvivorBot.getInstance().getDJA().getTextChannelById(
-                SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
-                .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', newMessage))).queue();
+            String newMessage = joinFormat.replace("{prefix}", joined.getTeam() == null ? "" : joined.getTeam().getPrefix())
+                    .replace("{player}", joined.getName())
+                    .replace("{suffix}", joined.getTeam() == null ? "" : joined.getTeam().getSuffix());
+            event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
+            SurvivorBot.getInstance().getDJA().getTextChannelById(
+                    SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
+                    .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', newMessage))).queue();
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        Chatter quitter = SurvivorBot.getChatterManager().getChatter(event.getPlayer());
-        String newMessage = quitFormat.replace("{prefix}", quitter.getTeam() == null ? "" : quitter.getTeam().getPrefix())
-                .replace("{player}", quitter.getName())
-                .replace("{suffix}", quitter.getTeam() == null ? "" : quitter.getTeam().getSuffix());
-        event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
-        SurvivorBot.getInstance().getDJA().getTextChannelById(
-                SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
-                .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', newMessage))).queue();
-        SurvivorBot.getChatterManager().removeChatter(event.getPlayer());
+        if (SurvivorBot.isDiscordJoinLeave()) {
+            Chatter quitter = SurvivorBot.getChatterManager().getChatter(event.getPlayer());
+            String newMessage = quitFormat.replace("{prefix}", quitter.getTeam() == null ? "" : quitter.getTeam().getPrefix())
+                    .replace("{player}", quitter.getName())
+                    .replace("{suffix}", quitter.getTeam() == null ? "" : quitter.getTeam().getSuffix());
+            event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
+            SurvivorBot.getInstance().getDJA().getTextChannelById(
+                    SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
+                    .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', newMessage))).queue();
+            SurvivorBot.getChatterManager().removeChatter(event.getPlayer());
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

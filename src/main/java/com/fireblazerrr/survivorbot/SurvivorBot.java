@@ -7,6 +7,7 @@ import com.fireblazerrr.survivorbot.chatter.Chatter;
 import com.fireblazerrr.survivorbot.chatter.ChatterManager;
 import com.fireblazerrr.survivorbot.chatter.YMLChatterStorage;
 import com.fireblazerrr.survivorbot.discord.Instance;
+import com.fireblazerrr.survivorbot.jedis.JedisListener;
 import com.fireblazerrr.survivorbot.spigot.PlayerListener;
 import com.fireblazerrr.survivorbot.spigot.command.CommandHandler;
 import com.fireblazerrr.survivorbot.spigot.command.commands.*;
@@ -14,6 +15,7 @@ import com.fireblazerrr.survivorbot.utils.ChatLogFormatter;
 import com.fireblazerrr.survivorbot.utils.ConfigManager;
 import com.fireblazerrr.survivorbot.utils.message.MessageHandler;
 import com.fireblazerrr.survivorbot.utils.message.MessageNotFoundException;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -21,6 +23,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.Protocol;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +44,11 @@ public class SurvivorBot extends JavaPlugin {
     private static final MessageHandler messageHandler = new MessageHandler();
     private static final ConfigManager configManager = new ConfigManager();
     private static final MessageNotFoundException except = new MessageNotFoundException();
+    private static JedisPool jedisPool;
+    private static JedisListener jedisListener = new JedisListener();
+    private static String jedisHost;
+    private static int jedisPort;
+    private static String jedisPass;
     private static final boolean DEBUG = true;
     private static Instance instance = new Instance();
     private static SurvivorBot plugin;
@@ -152,6 +161,9 @@ public class SurvivorBot extends JavaPlugin {
             chatterManager.clear();
         }
 
+        if (jedisPool != null)
+            jedisPool.close();
+
         info("Version " + this.getDescription().getVersion() + " is disabled.");
     }
 
@@ -174,6 +186,16 @@ public class SurvivorBot extends JavaPlugin {
         if (instance.isMaster()) {
             instance.setupInstance();
         }
+
+        jedisPool = new JedisPool(
+                new GenericObjectPoolConfig(),
+                jedisHost,
+                jedisPort,
+                Protocol.DEFAULT_TIMEOUT,
+                jedisPass.equals("") ? null : jedisPass,
+                Protocol.DEFAULT_DATABASE,
+                null);
+        new Thread(() -> jedisPool.getResource().subscribe(jedisListener, "survivor")).start();
     }
 
     public void setupStorage() {
@@ -261,5 +283,33 @@ public class SurvivorBot extends JavaPlugin {
 
     public static void setDiscordJoinLeave(boolean discordJoinLeave) {
         SurvivorBot.discordJoinLeave = discordJoinLeave;
+    }
+
+    public static JedisPool getJedisPool() {
+        return jedisPool;
+    }
+
+    public static String getJedisHost() {
+        return jedisHost;
+    }
+
+    public static void setJedisHost(String jedisHost) {
+        SurvivorBot.jedisHost = jedisHost;
+    }
+
+    public static int getJedisPort() {
+        return jedisPort;
+    }
+
+    public static void setJedisPort(int jedisPort) {
+        SurvivorBot.jedisPort = jedisPort;
+    }
+
+    public static String getJedisPass() {
+        return jedisPass;
+    }
+
+    public static void setJedisPass(String jedisPass) {
+        SurvivorBot.jedisPass = jedisPass;
     }
 }

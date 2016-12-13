@@ -6,6 +6,7 @@ import com.fireblazerrr.survivorbot.spigot.events.ChannelChatEvent;
 import com.fireblazerrr.survivorbot.spigot.events.ChatCompleteEvent;
 import com.fireblazerrr.survivorbot.utils.message.MessageFormatSupplier;
 import com.fireblazerrr.survivorbot.utils.message.MessageNotFoundException;
+import com.google.gson.JsonObject;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -95,6 +96,12 @@ public class StandardChannel implements Channel {
         this.members.forEach(chatter -> chatter.getPlayer().sendMessage(finalMessage));
 
         SurvivorBot.logChat(ChatColor.stripColor(message));
+    }
+
+    public void announce(TextComponent textComponent){
+        this.members.stream().map(Chatter::getPlayer).map(Player::spigot).forEach(spigot -> spigot.sendMessage(textComponent));
+
+        SurvivorBot.logChat(textComponent.toPlainText());
     }
 
     public TextComponent applyFormat(String format, String msg, Player player) {
@@ -456,9 +463,17 @@ public class StandardChannel implements Channel {
         Bukkit.getPluginManager().callEvent(new ChatCompleteEvent(sender, this, msg));
 
         // Send to discord
-        if (!discordChannelLinkID.equals("")) {
+        if (!discordChannelLinkID.equals("") && SurvivorBot.getInstance().isMaster()) {
             SurvivorBot.getInstance().getDJA().getTextChannelById(discordChannelLinkID).sendMessage("<" + player.getName() + "> " + event.getMessage()).queue();
         }
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", SurvivorBot.getChannelManager().getDefaultChannel().getName());
+        jsonObject.addProperty("channel", event.getChannel().getName());
+        jsonObject.addProperty("user", event.getSender().getName());
+        jsonObject.addProperty("message", event.getMessage());
+        SurvivorBot.getJedisPool().getResource().publish("survivor", jsonObject.toString());
+
         SurvivorBot.logChat(msg);
     }
 
