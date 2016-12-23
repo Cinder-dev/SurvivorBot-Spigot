@@ -18,6 +18,10 @@ public interface Channel {
 
     void announce(String message);
 
+    void announce(TextComponent textComponent);
+
+    TextComponent applyFormat(String format, String msg, String player);
+
     TextComponent applyFormat(String format, String msg, Player player);
 
     String applyFormat(String format, String originalFormat);

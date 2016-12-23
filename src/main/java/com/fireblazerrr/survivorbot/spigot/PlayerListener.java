@@ -4,6 +4,7 @@ import com.fireblazerrr.survivorbot.SurvivorBot;
 import com.fireblazerrr.survivorbot.channel.Channel;
 import com.fireblazerrr.survivorbot.chatter.Chatter;
 import com.fireblazerrr.survivorbot.utils.Announcement;
+import com.google.gson.JsonObject;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -234,30 +235,52 @@ public class PlayerListener implements Listener, TabCompleter {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Chatter joined = SurvivorBot.getChatterManager().addChatter(event.getPlayer());
+        if (SurvivorBot.isDiscordJoinLeave()) {
+            Chatter joined = SurvivorBot.getChatterManager().addChatter(event.getPlayer());
 
-        new Announcement(event.getPlayer());
+            new Announcement(event.getPlayer());
 
-        String newMessage = joinFormat.replace("{prefix}", joined.getTeam() == null ? "" : joined.getTeam().getPrefix())
-                .replace("{player}", joined.getName())
-                .replace("{suffix}", joined.getTeam() == null ? "" : joined.getTeam().getSuffix());
-        event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
-        SurvivorBot.getInstance().getDJA().getTextChannelById(
-                SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
-                .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', newMessage))).queue();
+            String newMessage = joinFormat.replace("{prefix}", joined.getTeam() == null ? "" : joined.getTeam().getPrefix())
+                    .replace("{player}", joined.getName())
+                    .replace("{suffix}", joined.getTeam() == null ? "" : joined.getTeam().getSuffix());
+            event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
+            if (SurvivorBot.getInstance().isMaster()) {
+                SurvivorBot.getInstance().getDJA().getTextChannelById(
+                        SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
+                        .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', newMessage))).queue();
+            }
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("id", SurvivorBot.getChannelManager().getDefaultChannel().getName());
+            jsonObject.addProperty("channel", "join");
+            jsonObject.addProperty("user", event.getPlayer().getName());
+            jsonObject.addProperty("message", newMessage);
+            SurvivorBot.publish("survivor", jsonObject.toString());
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        Chatter quitter = SurvivorBot.getChatterManager().getChatter(event.getPlayer());
-        String newMessage = quitFormat.replace("{prefix}", quitter.getTeam() == null ? "" : quitter.getTeam().getPrefix())
-                .replace("{player}", quitter.getName())
-                .replace("{suffix}", quitter.getTeam() == null ? "" : quitter.getTeam().getSuffix());
-        event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
-        SurvivorBot.getInstance().getDJA().getTextChannelById(
-                SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
-                .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', newMessage))).queue();
-        SurvivorBot.getChatterManager().removeChatter(event.getPlayer());
+        if (SurvivorBot.isDiscordJoinLeave()) {
+            Chatter quitter = SurvivorBot.getChatterManager().getChatter(event.getPlayer());
+            String newMessage = quitFormat.replace("{prefix}", quitter.getTeam() == null ? "" : quitter.getTeam().getPrefix())
+                    .replace("{player}", quitter.getName())
+                    .replace("{suffix}", quitter.getTeam() == null ? "" : quitter.getTeam().getSuffix());
+            event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
+            if (SurvivorBot.getInstance().isMaster()) {
+                SurvivorBot.getInstance().getDJA().getTextChannelById(
+                        SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID())
+                        .sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', newMessage))).queue();
+            }
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("id", SurvivorBot.getChannelManager().getDefaultChannel().getName());
+            jsonObject.addProperty("channel", "leave");
+            jsonObject.addProperty("user", event.getPlayer().getName());
+            jsonObject.addProperty("message", newMessage);
+            SurvivorBot.publish("survivor", jsonObject.toString());
+            SurvivorBot.getChatterManager().removeChatter(event.getPlayer());
+        } else {
+
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -375,11 +398,19 @@ public class PlayerListener implements Listener, TabCompleter {
                 break;
         }
 
-        SurvivorBot.getInstance().getDJA().getTextChannelById(
-                SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID()
-        ).sendMessage(
-                String.format(achievementFormat, event.getPlayer().getName(), achievementName)
-        ).queue();
+        if (SurvivorBot.getInstance().isMaster()) {
+            SurvivorBot.getInstance().getDJA().getTextChannelById(
+                    SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID()
+            ).sendMessage(
+                    String.format(achievementFormat, event.getPlayer().getName(), achievementName)
+            ).queue();
+        }
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", SurvivorBot.getChannelManager().getDefaultChannel().getName());
+        jsonObject.addProperty("channel", "achievement");
+        jsonObject.addProperty("user", event.getPlayer().getName());
+        jsonObject.addProperty("message", String.format(achievementFormat, event.getPlayer().getName(), achievementName));
+        SurvivorBot.publish("survivor", jsonObject.toString());
     }
 
 }

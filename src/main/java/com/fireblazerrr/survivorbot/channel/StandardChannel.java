@@ -6,6 +6,7 @@ import com.fireblazerrr.survivorbot.spigot.events.ChannelChatEvent;
 import com.fireblazerrr.survivorbot.spigot.events.ChatCompleteEvent;
 import com.fireblazerrr.survivorbot.utils.message.MessageFormatSupplier;
 import com.fireblazerrr.survivorbot.utils.message.MessageNotFoundException;
+import com.google.gson.JsonObject;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -97,6 +98,130 @@ public class StandardChannel implements Channel {
         SurvivorBot.logChat(ChatColor.stripColor(message));
     }
 
+    public void announce(TextComponent textComponent) {
+        this.members.stream().map(Chatter::getPlayer).map(Player::spigot).forEach(spigot -> spigot.sendMessage(textComponent));
+
+        SurvivorBot.logChat(textComponent.toPlainText());
+    }
+
+    public TextComponent applyFormat(String format, String msg, String player) {
+//        Chatter chatter = SurvivorBot.getChatterManager().getChatter(player);
+        format = format.replace("{default}", this.formatSupplier.getStandardFormat());
+        TextComponent root = new TextComponent();
+
+        TextComponent tc = new TextComponent();
+        ClickEvent ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.getName());
+        HoverEvent he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
+        ChatColor currentColor = ChatColor.WHITE;
+        String analyzer = "";
+        boolean nextIsColorCode = false;
+        boolean inNode = false;
+        boolean prefix = false;
+
+        for (char c : format.toCharArray()) {
+            if (nextIsColorCode) {
+                currentColor = ChatColor.getByChar(c);
+                tc.setColor(ChatColor.getByChar(c).asBungee());
+                nextIsColorCode = false;
+            } else if (c == '{') {
+                inNode = true;
+            } else if (c == '}') {
+                boolean create = false;
+                tc = new TextComponent();
+                switch (analyzer) {
+                    case "name":
+                        tc.setText("" + this.name);
+                        ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.name);
+                        he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
+                        create = true;
+                        break;
+                    case "nick":
+                        tc.setText("" + this.nick);
+                        ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.name);
+                        he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
+                        create = true;
+                        break;
+                    case "color":
+                        currentColor = this.color;
+                        tc.setColor(this.color.asBungee());
+                        break;
+                    case "msg":
+                        tc.setText("" + msg);
+                        String[] words = msg.split("\\s+");
+                        boolean test = true;
+                        for (String word : words) {
+                            try {
+                                URL url = new URL(word);
+                                ce = new ClickEvent(ClickEvent.Action.OPEN_URL, url.toString());
+                                he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to follow link").create());
+                                test = false;
+                            } catch (MalformedURLException ignored) {
+                            }
+                        }
+                        if (test) {
+                            ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.name);
+                            he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
+                        }
+                        create = true;
+                        break;
+                    case "sender":
+                        if (prefix) {
+//                            tc.setText("" + (chatter.getTeam() == null ? "" : chatter.getTeam().getPrefix()) + player);
+                        } else {
+                            tc.setText("" + player);
+                        }
+                        ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "@" + player);
+                        he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to msg " + player).create());
+                        create = true;
+                        break;
+                    case "plainsender":
+                        tc.setText("" + player);
+                        ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "@" + player);
+                        he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to msg " + player).create());
+                        create = true;
+                        break;
+                    case "world":
+                        break;
+                    case "prefix":
+                        //prefix = chatter.getTeam() != null;
+                        break;
+                    case "suffix":
+//                        if (chatter.getTeam() != null) {
+//                            tc.setText("" + chatter.getTeam().getSuffix());
+//                            ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.name);
+//                            he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to focus " + this.color + this.name).create());
+//                            create = true;
+//                        }
+                        break;
+                    case "groupprefix":
+                        break;
+                    case "groupsuffix":
+                        break;
+                }
+                if (create) {
+                    tc.setColor(currentColor.asBungee());
+                    tc.setClickEvent(ce);
+                    tc.setHoverEvent(he);
+                    root.addExtra(tc);
+                }
+
+                analyzer = "";
+                inNode = false;
+            } else if (c == '&') {
+                nextIsColorCode = true;
+            } else if (inNode) {
+                analyzer += c;
+            } else {
+                tc = new TextComponent(String.valueOf(c));
+                tc.setColor(currentColor.asBungee());
+                tc.setClickEvent(ce);
+                tc.setHoverEvent(he);
+                root.addExtra(tc);
+            }
+        }
+        return root;
+    }
+
     public TextComponent applyFormat(String format, String msg, Player player) {
         Chatter chatter = SurvivorBot.getChatterManager().getChatter(player);
         format = format.replace("{default}", this.formatSupplier.getStandardFormat());
@@ -149,7 +274,8 @@ public class StandardChannel implements Channel {
                                 ce = new ClickEvent(ClickEvent.Action.OPEN_URL, url.toString());
                                 he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GRAY + "Click to follow link").create());
                                 test = false;
-                            } catch (MalformedURLException ignored) {}
+                            } catch (MalformedURLException ignored) {
+                            }
                         }
                         if (test) {
                             ce = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ch " + this.name);
@@ -456,9 +582,18 @@ public class StandardChannel implements Channel {
         Bukkit.getPluginManager().callEvent(new ChatCompleteEvent(sender, this, msg));
 
         // Send to discord
-        if (!discordChannelLinkID.equals("")) {
+        if (!discordChannelLinkID.equals("") && SurvivorBot.getInstance().isMaster()) {
             SurvivorBot.getInstance().getDJA().getTextChannelById(discordChannelLinkID).sendMessage("<" + player.getName() + "> " + event.getMessage()).queue();
         }
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", SurvivorBot.getChannelManager().getDefaultChannel().getName());
+        jsonObject.addProperty("channel", event.getChannel().getName());
+        Chatter chatter = SurvivorBot.getChatterManager().getChatter(player);
+        jsonObject.addProperty("user", (chatter.getTeam() == null ? "" : chatter.getTeam().getPrefix()) + player.getName());
+        jsonObject.addProperty("message", event.getMessage());
+        SurvivorBot.publish("survivor", jsonObject.toString());
+
         SurvivorBot.logChat(msg);
     }
 

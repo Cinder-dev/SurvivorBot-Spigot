@@ -18,7 +18,7 @@ public class ChannelManager implements MessageFormatSupplier {
     private ChannelStorage storage;
     private String standardFormat = "{color}[{nick}{color}] &f{prefix}{sender}{suffix}{color}: {msg}";
     private String emoteFormat = "{color}[{nick}{color}] * {msg}";
-    private String announceFormat = "{color}[{nick}{color}] {msg}";
+    private String announceFormat = "{msg}";
     private String discordFormat = "&9<Discord:{sender}&9>";
     private String conversationFormat = "&d{convoaddress} {convopartner}: {msg}";
     private boolean usingEmotes;
@@ -35,6 +35,8 @@ public class ChannelManager implements MessageFormatSupplier {
     public void addChannel(Channel channel) {
         this.channels.put(channel.getName().toLowerCase(), channel);
         this.channels.put(channel.getNick().toLowerCase(), channel);
+        if (!channel.getDiscordChannelLinkID().equals("") && channel.getDiscordChannelLinkID() != null)
+            this.channels.put(channel.getDiscordChannelLinkID(), channel);
         if (!channel.isTransient()) {
             Chatter.Permission[] pm = Chatter.Permission.values();
 

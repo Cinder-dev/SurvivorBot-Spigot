@@ -133,7 +133,6 @@
             <version>1.11-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Jedis: Removed till future use
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
@@ -141,7 +140,7 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        -->
+
     </dependencies>
 
 </project>

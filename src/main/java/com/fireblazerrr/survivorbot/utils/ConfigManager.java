@@ -177,9 +177,11 @@ public class ConfigManager {
         SurvivorBot.getInstance().setInviteURL(config.getString("discord.inviteURL"));
         SurvivorBot.getInstance().setAnnouncementChannelID(config.getString("discord.announcement-channel-id"));
 
-//        SurvivorBot.getJedisManager().setHostname(config.getString("redis.hostname"));
-//        SurvivorBot.getJedisManager().setPort(config.getInt("redis.port"));
-//        SurvivorBot.getJedisManager().setPassword(config.getString("redis.password"));
+        SurvivorBot.setJedisHost(config.getString("redis.hostname"));
+        SurvivorBot.setJedisPort(config.getInt("redis.port"));
+        SurvivorBot.setJedisPass(config.getString("redis.password"));
+
+        SurvivorBot.getInstance().setAnnouncement(config.getString("announcement"));
 
         try {
             config.options().copyDefaults(true);
@@ -244,9 +246,10 @@ public class ConfigManager {
         config.set("discord.server-id", "");
         config.set("discord.inviteURL", "");
         config.set("discord.announcement-channel-id", "");
-        config.set("redis.hostname", "");
+        config.set("redis.hostname", "localhost");
         config.set("redis.port", 6379);
         config.set("redis.password", "");
+        config.set("announcement", "");
         return config;
     }
 }
