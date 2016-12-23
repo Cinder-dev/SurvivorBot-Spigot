@@ -9,6 +9,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import redis.clients.jedis.Jedis;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -55,7 +56,10 @@ public class Announcement {
                     jsonObject.addProperty("channel", "announcement");
                     jsonObject.addProperty("user", "");
                     jsonObject.addProperty("message", messages.get(0).getContent());
-                    SurvivorBot.getJedisPool().getResource().publish("survivor", jsonObject.toString());
+                    SurvivorBot.publish("survivor", jsonObject.toString());
+                    Jedis jedis = SurvivorBot.getJedisPool().getResource();
+                    jedis.set("survivorAnnouncement", jsonObject.toString());
+                    jedis.close();
                 });
             } else {
                 String message = SurvivorBot.getInstance().getAnnouncement();
@@ -103,6 +107,17 @@ public class Announcement {
                     Arrays.stream(TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', SurvivorBot.getInstance().getAnnouncementHeader() + "\n" + announcement[0] + "\n" + SurvivorBot.getInstance().getAnnouncementFooter()))).forEach(component::addExtra);
 
                     player.spigot().sendMessage(component);
+                });
+
+                getLatestAnnouncement(messages -> {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("id", "announcement");
+                    jsonObject.addProperty("channel", "announcement");
+                    jsonObject.addProperty("user", "");
+                    jsonObject.addProperty("message", messages.get(0).getContent());
+                    Jedis jedis = SurvivorBot.getJedisPool().getResource();
+                    jedis.set("survivorAnnouncement", jsonObject.toString());
+                    jedis.close();
                 });
             } else {
                     String message = SurvivorBot.getInstance().getAnnouncement();

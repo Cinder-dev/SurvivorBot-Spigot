@@ -23,7 +23,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
 
 import java.io.File;
@@ -187,8 +189,11 @@ public class SurvivorBot extends JavaPlugin {
             instance.setupInstance();
         }
 
+        JedisPoolConfig config = new JedisPoolConfig();
+        config.setBlockWhenExhausted(false);
+
         jedisPool = new JedisPool(
-                new GenericObjectPoolConfig(),
+                config,
                 jedisHost,
                 jedisPort,
                 Protocol.DEFAULT_TIMEOUT,
@@ -259,6 +264,12 @@ public class SurvivorBot extends JavaPlugin {
                 ex.printStackTrace();
             }
         }
+    }
+
+    public static void publish(String channel, String message){
+        Jedis jedis = jedisPool.getResource();
+        jedis.publish(channel, message);
+        jedis.close();
     }
 
     public static String getJoinFormat() {

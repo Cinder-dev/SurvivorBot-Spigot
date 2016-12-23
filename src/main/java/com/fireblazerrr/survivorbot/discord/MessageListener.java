@@ -15,6 +15,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import redis.clients.jedis.Jedis;
 
 import java.awt.*;
 import java.util.stream.Collectors;
@@ -60,7 +61,7 @@ public class MessageListener extends ListenerAdapter {
             jsonObject.addProperty("userStatus", SurvivorBot.getInstance().getDJA().getGuildById(event.getGuild().getId()).getMember(event.getMessage().getAuthor()).getGame().getName() == null ? "" : "Playing: " + SurvivorBot.getInstance().getDJA().getGuildById(event.getGuild().getId()).getMember(event.getMessage().getAuthor()).getGame().getName());
             jsonObject.addProperty("message", message);
             jsonObject.addProperty("inviteURL", SurvivorBot.getInstance().getInviteURL());
-            SurvivorBot.getJedisPool().getResource().publish("survivor", jsonObject.toString());
+            SurvivorBot.publish("survivor", jsonObject.toString());
         }
     }
 

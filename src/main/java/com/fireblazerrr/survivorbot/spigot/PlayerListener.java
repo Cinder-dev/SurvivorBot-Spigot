@@ -254,7 +254,7 @@ public class PlayerListener implements Listener, TabCompleter {
             jsonObject.addProperty("channel", "join");
             jsonObject.addProperty("user", event.getPlayer().getName());
             jsonObject.addProperty("message", newMessage);
-            SurvivorBot.getJedisPool().getResource().publish("survivor", jsonObject.toString());
+            SurvivorBot.publish("survivor", jsonObject.toString());
         }
     }
 
@@ -276,7 +276,7 @@ public class PlayerListener implements Listener, TabCompleter {
             jsonObject.addProperty("channel", "leave");
             jsonObject.addProperty("user", event.getPlayer().getName());
             jsonObject.addProperty("message", newMessage);
-            SurvivorBot.getJedisPool().getResource().publish("survivor", jsonObject.toString());
+            SurvivorBot.publish("survivor", jsonObject.toString());
             SurvivorBot.getChatterManager().removeChatter(event.getPlayer());
         } else {
 
@@ -410,7 +410,7 @@ public class PlayerListener implements Listener, TabCompleter {
         jsonObject.addProperty("channel", "achievement");
         jsonObject.addProperty("user", event.getPlayer().getName());
         jsonObject.addProperty("message", String.format(achievementFormat, event.getPlayer().getName(), achievementName));
-        SurvivorBot.getJedisPool().getResource().publish("survivor", jsonObject.toString());
+        SurvivorBot.publish("survivor", jsonObject.toString());
     }
 
 }

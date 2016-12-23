@@ -61,9 +61,9 @@ public class JedisListener extends JedisPubSub {
                         user = jsonData.get("user").getAsString();
                         message = jsonData.get("message").getAsString();
                         if (SurvivorBot.getChannelManager().getChannel(channel) != null) {
-                            SurvivorBot.getChannelManager().getChannel(channel).announce(user + ": " + message);
+                            SurvivorBot.getChannelManager().getChannel(channel).announce(SurvivorBot.getChannelManager().getChannel(channel).applyFormat(SurvivorBot.getChannelManager().getChannel(channel).getFormat(), message, ChatColor.stripColor(user)));
                             if (SurvivorBot.getInstance().isMaster())
-                                SurvivorBot.getInstance().getDJA().getTextChannelById(SurvivorBot.getChannelManager().getChannel(channel).getDiscordChannelLinkID()).sendMessage(user + ": " + message).queue();
+                                SurvivorBot.getInstance().getDJA().getTextChannelById(SurvivorBot.getChannelManager().getChannel(channel).getDiscordChannelLinkID()).sendMessage(ChatColor.stripColor(user) + ": " + message).queue();
                         }
                     }
                 }
