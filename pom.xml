@@ -5,6 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.fireblazerrr.survivorbot</groupId>
     <artifactId>SurvivorBot</artifactId>
+    <packaging>pom</packaging>
     <version>0.0.2</version>
     <url>http://www.tba.com</url>
     <build>
@@ -75,16 +76,12 @@
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.1</version>
-                <configuration>
-                    <outputDirectory>S:/Dev/Java/SurvivorBot-Spigot/testserver/plugins</outputDirectory>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
+    <modules>
+        <module>SurvivorBot v2</module>
+        <module>SurvivorBot v1</module>
+    </modules>
     <repositories>
         <repository>
             <id>jcenter</id>
