@@ -11,7 +11,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Instance {
 
-    private final AtomicBoolean reconnect = new AtomicBoolean(true);
     private boolean master = true;
     private String token = "";
     private String adminRankID = "";
@@ -30,7 +29,7 @@ public class Instance {
     public void setupInstance() {
         if (!token.equals("")) {
             try {
-                SurvivorBot.info(token);
+                SurvivorBot.debug("Token", token);
                 jda = new JDABuilder(AccountType.BOT)
                         .setToken(token)
                         .addListener(new ReadyListener())
@@ -43,15 +42,6 @@ public class Instance {
             SurvivorBot.severe("Token is required for bot use");
         }
     }
-
-//    public void terminate() {
-//        reconnect.set(false);
-//        try {
-//            jda.logout();
-//        } catch (DiscordException | RateLimitException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public boolean isMaster() {
         return master;

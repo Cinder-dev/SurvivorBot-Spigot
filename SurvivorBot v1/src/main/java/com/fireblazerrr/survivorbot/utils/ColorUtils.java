@@ -18,7 +18,7 @@ public class ColorUtils {
     /**
      * Initialize the color list that we have.
      */
-    private ArrayList<ColorName> initColorList() {
+    private static ArrayList<ColorName> initColorList() {
         ArrayList<ColorName> colorList = new ArrayList<ColorName>();
         colorList.add(new ColorName(ChatColor.BLACK, 0, 0, 0));
         colorList.add(new ColorName(ChatColor.DARK_BLUE, 0, 0, 170));
@@ -48,7 +48,7 @@ public class ColorUtils {
      *
      * @return
      */
-    public ChatColor getColorNameFromRgb(int r, int g, int b) {
+    public static ChatColor getColorNameFromRgb(int r, int g, int b) {
         ArrayList<ColorName> colorList = initColorList();
         ColorName closestMatch = null;
         int minMSE = Integer.MAX_VALUE;
@@ -87,7 +87,7 @@ public class ColorUtils {
                 + Integer.toHexString(c.getRGB()).substring(2));
     }
 
-    public ChatColor getColorNameFromColor(Color color) {
+    public static ChatColor getColorNameFromColor(Color color) {
         if (color == null)
             return ChatColor.WHITE;
         return getColorNameFromRgb(color.getRed(), color.getGreen(),
@@ -99,7 +99,7 @@ public class ColorUtils {
      *
      * @author Xiaoxiao Li
      */
-    public class ColorName {
+    public static class ColorName {
         public int r, g, b;
         public ChatColor name;
 

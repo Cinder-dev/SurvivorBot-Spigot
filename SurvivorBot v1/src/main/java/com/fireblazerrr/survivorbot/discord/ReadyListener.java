@@ -1,16 +1,16 @@
 package com.fireblazerrr.survivorbot.discord;
 
 import com.fireblazerrr.survivorbot.SurvivorBot;
+import net.dv8tion.jda.core.OnlineStatus;
+import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class ReadyListener extends ListenerAdapter {
-
-    public ReadyListener() {
-    }
-
     @Override
     public void onReady(ReadyEvent event) {
+        //TODO: Set status from config
+        event.getJDA().getPresence().setGame(Game.of("survivorserver.com"));
         SurvivorBot.info("*** Discord bot armed ***");
         event.getJDA().getGuilds().forEach(guild -> {
             SurvivorBot.info("===== " + guild.getName() + " [" + guild.getId() + "] =====");

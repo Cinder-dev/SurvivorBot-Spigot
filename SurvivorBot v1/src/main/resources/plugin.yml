@@ -1,5 +1,5 @@
 name: SurvivorBot
-version: 0.0.2
+version: 0.1
 description: Multi server chat system with discord integration, requires a Redis server with default configuration to function
 author: Fireblazerrr
 

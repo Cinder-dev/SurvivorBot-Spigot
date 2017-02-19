@@ -6,10 +6,10 @@
     <groupId>com.fireblazerrr.survivorbot</groupId>
     <artifactId>SurvivorBot</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.2</version>
+    <version>0.1</version>
     <url>http://www.tba.com</url>
     <build>
-        <finalName>${project.artifactId}-Build-${project.version}-SNAPSHOT</finalName>
+        <finalName>${project.artifactId}-Build-${project.version}</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -32,7 +32,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.2.1</version>
                 <configuration>
-                    <finalName>${project.artifactId}-Build-${project.version}-SNAPSHOT</finalName>
+                    <finalName>${project.artifactId}-Build-${project.version}</finalName>
                     <descriptors>
                         <descriptor>distribution.xml</descriptor>
                     </descriptors>
@@ -79,7 +79,6 @@
         </plugins>
     </build>
     <modules>
-        <module>SurvivorBot v2</module>
         <module>SurvivorBot v1</module>
     </modules>
     <repositories>
@@ -109,19 +108,19 @@
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-chat</artifactId>
-            <version>1.11-20161125.003055-7</version>
+            <version>1.11-20161223.053256-18</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>3.0.BETA_96</version>
+            <version>3.0.BETA2_108</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.11-R0.1-SNAPSHOT</version>
+            <version>1.11.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

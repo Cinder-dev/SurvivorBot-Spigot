@@ -12,6 +12,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+
 public class MsgCommand extends BasicCommand {
     public MsgCommand() {
         super("Private Message");
@@ -23,6 +25,7 @@ public class MsgCommand extends BasicCommand {
     }
 
     public boolean execute(CommandSender sender, String identifier, String[] args) {
+        SurvivorBot.debug("msg execute", sender.toString(), identifier, Arrays.toString(args));
         Player player;
         if (!(sender instanceof Player)) {
             if (args.length < 2) {
@@ -50,14 +53,14 @@ public class MsgCommand extends BasicCommand {
             player = (Player) sender;
             Chatter playerChatter = SurvivorBot.getChatterManager().getChatter(player);
             if (args.length == 0) {
-                Channel var14 = playerChatter.getActiveChannel();
-                if (var14 != null && var14.isTransient()) {
-                    Channel var16 = playerChatter.getLastFocusableChannel();
-                    if (var16 != null) {
-                        playerChatter.setActiveChannel(var16, true, true);
+                Channel activeChannel = playerChatter.getActiveChannel();
+                if (activeChannel != null && activeChannel.isTransient()) {
+                    Channel lastFocusableChannel = playerChatter.getLastFocusableChannel();
+                    if (lastFocusableChannel != null) {
+                        playerChatter.setActiveChannel(lastFocusableChannel, true, true);
                     }
                 }
-
+                Messaging.send(sender, this.getMessage("msg_noSelect"));
                 return true;
             } else {
                 Player target = Bukkit.getServer().getPlayer(args[0]);

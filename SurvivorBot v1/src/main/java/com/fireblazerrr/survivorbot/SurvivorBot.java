@@ -15,7 +15,6 @@ import com.fireblazerrr.survivorbot.utils.ChatLogFormatter;
 import com.fireblazerrr.survivorbot.utils.ConfigManager;
 import com.fireblazerrr.survivorbot.utils.message.MessageHandler;
 import com.fireblazerrr.survivorbot.utils.message.MessageNotFoundException;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -51,7 +50,7 @@ public class SurvivorBot extends JavaPlugin {
     private static String jedisHost;
     private static int jedisPort;
     private static String jedisPass;
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static Instance instance = new Instance();
     private static SurvivorBot plugin;
     private static ResourceBundle messages;
@@ -71,11 +70,10 @@ public class SurvivorBot extends JavaPlugin {
 
     public static String getMessage(String key) throws MessageNotFoundException {
         String msg = messages.getString(key);
-        if (msg == null) {
+        if (msg == null)
             throw except;
-        } else {
+        else
             return msg;
-        }
     }
 
     public static SurvivorBot getPlugin() {
@@ -83,9 +81,8 @@ public class SurvivorBot extends JavaPlugin {
     }
 
     public static void logChat(String message) {
-        if (chatLogEnabled) {
+        if (chatLogEnabled)
             chatLog.info(ChatColor.stripColor(message));
-        }
     }
 
     public static void setChatLogEnabled(boolean chatLogEnabled) {
@@ -98,9 +95,8 @@ public class SurvivorBot extends JavaPlugin {
 
     public static void setLocale(Locale locale) throws ClassNotFoundException {
         messages = ResourceBundle.getBundle("messages", locale);
-        if (messages == null) {
+        if (messages == null)
             throw new ClassNotFoundException("messages");
-        }
     }
 
     public static ChannelManager getChannelManager() {
@@ -125,22 +121,28 @@ public class SurvivorBot extends JavaPlugin {
 
     public static void debug(String identifier, String... args) {
         if (DEBUG) {
-            final String[] results = {""};
-            Arrays.stream(args).forEach(s -> results[0] += s + " | ");
-            log.info("[SurvivorBot Debug] " + identifier + " | " + results[0]);
+            StringBuilder sb = new StringBuilder();
+            Arrays.stream(args).forEach(s -> sb.append(s).append(" "));
+            log.info("[SurvivorBot Debug: " + identifier + "] " + sb.toString());
         }
     }
 
-    public static void info(String message) {
-        log.info("[SurvivorBot] " + message);
+    public static void info(String... args) {
+        StringBuilder sb = new StringBuilder();
+        Arrays.stream(args).forEach(s -> sb.append(s).append(" "));
+        log.info("[SurvivorBot] " + sb.toString());
     }
 
-    public static void severe(String message) {
-        log.severe("[SurvivorBot] " + message);
+    public static void severe(String... args) {
+        StringBuilder sb = new StringBuilder();
+        Arrays.stream(args).forEach(s -> sb.append(s).append(" "));
+        log.severe("[SurvivorBot] " + sb.toString());
     }
 
-    public static void warning(String message) {
-        log.warning("[SurvivorBot] " + message);
+    public static void warning(String... args) {
+        StringBuilder sb = new StringBuilder();
+        Arrays.stream(args).forEach(s -> sb.append(s).append(" "));
+        log.warning("[SurvivorBot] " + sb.toString());
     }
 
     public static boolean hasChannelPermission(Player player, Channel channel, Chatter.Permission permission) {
@@ -149,9 +151,9 @@ public class SurvivorBot extends JavaPlugin {
                 player.hasPermission(permission.formAll());
     }
 
-    public boolean onCommand(CommandSender sender, Command command, String lable, String[] args) {
-        return commandHandler.dispatch(sender, lable, args);
-    }
+//    public boolean onCommand(CommandSender sender, Command command, String lable, String[] args) {
+//        return commandHandler.dispatch(sender, lable, args);
+//    }
 
     public void onDisable() {
         if (channelManager.getStorage() != null) {
@@ -266,7 +268,7 @@ public class SurvivorBot extends JavaPlugin {
         }
     }
 
-    public static void publish(String channel, String message){
+    public static void publish(String channel, String message) {
         Jedis jedis = jedisPool.getResource();
         jedis.publish(channel, message);
         jedis.close();
@@ -322,5 +324,9 @@ public class SurvivorBot extends JavaPlugin {
 
     public static void setJedisPass(String jedisPass) {
         SurvivorBot.jedisPass = jedisPass;
+    }
+
+    public static boolean isDEBUG() {
+        return DEBUG;
     }
 }

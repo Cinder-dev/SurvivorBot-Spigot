@@ -11,14 +11,16 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import redis.clients.jedis.JedisPubSub;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class JedisListener extends JedisPubSub {
 
     public void onMessage(String ch, String msg) {
-        SurvivorBot.info("JedisListener onMessage channel: " + ch + ", message: " + msg);
+        SurvivorBot.info("RedisMessage", "channel: " + ch + ", message: " + msg);
         JsonParser jsonParser = new JsonParser();
         JsonObject jsonData = jsonParser.parse(msg).getAsJsonObject();
         String id = jsonData.get("id").getAsString();
@@ -47,23 +49,26 @@ public class JedisListener extends JedisPubSub {
                 if (!SurvivorBot.getInstance().isMaster()) {
                     message = jsonData.get("message").getAsString();
                     SurvivorBot.getInstance().setAnnouncement(message);
-                    new Announcement(Bukkit.getOnlinePlayers().stream().collect(Collectors.toList()));
+                    new Announcement(new ArrayList<>(Bukkit.getOnlinePlayers()));
                 }
                 break;
             default: // From Other Server
                 if (!id.equals(SurvivorBot.getChannelManager().getDefaultChannel().getName())) {
                     if (channel.equals("join") || channel.equals("leave") || channel.equals("achievement")) {
-                        message = jsonData.get("message").getAsString();
+                        message = "[" + id + "] ";
+                        message += jsonData.get("message").getAsString();
                         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', message));
-                        if (SurvivorBot.getInstance().isMaster())
-                            SurvivorBot.getInstance().getDJA().getTextChannelById(SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID()).sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', message)));
+                        if (SurvivorBot.getInstance().isMaster()) {
+                            SurvivorBot.getInstance().getDJA().getTextChannelById(SurvivorBot.getChannelManager().getDefaultChannel().getDiscordChannelLinkID()).sendMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', jsonData.get("message").getAsString()))).queue();
+                        }
                     } else {
                         user = jsonData.get("user").getAsString();
                         message = jsonData.get("message").getAsString();
                         if (SurvivorBot.getChannelManager().getChannel(channel) != null) {
                             SurvivorBot.getChannelManager().getChannel(channel).announce(SurvivorBot.getChannelManager().getChannel(channel).applyFormat(SurvivorBot.getChannelManager().getChannel(channel).getFormat(), message, ChatColor.stripColor(user)));
-                            if (SurvivorBot.getInstance().isMaster())
+                            if (SurvivorBot.getInstance().isMaster()) {
                                 SurvivorBot.getInstance().getDJA().getTextChannelById(SurvivorBot.getChannelManager().getChannel(channel).getDiscordChannelLinkID()).sendMessage(ChatColor.stripColor(user) + ": " + message).queue();
+                            }
                         }
                     }
                 }

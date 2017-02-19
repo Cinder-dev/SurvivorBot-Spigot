@@ -17,9 +17,42 @@ import java.util.Locale;
 
 public class ConfigManager {
 
-    public ConfigManager() {
-
-    }
+    private final String CONFIGHEADER =
+            "============================================================================   \n" +
+            "Color Codes (Used with &<value>)  | Formatting Codes (Used with &<value>)      \n" +
+            "0 : Black                         | k : Obfuscated 'Magic'                     \n" +
+            "1 : Dark Blue                     | l : Bold                                   \n" +
+            "2 : Dark Green                    | m : Strikethrough                          \n" +
+            "3 : Dark Aqua                     | n : Underline                              \n" +
+            "4 : Dark Red                      | o : Italic                                 \n" +
+            "5 : Dark Purple                   | r : Reset                                  \n" +
+            "6 : Gold                          |                                            \n" +
+            "5 : Gray                          |                                            \n" +
+            "8 : Dark Gray                     |                                            \n" +
+            "9 : Blue                          |                                            \n" +
+            "a : Green                         |                                            \n" +
+            "b : Aqua                          |                                            \n" +
+            "c : Red                           |                                            \n" +
+            "d : Light Purple                  |                                            \n" +
+            "e : Yellow                        |                                            \n" +
+            "f : White                         |                                            \n" +
+            "============================================================================   \n" +
+            "Formatting Tags                                                                \n" +
+            "{name} : the channel's name                                                    \n" +
+            "{nick} : the channel's nick                                                    \n" +
+            "{color} : the channel's color                                                  \n" +
+            "{msg} : the message                                                            \n" +
+            "{sender} : the sender's display name                                           \n" +
+            "{plainsender} : senders user name                                              \n" +
+            "{world} : senders world                                                        \n" +
+            "{prefix} : senders scoreboard team prefix, formatting and color for sender     \n" +
+            "{suffix} : senders scoreboard team suffix                                      \n" +
+            "{group} : senders scoreboard team name - unimplemented                         \n" +
+            "{groupprefix} : - unimplemented                                                \n" +
+            "{groupsuffix} : - unimplemented                                                \n" +
+            "{convoaddress} : To or From (only used for private messages)                   \n" +
+            "{convopartner} : the sender or receiver (only used for private messages)       \n" +
+            "============================================================================   \n";
 
     public void load(File file) {
         YamlConfiguration config = new YamlConfiguration();
@@ -33,42 +66,8 @@ public class ConfigManager {
         }
 
         config.setDefaults(this.getDefaults());
-        config.options().header(
-                "============================================================================           \n" +
-                        "Color Codes (Used with &<value>)  | Formatting Codes (Used with &<value>)      \n" +
-                        "0 : Black                         | k : Obfuscated 'Magic'                     \n" +
-                        "1 : Dark Blue                     | l : Bold                                   \n" +
-                        "2 : Dark Green                    | m : Strikethrough                          \n" +
-                        "3 : Dark Aqua                     | n : Underline                              \n" +
-                        "4 : Dark Red                      | o : Italic                                 \n" +
-                        "5 : Dark Purple                   | r : Reset                                  \n" +
-                        "6 : Gold                          |                                            \n" +
-                        "5 : Gray                          |                                            \n" +
-                        "8 : Dark Gray                     |                                            \n" +
-                        "9 : Blue                          |                                            \n" +
-                        "a : Green                         |                                            \n" +
-                        "b : Aqua                          |                                            \n" +
-                        "c : Red                           |                                            \n" +
-                        "d : Light Purple                  |                                            \n" +
-                        "e : Yellow                        |                                            \n" +
-                        "f : White                         |                                            \n" +
-                        "============================================================================   \n" +
-                        "Formatting Tags                                                                \n" +
-                        "{name} : the channel's name                                                    \n" +
-                        "{nick} : the channel's nick                                                    \n" +
-                        "{color} : the channel's color                                                  \n" +
-                        "{msg} : the message                                                            \n" +
-                        "{sender} : the sender's display name                                           \n" +
-                        "{plainsender} : senders user name                                              \n" +
-                        "{world} : senders world                                                        \n" +
-                        "{prefix} : senders scoreboard team prefix, formatting and color for sender     \n" +
-                        "{suffix} : senders scoreboard team suffix                                      \n" +
-                        "{group} : senders scoreboard team name - unimplemented                         \n" +
-                        "{groupprefix} : - unimplemented                                                \n" +
-                        "{groupsuffix} : - unimplemented                                                \n" +
-                        "{convoaddress} : To or From (only used for private messages)                   \n" +
-                        "{convopartner} : the sender or receiver (only used for private messages)       \n" +
-                        "============================================================================   \n");
+        config.options().header(CONFIGHEADER);
+
         ChannelManager channelManager = SurvivorBot.getChannelManager();
         if (config.getBoolean("moderator-permissions.can-kick")) {
             channelManager.addModPermission(Chatter.Permission.KICK);

@@ -19,7 +19,7 @@ public class ChannelManager implements MessageFormatSupplier {
     private String standardFormat = "{color}[{nick}{color}] &f{prefix}{sender}{suffix}{color}: {msg}";
     private String emoteFormat = "{color}[{nick}{color}] * {msg}";
     private String announceFormat = "{msg}";
-    private String discordFormat = "&9<Discord:{sender}&9>";
+    private String discordFormat = "&9<Discord:{sender}&9> {msg}";
     private String conversationFormat = "&d{convoaddress} {convopartner}: {msg}";
     private boolean usingEmotes;
 
@@ -115,11 +115,11 @@ public class ChannelManager implements MessageFormatSupplier {
 
         this.modPermissions.clear();
         this.storage = null;
-        this.standardFormat = "{color}[{nick}{color}] " + ChatColor.WHITE + "{prefix}{sender}{suffix}{color}: {msg}";
-        this.announceFormat = "{color}[{nick}{color}] {msg}";
+        this.standardFormat = "{color}[{nick}{color}] &f{prefix}{sender}{suffix}{color}: {msg}";
         this.emoteFormat = "{color}[{nick}{color}] * {msg}";
-        this.discordFormat = "&9<Discord:{sender}&9>";
-        this.conversationFormat = ChatColor.LIGHT_PURPLE + "{convoaddress} {convopartner}: {msg}";
+        this.announceFormat = "{msg}";
+        this.discordFormat = "&9<Discord:{sender}&9> {msg}";
+        this.conversationFormat = "&d{convoaddress} {convopartner}: {msg}";
     }
 
     /**
