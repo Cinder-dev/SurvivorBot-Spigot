@@ -1,6 +1,6 @@
 # SurvivorBot-Spigot
 
-## Last know compiled version was for Spigot 1.10
+## Last compiled version was for Spigot 1.10
 
 ### Currently being re-written in kotlin
 
