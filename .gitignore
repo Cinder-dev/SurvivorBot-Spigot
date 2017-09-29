@@ -2,6 +2,7 @@ target/
 testserver/
 .idea/
 *.iml
+out/
 
 #################
 ## Eclipse
