@@ -22,7 +22,7 @@ class StandardChannel(private val storage: ChannelStorage, override val name: St
     override var verbose: Boolean = true
     override var crossWorld: Boolean = true
     override var muted: Boolean = false
-    private val members: MutableSet<Chatter> = HashSet()
+    override val members: MutableSet<Chatter> = HashSet()
     private val worlds: Set<String> = emptySet()
     private val bans: Set<String> = emptySet()
     private val moderators: Set<String> = emptySet()

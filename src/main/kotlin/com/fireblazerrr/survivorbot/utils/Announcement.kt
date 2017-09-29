@@ -1,3 +1,5 @@
 package com.fireblazerrr.survivorbot.utils
 
-class Announcement
+import org.bukkit.entity.Player
+
+class Announcement(players: List<Player>)

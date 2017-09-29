@@ -20,6 +20,7 @@ interface Channel {
     var verbose: Boolean
     var crossWorld: Boolean
     var muted: Boolean
+    val members: MutableSet<Chatter>
 
     fun addMember(chatter: Chatter, announce: Boolean, flagUpdate: Boolean): Boolean
     fun addWorld(world: String)

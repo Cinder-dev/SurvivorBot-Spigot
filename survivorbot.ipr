@@ -111,7 +111,19 @@
   <component name="SvnBranchConfigurationManager">
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+  </component>
   <component name="libraryTable">
+    <library name="Gradle: com.github.JDA-Applications:Kotlin-JDA:master-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.JDA-Applications/Kotlin-JDA/master-SNAPSHOT/769b81b5892eacf56ae30711cb8a4c7309e0f552/Kotlin-JDA-master-SNAPSHOT.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.JDA-Applications/Kotlin-JDA/master-SNAPSHOT/d26b813721b47f92e96a2f0fbb6777f27a54b6a3/Kotlin-JDA-master-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Gradle: com.google.code.findbugs:jsr305:3.0.2">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.2/25ea2e8b0c338a877313bd4672d3fe056ea78f0d/jsr305-3.0.2.jar!/" />
@@ -265,31 +277,31 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.50">
+    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.51">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jre7/1.1.50/782cda128253a8a1843d26b00d86e7c44fbc6246/kotlin-stdlib-jre7-1.1.50.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jre7/1.1.51/8b5933578dc55f32cfc1a25f1db6371e4161fb8f/kotlin-stdlib-jre7-1.1.51.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jre7/1.1.50/59c56c40668f351a4d52530aed2a65fd46ceae5f/kotlin-stdlib-jre7-1.1.50-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jre7/1.1.51/f5c617b826da56c4d691c0094d42749bd1e62e21/kotlin-stdlib-jre7-1.1.51-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.50">
+    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.51">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jre8/1.1.50/adc62fee3e99a0f5efe8baf529db0c51449b30d1/kotlin-stdlib-jre8-1.1.50.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jre8/1.1.51/cc8e639ff087472268912159cd66c01f2765c657/kotlin-stdlib-jre8-1.1.51.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jre8/1.1.50/66c65c6cd4bfadf11ff4e2a08403829a3f7c9db6/kotlin-stdlib-jre8-1.1.50-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jre8/1.1.51/df8f681cc96d6198dcd69669118e6a4eab5c3e95/kotlin-stdlib-jre8-1.1.51-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.1.50">
+    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.1.51">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.1.50/2bbd56ca7884b4f70db0f1d655d32ee6f205eaa5/kotlin-stdlib-1.1.50.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.1.51/e34fe80c9714240525f665113dd3749415515655/kotlin-stdlib-1.1.51.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.1.50/6649061a364e109349b4d1fb644b4ae14ee21905/kotlin-stdlib-1.1.50-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.1.51/b44aed5fe16fe27bb75488a2274d435e875fdb44/kotlin-stdlib-1.1.51-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.jetbrains:annotations:13.0">

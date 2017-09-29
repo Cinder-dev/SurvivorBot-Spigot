@@ -4,7 +4,20 @@
     <bookmark url="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/chatter/StandardChatter.kt" line="206" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22d11dfd-69e3-49e9-a0ef-d0d5b06afd50" name="Default" comment="" />
+    <list default="true" id="22d11dfd-69e3-49e9-a0ef-d0d5b06afd50" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/SurvivorBot.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/SurvivorBot.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/Channel.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/Channel.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/StandardChannel.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/StandardChannel.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/DiscordBot.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/DiscordBot.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/MessageListener.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/MessageListener.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/jedis/JedisListener.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/jedis/JedisListener.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/Announcement.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/Announcement.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/ColorUtils.kt" afterPath="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/ColorUtils.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/survivorbot.ipr" afterPath="$PROJECT_DIR$/survivorbot.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/survivorbot.iws" afterPath="$PROJECT_DIR$/survivorbot.iws" />
+    </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -109,102 +122,20 @@
       <file leaf-file-name="SurvivorBot.kt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/SurvivorBot.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="20" column="98" lean-forward="false" selection-start-line="20" selection-start-column="98" selection-end-line="20" selection-end-column="98" />
+            <state relative-caret-position="169">
+              <caret line="26" column="58" lean-forward="false" selection-start-line="26" selection-start-column="58" selection-end-line="26" selection-end-column="58" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Channel.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/Channel.kt">
+      <file leaf-file-name="JedisListener.kt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/jedis/JedisListener.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="15" column="36" lean-forward="false" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+            <state relative-caret-position="195">
+              <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding>
-                <element signature="e#46#303#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StandardChannel.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/StandardChannel.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="78">
-              <caret line="14" column="86" lean-forward="false" selection-start-line="14" selection-start-column="86" selection-end-line="14" selection-end-column="86" />
-              <folding>
-                <element signature="e#46#454#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DiscordBot.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/DiscordBot.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="455">
-              <caret line="38" column="5" lean-forward="false" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
-              <folding>
-                <element signature="e#46#188#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReadyListener.kt" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/ReadyListener.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="23" column="107" lean-forward="false" selection-start-line="23" selection-start-column="107" selection-end-line="23" selection-end-column="107" />
-              <folding>
-                <element signature="e#46#212#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Chatter.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/chatter/Chatter.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="27" column="60" lean-forward="false" selection-start-line="27" selection-start-column="60" selection-end-line="27" selection-end-column="60" />
-              <folding>
-                <element signature="e#46#200#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StandardChatter.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/chatter/StandardChatter.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2600">
-              <caret line="206" column="47" lean-forward="false" selection-start-line="206" selection-start-column="47" selection-end-line="206" selection-end-column="47" />
-              <folding>
-                <element signature="e#46#333#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Messaging.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/message/Messaging.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="845">
-              <caret line="66" column="41" lean-forward="false" selection-start-line="66" selection-start-column="41" selection-end-line="66" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChannelManager.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/ChannelManager.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="32" column="4" lean-forward="false" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
-              <folding>
-                <element signature="e#46#411#0" expanded="true" />
+                <element signature="e#44#182#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -226,6 +157,9 @@
       <find>Nothing</find>
       <find>: Nothing</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
     <option name="myGradleHomes">
@@ -468,8 +402,8 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="5979990423922" />
-        <entry key="$PROJECT_DIR$/build.gradle" value="810635206" />
+        <entry key="$PROJECT_DIR$" value="5980431176354" />
+        <entry key="$PROJECT_DIR$/build.gradle" value="3562212978" />
         <entry key="$PROJECT_DIR$/gradle.properties" value="328079254" />
       </map>
     </option>
@@ -487,24 +421,17 @@
                           <list>
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.rodionmoiseev.gradle.plugins/idea-utils/0.2/e90b9ed18b94d4739f4c65661f684a356b51ad73/idea-utils-0.2-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.rodionmoiseev.gradle.plugins/idea-utils/0.2/95bd26bd416983767bc54493a25bf455731a14aa/idea-utils-0.2.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.1.50/6e690f873a4d1601e6f974d52c857e73f4a62666/kotlin-gradle-plugin-1.1.50-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.1.50/cda34dbf6a5674ad9661657a74bccb05c33a502d/kotlin-gradle-plugin-1.1.50.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.1.51/1b52dc196b624b3df76dd5ed3a3d8ddcd22736ab/kotlin-gradle-plugin-1.1.51.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.jengelman.gradle.plugins/shadow/1.2.3/7b10b9c4a397b19ebfb80a9a6c4330325ea5606a/shadow-1.2.3-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.jengelman.gradle.plugins/shadow/1.2.3/52bbde5e384f0860df145abe24070d74dd8ed590/shadow-1.2.3.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/de.undercouch/gradle-download-task/3.1.1/7fa981c6a3af562c395b543bdaac8999ec29a919/gradle-download-task-3.1.1-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/de.undercouch/gradle-download-task/3.1.1/f6a01bd6f62867b056459d63fc66040b7c43e45e/gradle-download-task-3.1.1.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.1.50/8b6dbb5b3da32f6cd090d87742070d58a34b362f/kotlin-gradle-plugin-api-1.1.50-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.1.50/1434929270e6de154b50e31f0a094e963da87236/kotlin-gradle-plugin-api-1.1.50.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.1.50/6649061a364e109349b4d1fb644b4ae14ee21905/kotlin-stdlib-1.1.50-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.1.50/2bbd56ca7884b4f70db0f1d655d32ee6f205eaa5/kotlin-stdlib-1.1.50.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.1.50/954cfd94ba7e2b820bde2f78334fdcb0839da1b6/kotlin-android-extensions-1.1.50-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.1.50/c3fae895fcda6fcbdf82739385f00e7e5d9a324e/kotlin-android-extensions-1.1.50.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.1.50/15a1ef0a0faf09371393bd5979fdb10675581ba8/kotlin-compiler-embeddable-1.1.50-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.1.50/236f0d998fafc1a859e084cdc727afafcc246db7/kotlin-compiler-embeddable-1.1.50.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.1.50/f009f2ba1b7acf1972e8d343a854f88250cbd9ce/kotlin-compiler-runner-1.1.50-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.1.50/a4eaaeece471f2232327b32c578041800ee8747e/kotlin-compiler-runner-1.1.50.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing/1.1.50/78331af47b234b7d774fd52f4b4202f1072a9645/kotlin-annotation-processing-1.1.50-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing/1.1.50/e0f823be4357a0493c62bef79f14507ef8b2f4a1/kotlin-annotation-processing-1.1.50.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.1.51/94fc9409f2f88c4d2084a7eb9a5fb12f5f7ae125/kotlin-gradle-plugin-api-1.1.51.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.1.51/e34fe80c9714240525f665113dd3749415515655/kotlin-stdlib-1.1.51.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.1.51/5c33f0c440fdd8416f77824bda078426c3f3dc94/kotlin-android-extensions-1.1.51.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.1.51/e87f62328a705dc5c5b857f1aa50d1732c8bc3d6/kotlin-compiler-embeddable-1.1.51.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.1.51/307b950831a67e1e3db3afa15281575441e8dc21/kotlin-compiler-runner-1.1.51.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing/1.1.51/236f9e54c9f2fa4fd75efade8d07092fdf86e424/kotlin-annotation-processing-1.1.51.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jdom/jdom2/2.0.5/769f3cca4ce92088288be3d0238ef96ef787e82f/jdom2-2.0.5-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jdom/jdom2/2.0.5/2001db51c131e555bafdb77fc52af6a9408c505e/jdom2-2.0.5.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/5.0.3/f0f24f6666c1a15c7e202e91610476bd4ce59368/asm-5.0.3-sources.jar" />
@@ -687,11 +614,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/message/MessageHandler.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/Announcement.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/ColorUtils.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/ConfigManager.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/ChatLogFormatter.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/ConversationChannel.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/spigot/PlayerListener.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/spigot/events/ChannelChatEvent.kt" />
@@ -724,20 +646,25 @@
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/spigot/command/BasicCommand.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/chatter/ChatterManager.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/spigot/command/commands/AFKCommand.kt" />
-        <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/message/MessageFormatSupplier.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/FileExtensions.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/ChannelStorage.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/chatter/ChatterStorage.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/ChannelManager.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/Channel.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/StandardChannel.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/chatter/Chatter.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/chatter/StandardChatter.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/Instance.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/DiscordBot.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/SurvivorBot.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/ReadyListener.kt" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/Announcement.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/ColorUtils.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/StandardChannel.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/Channel.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/DiscordBot.kt" />
+        <option value="$MAVEN_REPOSITORY$/redis/clients/jedis/2.9.0/jedis-2.9.0-sources.jar!/redis/clients/jedis/JedisPool.java" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/SurvivorBot.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/MessageListener.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/jedis/JedisListener.kt" />
       </list>
     </option>
   </component>
@@ -881,55 +808,7 @@
               <item name="com" type="1f31426a:PackageElementNode" />
               <item name="fireblazerrr" type="1f31426a:PackageElementNode" />
               <item name="survivorbot" type="1f31426a:PackageElementNode" />
-              <item name="channel" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="survivorbot" type="58d84e3e:PackageViewProjectNode" />
-              <item name="survivorbot" type="eaaa3913:PackageViewModuleGroupNode" />
-              <item name="survivorbot_main" type="616d4139:PackageViewModuleNode" />
-              <item name="com" type="1f31426a:PackageElementNode" />
-              <item name="fireblazerrr" type="1f31426a:PackageElementNode" />
-              <item name="survivorbot" type="1f31426a:PackageElementNode" />
-              <item name="chatter" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="survivorbot" type="58d84e3e:PackageViewProjectNode" />
-              <item name="survivorbot" type="eaaa3913:PackageViewModuleGroupNode" />
-              <item name="survivorbot_main" type="616d4139:PackageViewModuleNode" />
-              <item name="com" type="1f31426a:PackageElementNode" />
-              <item name="fireblazerrr" type="1f31426a:PackageElementNode" />
-              <item name="survivorbot" type="1f31426a:PackageElementNode" />
-              <item name="discord" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="survivorbot" type="58d84e3e:PackageViewProjectNode" />
-              <item name="survivorbot" type="eaaa3913:PackageViewModuleGroupNode" />
-              <item name="survivorbot_main" type="616d4139:PackageViewModuleNode" />
-              <item name="com" type="1f31426a:PackageElementNode" />
-              <item name="fireblazerrr" type="1f31426a:PackageElementNode" />
-              <item name="survivorbot" type="1f31426a:PackageElementNode" />
-              <item name="spigot" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="survivorbot" type="58d84e3e:PackageViewProjectNode" />
-              <item name="survivorbot" type="eaaa3913:PackageViewModuleGroupNode" />
-              <item name="survivorbot_main" type="616d4139:PackageViewModuleNode" />
-              <item name="com" type="1f31426a:PackageElementNode" />
-              <item name="fireblazerrr" type="1f31426a:PackageElementNode" />
-              <item name="survivorbot" type="1f31426a:PackageElementNode" />
-              <item name="spigot" type="1f31426a:PackageElementNode" />
-              <item name="command" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="survivorbot" type="58d84e3e:PackageViewProjectNode" />
-              <item name="survivorbot" type="eaaa3913:PackageViewModuleGroupNode" />
-              <item name="survivorbot_main" type="616d4139:PackageViewModuleNode" />
-              <item name="com" type="1f31426a:PackageElementNode" />
-              <item name="fireblazerrr" type="1f31426a:PackageElementNode" />
-              <item name="survivorbot" type="1f31426a:PackageElementNode" />
-              <item name="spigot" type="1f31426a:PackageElementNode" />
-              <item name="command" type="1f31426a:PackageElementNode" />
-              <item name="commands" type="1f31426a:PackageElementNode" />
+              <item name="jedis" type="1f31426a:PackageElementNode" />
             </path>
             <path>
               <item name="survivorbot" type="58d84e3e:PackageViewProjectNode" />
@@ -939,86 +818,25 @@
               <item name="fireblazerrr" type="1f31426a:PackageElementNode" />
               <item name="survivorbot" type="1f31426a:PackageElementNode" />
               <item name="utils" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="survivorbot" type="58d84e3e:PackageViewProjectNode" />
-              <item name="survivorbot" type="eaaa3913:PackageViewModuleGroupNode" />
-              <item name="survivorbot_main" type="616d4139:PackageViewModuleNode" />
-              <item name="com" type="1f31426a:PackageElementNode" />
-              <item name="fireblazerrr" type="1f31426a:PackageElementNode" />
-              <item name="survivorbot" type="1f31426a:PackageElementNode" />
-              <item name="utils" type="1f31426a:PackageElementNode" />
-              <item name="message" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="survivorbot" type="58d84e3e:PackageViewProjectNode" />
-              <item name="survivorbot" type="eaaa3913:PackageViewModuleGroupNode" />
-              <item name="survivorbot_main" type="616d4139:PackageViewModuleNode" />
-              <item name="Resource Bundle 'messages'" type="a6c14932:ResourceBundleNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="AndroidView" />
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="survivorbot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="survivorbot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="survivorbot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="survivorbot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="survivorbot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="survivorbot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="survivorbot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="survivorbot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="survivorbot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="survivorbot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="survivorbot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="survivorbot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="fireblazerrr" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="survivorbot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="survivorbot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="fireblazerrr" type="462c0819:PsiDirectoryNode" />
-              <item name="survivorbot" type="462c0819:PsiDirectoryNode" />
+              <item name="SurvivorBot-Spigot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1030,7 +848,7 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SurvivorBot-Spigot" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
     <property name="project.structure.last.edited" value="Problems" />
@@ -1153,14 +971,17 @@
       <workItem from="1506203778470" duration="17476000" />
       <workItem from="1506415798288" duration="2580000" />
       <workItem from="1506642348291" duration="563000" />
+      <workItem from="1506643643188" duration="916000" />
+      <workItem from="1506644587414" duration="6223000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59526000" />
+    <option name="totallyTimeSpent" value="66665000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1862" height="1096" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1170,14 +991,14 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938856" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1936737" sideWeight="0.4783069" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1981132" sideWeight="0.46984127" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1984375" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1936737" sideWeight="0.5216931" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1981132" sideWeight="0.53015876" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1241,62 +1062,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/spigot/command/commands/IgnoreCommand.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="36" lean-forward="false" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/spigot/command/commands/JoinCommand.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/spigot/command/commands/InfoCommand.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/spigot/command/commands/KickCommand.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/spigot/command/commands/ListCommand.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/spigot/command/commands/ModCommand.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="33" lean-forward="false" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/spigot/command/commands/LeaveCommand.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="35" lean-forward="false" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/spigot/command/commands/MsgCommand.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="33" lean-forward="false" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/spigot/command/commands/MuteCommand.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1401,13 +1166,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/messages.properties">
-      <provider editor-type-id="ResourceBundle">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider editor-type-id="ResourceBundle">
+        <state />
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.1.4-3/3f64b358bd71a3b615c8cb90f35c3152492d4b27/kotlin-stdlib-1.1.4-3-sources.jar!/generated/_Arrays.kt">
@@ -1436,7 +1201,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="169">
           <caret line="13" column="65" lean-forward="false" selection-start-line="13" selection-start-column="65" selection-end-line="13" selection-end-column="65" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1454,14 +1218,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
           <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="39">
-          <caret line="4" column="33" lean-forward="false" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -1490,7 +1246,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="104">
           <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1514,7 +1269,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="130">
           <caret line="10" column="41" lean-forward="false" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1523,16 +1277,6 @@
         <state relative-caret-position="39">
           <caret line="3" column="37" lean-forward="true" selection-start-line="3" selection-start-column="37" selection-end-line="6" selection-end-column="34" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/ChannelManager.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="32" column="4" lean-forward="false" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
-          <folding>
-            <element signature="e#46#411#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1578,50 +1322,134 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/SurvivorBot.kt">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.neovisionaries/nv-websocket-client/2.2/21006ec7aba15737d03dc6b1fe31c7572f6343fa/nv-websocket-client-2.2-sources.jar!/com/neovisionaries/ws/client/WebSocketFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="20" column="98" lean-forward="false" selection-start-line="20" selection-start-column="98" selection-end-line="20" selection-end-column="98" />
+        <state relative-caret-position="298">
+          <caret line="189" column="28" lean-forward="false" selection-start-line="189" selection-start-column="28" selection-end-line="189" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.JDA-Applications/Kotlin-JDA/master-SNAPSHOT/d26b813721b47f92e96a2f0fbb6777f27a54b6a3/Kotlin-JDA-master-SNAPSHOT-sources.jar!/club/minnced/kjda/KJDAClientBuilder.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="46" column="4" lean-forward="false" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="39">
+          <caret line="4" column="32" lean-forward="false" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/ReadyListener.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="15" column="52" lean-forward="false" selection-start-line="15" selection-start-column="52" selection-end-line="15" selection-end-column="52" />
+          <folding>
+            <element signature="e#46#212#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/Announcement.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="4" column="39" lean-forward="false" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/ChannelManager.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="18" column="8" lean-forward="false" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
+          <folding>
+            <element signature="e#46#411#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.dv8tion/JDA/3.3.0_273/f7a96803ba5574309c33857a506b54f55d4c0ce7/JDA-3.3.0_273-sources.jar!/net/dv8tion/jda/core/entities/Member.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="129" column="10" lean-forward="false" selection-start-line="129" selection-start-column="10" selection-end-line="129" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/Channel.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="15" column="36" lean-forward="false" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+        <state relative-caret-position="286">
+          <caret line="22" column="36" lean-forward="false" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
           <folding>
             <element signature="e#46#303#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/DiscordBot.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="14" column="4" lean-forward="false" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/utils/ColorUtils.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="45" column="5" lean-forward="true" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
+          <folding>
+            <element signature="e#44#102#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/redis/clients/jedis/2.9.0/jedis-2.9.0-sources.jar!/redis/clients/jedis/JedisPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="224" column="15" lean-forward="false" selection-start-line="224" selection-start-column="15" selection-end-line="224" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/MessageListener.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="673">
+          <caret line="72" column="49" lean-forward="false" selection-start-line="72" selection-start-column="49" selection-end-line="72" selection-end-column="49" />
+          <folding>
+            <element signature="e#46#750#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/channel/StandardChannel.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="14" column="86" lean-forward="false" selection-start-line="14" selection-start-column="86" selection-end-line="14" selection-end-column="86" />
+        <state relative-caret-position="208">
+          <caret line="24" column="57" lean-forward="true" selection-start-line="24" selection-start-column="57" selection-end-line="24" selection-end-column="57" />
           <folding>
             <element signature="e#46#454#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/DiscordBot.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/SurvivorBot.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="38" column="5" lean-forward="false" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
-          <folding>
-            <element signature="e#46#188#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="169">
+          <caret line="26" column="58" lean-forward="false" selection-start-line="26" selection-start-column="58" selection-end-line="26" selection-end-column="58" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/discord/ReadyListener.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/fireblazerrr/survivorbot/jedis/JedisListener.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="23" column="107" lean-forward="false" selection-start-line="23" selection-start-column="107" selection-end-line="23" selection-end-column="107" />
+        <state relative-caret-position="195">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding>
-            <element signature="e#46#212#0" expanded="true" />
+            <element signature="e#44#182#0" expanded="true" />
           </folding>
         </state>
       </provider>

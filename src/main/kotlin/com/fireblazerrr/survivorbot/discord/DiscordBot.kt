@@ -1,8 +1,10 @@
 package com.fireblazerrr.survivorbot.discord
 
+import club.minnced.kjda.*
 import net.dv8tion.jda.core.AccountType
 import net.dv8tion.jda.core.JDA
-import net.dv8tion.jda.core.JDABuilder
+import net.dv8tion.jda.core.OnlineStatus
+import java.util.concurrent.TimeUnit
 import java.util.logging.Logger
 
 class DiscordBot {
@@ -10,7 +12,7 @@ class DiscordBot {
     private val logger: Logger = Logger.getLogger("Minecraft")
 
     var token: String = ""
-    private var jda: JDA? = null
+    lateinit var jda: JDA
 
     var master: Boolean = true
     var adminRankID: String = ""
@@ -24,15 +26,23 @@ class DiscordBot {
 
     fun start() {
         if (token != "") {
-            try {
-                logger.info("Discord Bot Starting")
-                jda = JDABuilder(AccountType.BOT)
-                        .setToken(token)
-                        .addEventListener(ReadyListener())
-                        .addEventListener(MessageListener())
-                        .buildBlocking()
-            } catch (ex: Exception) {
-                ex.printStackTrace()
+            logger.info("Discord Bot Starting")
+            jda = client(AccountType.BOT){
+                token { token }
+                game { "survivorserver.com" }
+                status { OnlineStatus.ONLINE }
+                this += ReadyListener()
+                this += MessageListener()
+
+                httpSettings {
+                    connectTimeout(2, TimeUnit.SECONDS)
+                    readTimeout(3, TimeUnit.SECONDS)
+                    writeTimeout(2, TimeUnit.SECONDS)
+                }
+
+                websocketSettings {
+                    connectionTimeout = TimeUnit.SECONDS.toMillis(1).toInt()
+                }
             }
         } else
             logger.severe("Token is required for Discord cross chat.")
